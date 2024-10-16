@@ -9,11 +9,14 @@ class PagePath {
   static const String createNewPassword = 'createNewPassword';
   static const String onboarding = '/onboarding';
   static const String privacyAndPolicy = '/privacyAndPolicy';
-
-  ///======= Authenticated Routes ===========
-
-  /// HOME
-  static const String homeScreen = '/homeScreen';
+//Dashboard Routes
+  static const String dashboard = '/dashboard';
+  static const String userParents = '/userParents';
+  static const String userContributor = '/userContributor';
+  static const String giftings = '/giftings';
+  static const String contrbutors = '/contributors';
+  static const String payouts = '/payouts';
+  static const String analytics = '/analytics';
 }
 
 extension ContextExtensionss on String {

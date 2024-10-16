@@ -10,13 +10,15 @@ import 'package:grow_up_admin_panel/presentation/auth/create_new_pass/create_new
 import 'package:grow_up_admin_panel/presentation/auth/forgot_password/forget_pass_main.dart';
 import 'package:grow_up_admin_panel/presentation/auth/login/login_main.dart';
 import 'package:grow_up_admin_panel/presentation/auth/otp/otp_main.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/admin_dashboard_desktop.dart';
 import 'package:grow_up_admin_panel/presentation/splash_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final globalContext = _rootNavigatorKey.currentContext;
 // uncomment to use shell navigator
-// final GlobalKey<NavigatorState> _shellNavigatorKey =
-//     GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> _shellNavigatorKey =
+    GlobalKey<NavigatorState>();
 final GlobalKey<OverlayState> overlayState = GlobalKey<OverlayState>();
 
 class AppRouter {
@@ -69,6 +71,61 @@ class AppRouter {
               },
             ),
           ]),
+      //Dashboard
+
+      ShellRoute(
+        navigatorKey: _shellNavigatorKey,
+        builder: (context, state, child) {
+          Get.put<SideBarController>(SideBarController(), permanent: true);
+          return AdminDashboard(
+            child: child,
+          );
+        },
+        routes: [
+          GoRoute(
+              parentNavigatorKey: _shellNavigatorKey,
+              path: PagePath.dashboard,
+              pageBuilder: (context, state) {
+                return const MaterialPage(child: SizedBox());
+              }),
+          GoRoute(
+              parentNavigatorKey: _shellNavigatorKey,
+              path: PagePath.userParents,
+              pageBuilder: (context, state) {
+                return MaterialPage(child: SizedBox());
+              }),
+          GoRoute(
+              parentNavigatorKey: _shellNavigatorKey,
+              path: PagePath.userContributor,
+              pageBuilder: (context, state) => MaterialPage(child: SizedBox())),
+          GoRoute(
+              parentNavigatorKey: _shellNavigatorKey,
+              path: PagePath.giftings,
+              pageBuilder: (context, state) {
+                return MaterialPage(child: SizedBox());
+              }),
+          GoRoute(
+            parentNavigatorKey: _shellNavigatorKey,
+            path: PagePath.contrbutors,
+            pageBuilder: (context, state) {
+              return const MaterialPage(child: SizedBox());
+            },
+          ),
+          GoRoute(
+              parentNavigatorKey: _shellNavigatorKey,
+              path: PagePath.payouts,
+              pageBuilder: (context, state) {
+                return MaterialPage(child: SizedBox());
+              }),
+          GoRoute(
+            parentNavigatorKey: _shellNavigatorKey,
+            path: PagePath.analytics,
+            pageBuilder: (context, state) {
+              return const MaterialPage(child: SizedBox());
+            },
+          ),
+        ],
+      ),
     ],
   );
 }

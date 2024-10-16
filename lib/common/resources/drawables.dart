@@ -5,4 +5,14 @@ class Assets {
   static const cancelIcon = "assets/images/cancelIcon.svg";
   static const forwardButton = "assets/images/forwardButton.svg";
   static const hands = "assets/images/hands.png";
+
+  //Dashboard
+  static const dashboardIcon = "assets/images/Dashboard-Icon.png";
+  static const userParentIcon = "assets/images/User-Parents-Colored-Icon.png";
+  static const userContributiorIcon =
+      "assets/images/User-Contributors-Icon.png";
+  static const giftingsIcon = "assets/images/Giftings-Icon.png";
+  static const contributionsIcon = "assets/images/Contributions-Icon.png";
+  static const payoutIcon = "assets/images/Payout-Icon.png";
+  static const analyticsIcon = "assets/images/analytics-Icon.png";
 }

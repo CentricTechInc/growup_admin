@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 
 class SideBarController extends GetxController {
   int selectedItemIndex = 0;
@@ -7,23 +8,20 @@ class SideBarController extends GetxController {
   final GlobalKey<FormState> notificationFormKey = GlobalKey<FormState>();
 
   List<SideBarItemModel> sideBarList = [
-    // SideBarItemModel(
-    //     itemName: 'Dashboard',
-    //     isSelected: true,
-    //     imageUrl: AssetIcons.dashboard),
-    // SideBarItemModel(itemName: 'Users', imageUrl: AssetIcons.users),
-    // SideBarItemModel(
-    //     itemName: 'Registered QR\'s', imageUrl: AssetIcons.registeredQR),
-    // SideBarItemModel(itemName: 'Generated QR\'s', imageUrl: AssetIcons.newQR),
-    // SideBarItemModel(itemName: 'Payments', imageUrl: AssetIcons.payments),
-    // SideBarItemModel(
-    //     itemName: 'Notifications', imageUrl: AssetIcons.notifications),
-    // SideBarItemModel(
-    //     itemName: 'Privacy Policies', imageUrl: AssetIcons.privacyPolicy),
-    // SideBarItemModel(
-    //     itemName: 'Printing Request', imageUrl: AssetIcons.shippingQrIcon),
-    // SideBarItemModel(
-    //     itemName: 'Complaints', imageUrl: AssetIcons.shippingQrIcon),
+    SideBarItemModel(
+        itemName: 'Dashboard',
+        isSelected: true,
+        imageUrl: Assets.dashboardIcon),
+    SideBarItemModel(
+        itemName: 'User : Parents', imageUrl: Assets.userParentIcon),
+    SideBarItemModel(
+        itemName: 'User : Contributors', imageUrl: Assets.userContributiorIcon),
+    SideBarItemModel(itemName: 'Gifings', imageUrl: Assets.giftingsIcon),
+    SideBarItemModel(
+        itemName: 'Contributions', imageUrl: Assets.contributionsIcon),
+    SideBarItemModel(itemName: 'Payout', imageUrl: Assets.payoutIcon),
+    SideBarItemModel(
+        itemName: 'Analytics & Reports', imageUrl: Assets.analyticsIcon),
   ];
   final List<String> newQRTableHeaderList = [
     'SR. No.',
