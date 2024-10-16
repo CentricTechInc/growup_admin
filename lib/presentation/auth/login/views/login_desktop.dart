@@ -67,7 +67,8 @@ class LoginDesktop extends StatelessWidget with FieldsValidation {
                   ),
                   InkWell(
                     onTap: () {
-                      context.push(PagePath.forgotPassword);
+                      context.push(
+                          PagePath.login + PagePath.forgotPassword.toRoute);
                     },
                     child: const CommonText(
                       text: 'Forgot Password?',

@@ -40,11 +40,11 @@ dependencies:
   sizer: ^2.0.15
   go_router: ^14.1.0
   get: ^4.6.6
-  delightful_toast: ^1.1.0
   http: ^1.2.1
   toastification: ^2.3.0
   dropdown_search: ^5.0.6
   pager: ^0.0.6
+  pin_code_fields: ^8.0.1
 
 dev_dependencies:
   flutter_test:
