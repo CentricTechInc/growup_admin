@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grow_up_admin_panel/app/extensions/build_context_ext.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
+import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 
 class CommonAuthWidget extends StatelessWidget {
   const CommonAuthWidget(
@@ -17,19 +18,16 @@ class CommonAuthWidget extends StatelessWidget {
       child: Row(
         children: [
           if (showLogo)
-            // Expanded(
-            //   child: Container(
-            //     color: AppColors.primary,
-            //     width: context.width * 0.4,
-            //     child: Center(
-            //       child: Image.asset(
-            //         AssetIcons.whiteLogo,
-            //         scale: 8,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            if (!showLogo) const Spacer(),
+            Container(
+              color: AppColors.primary,
+              height: context.height,
+              width: context.width * 0.4,
+              child: Image.asset(
+                Assets.hands,
+                fit: BoxFit.cover,
+              ),
+            ),
+          if (!showLogo) const Spacer(),
           Container(
               padding: padding ??
                   EdgeInsets.symmetric(horizontal: context.width * 0.15),

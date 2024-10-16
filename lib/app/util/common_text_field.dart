@@ -40,7 +40,7 @@ class CommonTextField extends StatelessWidget {
       this.contentPadding =
           const EdgeInsets.only(right: 20.0, top: 18, bottom: 14, left: 10.0),
       this.prefix,
-      this.isBorderEnabled = false,
+      this.isBorderEnabled = true,
       this.isSuffix = true,
       this.textOverflow,
       this.label,
@@ -127,54 +127,53 @@ class CommonTextField extends StatelessWidget {
               ),
               onChanged: onChanged,
               decoration: InputDecoration(
-                  focusedErrorBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.grey, width: .5),
-                  ),
-                  // fillColor: AppColors.fieldBgColor,
-                  filled: isFilledColor,
-                  hintText: hintText,
-                  // suffix: GestureDetector(onTap: suffixIconIconTap),
-                  suffixIcon: isSuffix
-                      ? IconButton(
-                          onPressed: suffixIconOnTap,
-                          icon: Icon(
-                            suffixIcon,
-                            color: iconColor ?? AppColors.grey,
-                          ),
-                          color: AppColors.grey,
-                        )
-                      : null,
-                  prefixIcon: prefix,
-                  prefixIconConstraints: const BoxConstraints(maxHeight: 26),
-                  // suffixIconConstraints: const BoxConstraints(maxHeight: 26),
-                  contentPadding: contentPadding,
-                  hintStyle: TextStyle(
-                      color: hintColor.withOpacity(0.7),
-                      fontFamily: fontFamily,
-                      fontSize: hintSize,
-                      fontWeight: hintweight),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: isBorderEnabled
-                          ? BorderSide(color: borderColor, width: .5)
-                          : BorderSide.none,
-                      borderRadius: BorderRadius.circular(8)),
-                  border: OutlineInputBorder(
-                      borderSide: isBorderEnabled
-                          ? BorderSide(color: borderColor, width: .5)
-                          : BorderSide.none,
-                      borderRadius: BorderRadius.circular(10)),
-                  disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: disableBorder, width: .5)),
-                  enabledBorder: OutlineInputBorder(
+                focusedErrorBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.grey, width: .5),
+                ),
+                // fillColor: AppColors.fieldBgColor,
+                filled: isFilledColor,
+                hintText: hintText,
+                // suffix: GestureDetector(onTap: suffixIconIconTap),
+                suffixIcon: isSuffix
+                    ? IconButton(
+                        onPressed: suffixIconOnTap,
+                        icon: Icon(
+                          suffixIcon,
+                          color: iconColor ?? AppColors.grey,
+                        ),
+                        color: AppColors.grey,
+                      )
+                    : null,
+                prefixIcon: prefix,
+                prefixIconConstraints: const BoxConstraints(maxHeight: 26),
+                // suffixIconConstraints: const BoxConstraints(maxHeight: 26),
+                contentPadding: contentPadding,
+                hintStyle: TextStyle(
+                    color: hintColor.withOpacity(0.7),
+                    fontFamily: fontFamily,
+                    fontSize: hintSize,
+                    fontWeight: hintweight),
+                focusedBorder: UnderlineInputBorder(
                     borderSide: isBorderEnabled
-                        ? BorderSide(color: enableBorder, width: .5)
-                        : BorderSide.none,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                      borderSide: isBorderEnabled
-                          ? const BorderSide(color: Colors.red, width: 1.25)
-                          : BorderSide.none))),
+                        ? BorderSide(color: borderColor, width: .5)
+                        : BorderSide.none),
+                border: UnderlineInputBorder(
+                    borderSide: isBorderEnabled
+                        ? BorderSide(color: borderColor, width: .5)
+                        : BorderSide.none),
+                disabledBorder: UnderlineInputBorder(
+                    borderSide: isBorderEnabled
+                        ? BorderSide(color: borderColor, width: .5)
+                        : BorderSide.none),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: isBorderEnabled
+                        ? BorderSide(color: borderColor, width: .5)
+                        : BorderSide.none),
+                errorBorder: UnderlineInputBorder(
+                    borderSide: isBorderEnabled
+                        ? const BorderSide(color: Colors.red, width: .5)
+                        : BorderSide.none),
+              )),
         ],
       ),
     );
