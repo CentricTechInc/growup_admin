@@ -16,7 +16,7 @@ class SideBarController extends GetxController {
         itemName: 'User : Parents', imageUrl: Assets.userParentIcon),
     SideBarItemModel(
         itemName: 'User : Contributors', imageUrl: Assets.userContributiorIcon),
-    SideBarItemModel(itemName: 'Gifings', imageUrl: Assets.giftingsIcon),
+    SideBarItemModel(itemName: 'Giftings', imageUrl: Assets.giftingsIcon),
     SideBarItemModel(
         itemName: 'Contributions', imageUrl: Assets.contributionsIcon),
     SideBarItemModel(itemName: 'Payout', imageUrl: Assets.payoutIcon),

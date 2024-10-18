@@ -13,6 +13,7 @@ class Assets {
       "assets/images/User-Contributors-Icon.png";
   static const giftingsIcon = "assets/images/Giftings-Icon.png";
   static const contributionsIcon = "assets/images/Contributions-Icon.png";
+  static const contributerDollorIcon = "assets/icons/contribution_icon.png";
   static const payoutIcon = "assets/images/Payout-Icon.png";
   static const analyticsIcon = "assets/images/analytics-Icon.png";
 }

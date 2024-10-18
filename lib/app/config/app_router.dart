@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/presentation/auth/controllers/create_new_pass_controller.dart';
 import 'package:grow_up_admin_panel/presentation/auth/controllers/forget_pass_controller.dart';
@@ -12,6 +13,7 @@ import 'package:grow_up_admin_panel/presentation/auth/login/login_main.dart';
 import 'package:grow_up_admin_panel/presentation/auth/otp/otp_main.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/admin_dashboard_desktop.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/dashboard_page.dart';
 import 'package:grow_up_admin_panel/presentation/splash_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -26,6 +28,22 @@ class AppRouter {
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     initialLocation: PagePath.slash,
+    // redirect: (context, state) {
+    //   if (LocalStorageService.instance.user == null) {
+    //     switch (state.uri.path) {
+    //       case PagePath.login:
+    //         return PagePath.login;
+    //       case PagePath.forgotPassword:
+    //         return PagePath.forgotPassword;
+    //       case PagePath.otp:
+    //         return PagePath.otp;
+    //       case PagePath.createNewPassword:
+    //         return PagePath.createNewPassword;
+    //     }
+    //     return PagePath.login;
+    //   }
+    //   return null;
+    // },
     observers: [],
     routes: [
       GoRoute(
@@ -86,7 +104,7 @@ class AppRouter {
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.dashboard,
               pageBuilder: (context, state) {
-                return const MaterialPage(child: SizedBox());
+                return const MaterialPage(child: DashboardPage());
               }),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
