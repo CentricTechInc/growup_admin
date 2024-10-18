@@ -14,7 +14,7 @@ class CommonVerticalDivider extends StatelessWidget {
     return Padding(
       padding: padding ?? EdgeInsets.zero,
       child: VerticalDivider(
-        width: width ?? 2,
+        width: width ?? 3,
         color: color ?? AppColors.grey,
       ),
     );
