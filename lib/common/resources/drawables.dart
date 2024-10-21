@@ -16,4 +16,6 @@ class Assets {
   static const contributerDollorIcon = "assets/icons/contribution_icon.png";
   static const payoutIcon = "assets/images/Payout-Icon.png";
   static const analyticsIcon = "assets/images/analytics-Icon.png";
+  static const shareIcon = "assets/icons/admin_share_icon.png";
+  static const backIcon = "assets/icons/back_icon.png";
 }
