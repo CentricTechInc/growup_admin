@@ -33,15 +33,16 @@ class CommonChartWidget extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                flex: 2,
                 child: CommonText(
                   text: title,
                   weight: FontWeight.w500,
                   fontSize: 16,
+                  textOverflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
               ),
-              const Spacer(),
-              Expanded(
+              SizedBox(
+                width: 150,
                 child: CommonDropDownWidget(
                   selectedItem: 'This Week',
                   onChanged: (value) {},
@@ -56,9 +57,7 @@ class CommonChartWidget extends StatelessWidget {
             weight: FontWeight.w400,
             color: AppColors.primary,
           ),
-          Expanded(
-            child: child,
-          ),
+          Expanded(child: child),
           if (legend != null) const VerticalSpacing(15),
           legend ?? const SizedBox(),
         ],

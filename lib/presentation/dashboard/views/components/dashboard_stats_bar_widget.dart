@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/common_vertical_divider_widget.dart';
@@ -18,7 +17,8 @@ class DashboardStatsBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      height: 80,
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(10),
@@ -26,10 +26,11 @@ class DashboardStatsBarWidget extends StatelessWidget {
       child: Row(
         children: List.generate(
           3,
-              (index) => Expanded(
+          (index) => Expanded(
             child: Visibility(
               visible: index != 0,
               replacement: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   HorizontalSpacing(30),
@@ -47,15 +48,15 @@ class DashboardStatsBarWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Row(
+              child: const Row(
                 children: [
                   SizedBox(
-                    height: context.height * 0.08,
-                    child: const CommonVerticalDivider(),
+                    height: 60,
+                    child: CommonVerticalDivider(),
                   ),
-                  const HorizontalSpacing(30),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  HorizontalSpacing(30),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       HorizontalSpacing(30),
                       CommonText(
