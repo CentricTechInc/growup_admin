@@ -27,7 +27,7 @@ class AppColors {
   static const Color orange = Color(0xffEF6C35);
   static const Color background = Color(0xffFFFFFF);
   static const Color secondaryText = Color(0xff7B7A7D);
-  static const Color cardGrey = Color(0xffF9F9FA);
+  static const Color cardGrey = Color(0xffF3F3F3);
   static const Color greyish = Color(0xffF2F4F6);
   static const Color blue = Color(0xff037CEC);
   static const Color purple = Color(0xff5B64AF);

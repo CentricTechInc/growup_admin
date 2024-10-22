@@ -18,4 +18,8 @@ class Assets {
   static const analyticsIcon = "assets/images/analytics-Icon.png";
   static const shareIcon = "assets/icons/admin_share_icon.png";
   static const backIcon = "assets/icons/back_icon.png";
+  static const relationIcon = "assets/icons/relation_icon.png";
+  static const deleteIcon = "assets/icons/delete_icon.png";
+  static const upChevronIcon = "assets/icons/up_chevron_icon.png";
+  static const schoolImg = "assets/images/school_img.png";
 }
