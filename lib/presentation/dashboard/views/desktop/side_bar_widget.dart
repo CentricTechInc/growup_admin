@@ -136,28 +136,31 @@ class SideBarWidget extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 20),
-            //   child: InkWell(
-            //     onTap: () {
-            //       LocalStorageService.instance.logoutUser();
-            //     },
-            //     child: Row(
-            //       children: [
-            //         Image.asset(height: 25, width: 25, AssetIcons.logout),
-            //         const SizedBox(
-            //           width: 20,
-            //         ),
-            //         const CommonText(
-            //           color: AppColors.grey,
-            //           text: 'Log Out',
-            //           fontSize: 15,
-            //           weight: FontWeight.w700,
-            //         )
-            //       ],
-            //     ),
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+              child: InkWell(
+                onTap: () {
+                  // LocalStorageService.instance.logoutUser();
+                },
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.logout,
+                      color: AppColors.red,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    CommonText(
+                      color: AppColors.grey,
+                      text: 'Log Out',
+                      fontSize: 15,
+                      weight: FontWeight.w700,
+                    )
+                  ],
+                ),
+              ),
+            ),
           ]),
         ),
       );

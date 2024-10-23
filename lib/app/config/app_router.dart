@@ -104,7 +104,7 @@ class AppRouter {
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.dashboard,
               pageBuilder: (context, state) {
-                return const MaterialPage(child: DashboardPage());
+                return MaterialPage(child: DashboardPage());
               }),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
