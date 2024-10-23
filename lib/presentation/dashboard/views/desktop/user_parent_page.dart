@@ -284,285 +284,40 @@ class UserParentDetails extends StatelessWidget {
                           ),
                         ),
                         const VerticalSpacing(20),
-                        Row(
-                          children: List.generate(
-                            3,
-                            (index) => InkWell(
-                              onTap: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20.0, vertical: 10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: index == 0
-                                        ? AppColors.greyish
-                                        : AppColors.transparent,
-                                  ),
-                                  child: const CommonText(
-                                    text: 'Live Giftings',
-                                    fontSize: 16,
-                                    weight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                        const TabBarWidget(
+                          title: [
+                            'Live Giftings',
+                            'Previous Giftings',
+                            'Activity'
+                          ],
                         ),
                         const VerticalSpacing(20),
+                        // Expanded(
+                        //   child: PageView(
+                        //     children: [
+                        //       SizedBox(),
+                        //     ],
+                        //   ),
+                        // ),
                         Container(
                           padding: const EdgeInsets.all(30),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: AppColors.cardGrey,
                           ),
-                          child: Column(
+                          child: const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  Row(
-                                    children: List.generate(
-                                      3,
-                                      (index) => InkWell(
-                                        onTap: () {},
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20.0, vertical: 10),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: index == 0
-                                                  ? AppColors.white
-                                                  : AppColors.transparent,
-                                            ),
-                                            child: const CommonText(
-                                              text: 'Live Giftings',
-                                              fontSize: 16,
-                                              weight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  IconButton(
-                                    icon: Assets.deleteIcon,
-                                    onTap: () {},
-                                    color: AppColors.red,
-                                  ),
-                                  const HorizontalSpacing(20),
-                                  IconButton(
-                                    icon: Assets.upChevronIcon,
-                                    onTap: () {},
-                                    color: AppColors.darkGrey,
-                                  ),
-                                ],
-                              ),
-                              const VerticalSpacing(20),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    height: 140,
-                                    width: 210,
-                                    child: Stack(
-                                      alignment: AlignmentDirectional.bottomEnd,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            image: const DecorationImage(
-                                                image: AssetImage(
-                                                  Assets.schoolImg,
-                                                ),
-                                                fit: BoxFit.cover),
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            gradient: const LinearGradient(
-                                              stops: [0, 1.0],
-                                              begin: Alignment.topCenter,
-                                              end: Alignment.bottomCenter,
-                                              colors: AppColors.bwGradient,
-                                            ),
-                                          ),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 10, horizontal: 10),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              CommonText(
-                                                text: 'help Us Succeed',
-                                                fontSize: 16,
-                                                weight: FontWeight.w600,
-                                                color: AppColors.white,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const HorizontalSpacing(20),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        const VerticalSpacing(20),
-                                        Row(
-                                          children: List.generate(
-                                            3,
-                                            (index) => const Expanded(
-                                              child: CommonText(
-                                                text: 'Total Gifting',
-                                                fontSize: 16,
-                                                weight: FontWeight.w700,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const VerticalSpacing(10),
-                                        Row(
-                                          children: List.generate(
-                                            3,
-                                            (index) => const Expanded(
-                                              child: CommonText(
-                                                text: 'Total Gifting',
-                                                fontSize: 16,
-                                                weight: FontWeight.w400,
-                                                color: AppColors.secondaryText,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const VerticalSpacing(20),
-                                        Row(
-                                          children: List.generate(
-                                            3,
-                                            (index) => const Expanded(
-                                              child: CommonText(
-                                                text: 'Total Gifting',
-                                                fontSize: 16,
-                                                weight: FontWeight.w700,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const VerticalSpacing(10),
-                                        Row(
-                                          children: List.generate(
-                                            3,
-                                            (index) => const Expanded(
-                                              child: CommonText(
-                                                text: 'Total Gifting',
-                                                fontSize: 16,
-                                                weight: FontWeight.w400,
-                                                color: AppColors.secondaryText,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const VerticalSpacing(20),
-                              const CommonText(
-                                text: 'Description',
-                                fontSize: 16,
-                                weight: FontWeight.w700,
-                              ),
-                              const VerticalSpacing(10),
-                              const CommonText(
-                                text:
-                                    'Help John achieve his dream of attending college! Your contributions will cover tuition, books, and living expenses, enabling him to focus on his studies. Every donation brings him one step closer to a bright future. Thank you for your support!',
-                                fontSize: 16,
-                                weight: FontWeight.w400,
-                                color: AppColors.secondaryText,
-                              ),
-                              const VerticalSpacing(60),
-                              const Divider(
-                                color: AppColors.grey,
-                              ),
-                              const VerticalSpacing(20),
-                              const CommonText(
-                                text: 'Beneficiary Account Details',
-                                fontSize: 20,
-                                weight: FontWeight.w700,
-                              ),
-                              const VerticalSpacing(20),
-                              Row(
-                                children: List.generate(
-                                  4,
-                                  (index) => const Expanded(
-                                    child: CommonText(
-                                      text: 'Bank',
-                                      fontSize: 16,
-                                      weight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const VerticalSpacing(10),
-                              Row(
-                                children: List.generate(
-                                  4,
-                                  (index) => const Expanded(
-                                    child: CommonText(
-                                      text: 'City Bank',
-                                      fontSize: 16,
-                                      weight: FontWeight.w400,
-                                      color: AppColors.secondaryText,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const VerticalSpacing(20),
-                              Row(
-                                children: List.generate(
-                                  4,
-                                  (index) => Expanded(
-                                    child: index == 3
-                                        ? const Spacer()
-                                        : const CommonText(
-                                            text: 'Bank',
-                                            fontSize: 16,
-                                            weight: FontWeight.w700,
-                                          ),
-                                  ),
-                                ),
-                              ),
-                              const VerticalSpacing(10),
-                              Row(
-                                children: List.generate(
-                                  4,
-                                  (index) => Expanded(
-                                    child: index == 3
-                                        ? const Spacer()
-                                        : const CommonText(
-                                            text: 'City Bank',
-                                            fontSize: 16,
-                                            weight: FontWeight.w400,
-                                            color: AppColors.secondaryText,
-                                          ),
-                                  ),
-                                ),
-                              ),
+                              // Expanded(
+                              //   child: TabBarWidget(
+                              //     title: [
+                              //       'Gifting Details',
+                              //       'Contributions',
+                              //       'Payout'
+                              //     ],
+                              //   ),
+                              // ),
+                              // ParentLiveGiftingsWidget(),
                             ],
                           ),
                         )
@@ -656,6 +411,254 @@ class UserParentDetails extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class TabBarWidget extends StatelessWidget {
+  const TabBarWidget(
+      {super.key,
+      required this.title,
+      this.selectedColor,
+      this.unselectedColor});
+
+  final List<String> title;
+  final Color? selectedColor;
+  final Color? unselectedColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: List.generate(
+        title.length,
+        (index) => InkWell(
+          onTap: () {},
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: index == 0
+                    ? selectedColor ?? AppColors.greyish
+                    : unselectedColor ?? AppColors.transparent,
+              ),
+              child: CommonText(
+                text: title[index],
+                fontSize: 16,
+                weight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ParentLiveGiftingsWidget extends StatelessWidget {
+  const ParentLiveGiftingsWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const VerticalSpacing(20),
+        Row(
+          children: [
+            SizedBox(
+              height: 140,
+              width: 210,
+              child: Stack(
+                alignment: AlignmentDirectional.bottomEnd,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: const DecorationImage(
+                          image: AssetImage(
+                            Assets.schoolImg,
+                          ),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: const LinearGradient(
+                        stops: [0, 1.0],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: AppColors.bwGradient,
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CommonText(
+                          text: 'help Us Succeed',
+                          fontSize: 16,
+                          weight: FontWeight.w600,
+                          color: AppColors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const HorizontalSpacing(20),
+            Expanded(
+              child: Column(
+                children: [
+                  const VerticalSpacing(20),
+                  Row(
+                    children: List.generate(
+                      3,
+                      (index) => const Expanded(
+                        child: CommonText(
+                          text: 'Total Gifting',
+                          fontSize: 16,
+                          weight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const VerticalSpacing(10),
+                  Row(
+                    children: List.generate(
+                      3,
+                      (index) => const Expanded(
+                        child: CommonText(
+                          text: 'Total Gifting',
+                          fontSize: 16,
+                          weight: FontWeight.w400,
+                          color: AppColors.secondaryText,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const VerticalSpacing(20),
+                  Row(
+                    children: List.generate(
+                      3,
+                      (index) => const Expanded(
+                        child: CommonText(
+                          text: 'Total Gifting',
+                          fontSize: 16,
+                          weight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const VerticalSpacing(10),
+                  Row(
+                    children: List.generate(
+                      3,
+                      (index) => const Expanded(
+                        child: CommonText(
+                          text: 'Total Gifting',
+                          fontSize: 16,
+                          weight: FontWeight.w400,
+                          color: AppColors.secondaryText,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const VerticalSpacing(20),
+        const CommonText(
+          text: 'Description',
+          fontSize: 16,
+          weight: FontWeight.w700,
+        ),
+        const VerticalSpacing(10),
+        const CommonText(
+          text:
+              'Help John achieve his dream of attending college! Your contributions will cover tuition, books, and living expenses, enabling him to focus on his studies. Every donation brings him one step closer to a bright future. Thank you for your support!',
+          fontSize: 16,
+          weight: FontWeight.w400,
+          color: AppColors.secondaryText,
+        ),
+        const VerticalSpacing(60),
+        const Divider(
+          color: AppColors.grey,
+        ),
+        const VerticalSpacing(20),
+        const CommonText(
+          text: 'Beneficiary Account Details',
+          fontSize: 20,
+          weight: FontWeight.w700,
+        ),
+        const VerticalSpacing(20),
+        Row(
+          children: List.generate(
+            4,
+            (index) => const Expanded(
+              child: CommonText(
+                text: 'Bank',
+                fontSize: 16,
+                weight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ),
+        const VerticalSpacing(10),
+        Row(
+          children: List.generate(
+            4,
+            (index) => const Expanded(
+              child: CommonText(
+                text: 'City Bank',
+                fontSize: 16,
+                weight: FontWeight.w400,
+                color: AppColors.secondaryText,
+              ),
+            ),
+          ),
+        ),
+        const VerticalSpacing(20),
+        Row(
+          children: List.generate(
+            4,
+            (index) => Expanded(
+              child: index == 3
+                  ? const Spacer()
+                  : const CommonText(
+                      text: 'Bank',
+                      fontSize: 16,
+                      weight: FontWeight.w700,
+                    ),
+            ),
+          ),
+        ),
+        const VerticalSpacing(10),
+        Row(
+          children: List.generate(
+            4,
+            (index) => Expanded(
+              child: index == 3
+                  ? const Spacer()
+                  : const CommonText(
+                      text: 'City Bank',
+                      fontSize: 16,
+                      weight: FontWeight.w400,
+                      color: AppColors.secondaryText,
+                    ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
