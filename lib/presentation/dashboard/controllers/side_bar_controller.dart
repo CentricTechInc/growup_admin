@@ -66,7 +66,13 @@ class SideBarController extends GetxController {
     // getDashboardData();
     super.onReady();
   }
+  int selectedIndex = 0;
 
+  final liveGiftingPageController = PageController(
+    initialPage: 0,
+    viewportFraction: 0.8,
+    keepPage: true,
+  );
   // void pageRefresh() {
   //   selectedItemIndex = 0;
   //   globalContext!.go(PagePath.adminDashboard);
@@ -76,13 +82,15 @@ class SideBarController extends GetxController {
   // DashboardRepository dashboardRepository = DashboardRepositoryImpl();
 
   //
-  TextEditingController userSearchController = TextEditingController();
-  TextEditingController registerQrSearchController = TextEditingController();
-  TextEditingController newQrSearchController = TextEditingController();
-  TextEditingController paymentSearchController = TextEditingController();
+  // TextEditingController userSearchController = TextEditingController();
+  // TextEditingController registerQrSearchController = TextEditingController();
+  // TextEditingController newQrSearchController = TextEditingController();
+  // TextEditingController paymentSearchController = TextEditingController();
+
+
 
   //
-  final List<String> selectedQr = [];
+  // final List<String> selectedQr = [];
   // List<RegisteredQRDto> registeredQrsList = [];
   // List<RegisteredQRDto> searchRegisteredQrsList = [];
   // List<RegisteredQRDto> newQrsList = [];

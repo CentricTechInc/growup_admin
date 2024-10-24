@@ -11,6 +11,7 @@ import 'package:grow_up_admin_panel/presentation/auth/forgot_password/forget_pas
 import 'package:grow_up_admin_panel/presentation/auth/login/login_main.dart';
 import 'package:grow_up_admin_panel/presentation/auth/otp/otp_main.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_details.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/admin_dashboard_desktop.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/dashboard_page.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
@@ -119,7 +120,6 @@ class AppRouter {
                     return MaterialPage(child: UserParentDetails());
                   },
                 ),
-
               ]),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
