@@ -25,8 +25,9 @@ class CommonPagerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Spacer(),
+        // Spacer(),
         // const CommonText(
         //   text: 'Page size',
         //   fontSize: 14,

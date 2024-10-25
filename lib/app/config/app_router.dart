@@ -14,6 +14,7 @@ import 'package:grow_up_admin_panel/presentation/auth/otp/otp_main.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/admin_dashboard_desktop.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/dashboard_page.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/payout_page_desktop.dart';
 import 'package:grow_up_admin_panel/presentation/splash_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -133,7 +134,7 @@ class AppRouter {
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.payouts,
               pageBuilder: (context, state) {
-                return MaterialPage(child: SizedBox());
+                return MaterialPage(child: PayoutPageDesktop());
               }),
           GoRoute(
             parentNavigatorKey: _shellNavigatorKey,

@@ -17,7 +17,7 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/rece
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/top_gifting_chart_widget.dart';
 
 class DashboardPage extends StatelessWidget {
-  DashboardPage({super.key});
+  const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
