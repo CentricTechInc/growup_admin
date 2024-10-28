@@ -35,7 +35,7 @@ class SideBarController extends GetxController {
   int pageSize = 10;
 
   ///Registered QR------
-  int registeredQrPageNo = 1;
+  int payoutPageNo = 1;
 
   ///Generated QR------
   int generatedQrPageNo = 1;

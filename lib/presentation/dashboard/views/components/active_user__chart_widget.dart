@@ -41,54 +41,56 @@ class ActiveUserChartWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: SfCartesianChart(
-        primaryXAxis: const CategoryAxis(),
-        primaryYAxis: const NumericAxis(),
-        trackballBehavior: TrackballBehavior(
-          enable: true, // Enable the trackball
-          activationMode: ActivationMode.singleTap, // Activate on single tap
-        ),
-        series: <SplineSeries<int, double>>[
-          // First dotted curved line (Curve 1)
-          SplineSeries<int, double>(
-            color: AppColors.secondary,
-            dataSource: const <int>[0, 5, 2, 7, 1],
-            xValueMapper: (int datum, int index) {
-              return index.toDouble();
-            },
-            yValueMapper: (int datum, int index) {
-              return datum * 0.5; // Curve 1 data points
-            },
-            splineType: SplineType.natural,
-            // Smooth curve
-            dashArray: const <double>[5, 5],
-            // Dotted line effect
-            name: 'Parent',
-            markerSettings: const MarkerSettings(
-              isVisible: true, // Show markers at data points
-            ),
+      child: Expanded(
+        child: SfCartesianChart(
+          primaryXAxis: const CategoryAxis(),
+          primaryYAxis: const NumericAxis(),
+          trackballBehavior: TrackballBehavior(
+            enable: true, // Enable the trackball
+            activationMode: ActivationMode.singleTap, // Activate on single tap
           ),
+          series: <SplineSeries<int, double>>[
+            // First dotted curved line (Curve 1)
+            SplineSeries<int, double>(
+              color: AppColors.secondary,
+              dataSource: const <int>[0, 5, 2, 7, 1],
+              xValueMapper: (int datum, int index) {
+                return index.toDouble();
+              },
+              yValueMapper: (int datum, int index) {
+                return datum * 0.5; // Curve 1 data points
+              },
+              splineType: SplineType.natural,
+              // Smooth curve
+              dashArray: const <double>[5, 5],
+              // Dotted line effect
+              name: 'Parent',
+              markerSettings: const MarkerSettings(
+                isVisible: true, // Show markers at data points
+              ),
+            ),
 
-          // Second dotted curved line (Curve 2)
-          SplineSeries<int, double>(
-            color: AppColors.primaryLight,
-            dataSource: const <int>[4, 3, 1, 10, 4],
-            xValueMapper: (int datum, int index) {
-              return index.toDouble();
-            },
-            yValueMapper: (int datum, int index) {
-              return datum * 0.7; // Curve 2 data points
-            },
-            splineType: SplineType.natural,
-            // Smooth curve
-            dashArray: const <double>[5, 5],
-            // Dotted line effect
-            name: 'Contributor',
-            markerSettings: const MarkerSettings(
-              isVisible: true, // Show markers at data points
+            // Second dotted curved line (Curve 2)
+            SplineSeries<int, double>(
+              color: AppColors.primaryLight,
+              dataSource: const <int>[4, 3, 1, 10, 4],
+              xValueMapper: (int datum, int index) {
+                return index.toDouble();
+              },
+              yValueMapper: (int datum, int index) {
+                return datum * 0.7; // Curve 2 data points
+              },
+              splineType: SplineType.natural,
+              // Smooth curve
+              dashArray: const <double>[5, 5],
+              // Dotted line effect
+              name: 'Contributor',
+              markerSettings: const MarkerSettings(
+                isVisible: true, // Show markers at data points
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
