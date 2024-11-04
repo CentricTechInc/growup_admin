@@ -11,11 +11,16 @@ import 'package:grow_up_admin_panel/presentation/auth/forgot_password/forget_pas
 import 'package:grow_up_admin_panel/presentation/auth/login/login_main.dart';
 import 'package:grow_up_admin_panel/presentation/auth/otp/otp_main.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_contributors_details.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_details.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/admin_dashboard_desktop.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/contributions_page.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/dashboard_page.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/giftings_page.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/payout_page.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/payout_page_desktop.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_contribution_page.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
 import 'package:grow_up_admin_panel/presentation/splash_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -125,25 +130,36 @@ class AppRouter {
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.userContributor,
-              pageBuilder: (context, state) => MaterialPage(child: SizedBox())),
+              pageBuilder: (context, state) {
+                return MaterialPage(child: UserContributionPage());
+              },
+              routes: [
+                GoRoute(
+                  parentNavigatorKey: _shellNavigatorKey,
+                  path: PagePath.contributorDetails,
+                  pageBuilder: (context, state) {
+                    return MaterialPage(child: UserContributerDetails());
+                  },
+                ),
+              ]),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.giftings,
               pageBuilder: (context, state) {
-                return MaterialPage(child: SizedBox());
+                return MaterialPage(child: GiftingsPage());
               }),
           GoRoute(
             parentNavigatorKey: _shellNavigatorKey,
-            path: PagePath.contrbutors,
+            path: PagePath.contrbutions,
             pageBuilder: (context, state) {
-              return const MaterialPage(child: SizedBox());
+              return const MaterialPage(child: ContributionPage());
             },
           ),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.payouts,
               pageBuilder: (context, state) {
-                return MaterialPage(child: PayoutPageDesktop());
+                return MaterialPage(child: PayoutPage());
               }),
           GoRoute(
             parentNavigatorKey: _shellNavigatorKey,

@@ -70,7 +70,7 @@ class SideBarController extends GetxController {
 
   final liveGiftingPageController = PageController(
     initialPage: 0,
-    viewportFraction: 0.8,
+    viewportFraction: 1,
     keepPage: true,
   );
   // void pageRefresh() {

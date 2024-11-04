@@ -71,7 +71,7 @@ class SideBarWidget extends StatelessWidget {
                         context.go(PagePath.giftings);
                         break;
                       case 4:
-                        context.go(PagePath.contrbutors);
+                        context.go(PagePath.contrbutions);
                         break;
                       case 5:
                         context.go(PagePath.payouts);
