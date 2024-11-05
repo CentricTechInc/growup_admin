@@ -12,7 +12,7 @@ class PagePath {
 //Dashboard Routes
   static const String dashboard = '/dashboard';
   static const String userParents = '/userParents';
-  static const String parentDetails = 'parentDetails';
+  static const String parentDetails = '/parentDetails';
   static const String userContributor = '/userContributor';
   static const String contributorDetails = 'contributorDetails';
   static const String giftings = '/giftings';

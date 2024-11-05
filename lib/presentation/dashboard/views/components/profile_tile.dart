@@ -54,12 +54,12 @@ class ProfileTile extends StatelessWidget {
           onTap: () {},
           color: AppColors.red,
         ),
-        const HorizontalSpacing(20),
-        CommonIconButton(
-          icon: Assets.upChevronIcon,
-          onTap: () {},
-          color: AppColors.darkGrey,
-        ),
+        // const HorizontalSpacing(20),
+        // CommonIconButton(
+        //   icon: Assets.upChevronIcon,
+        //   onTap: () {},
+        //   color: AppColors.darkGrey,
+        // ),
       ],
     );
   }

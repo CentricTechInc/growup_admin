@@ -552,3 +552,96 @@ class PayoutTableBody extends StatelessWidget {
     );
   }
 }
+class UserParentLiveGfitingPayoutTableBody extends StatelessWidget {
+  const UserParentLiveGfitingPayoutTableBody({super.key, required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 50,
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: 35,
+                    width: 35,
+                    child: Checkbox(
+                      value: false,
+                      activeColor: AppColors.primary,
+                      splashRadius: 10,
+                      onChanged: (p0) {},
+                      side: const BorderSide(color: AppColors.grey, width: 1),
+                    ),
+                  ),
+                  const HorizontalSpacing(30),
+                  const CommonText(
+                    text: '#HS5896',
+                    fontSize: 12,
+                    weight: FontWeight.w500,
+                  ),
+                ],
+              ),
+            ),
+            const CommonVerticalDivider(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              color: AppColors.grey,
+              thickness: 2,
+            ),
+            const Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: 30.0),
+                child: CommonText(
+                  text: 'Dream Weaver',
+                  fontSize: 12,
+                  weight: FontWeight.w500,
+                ),
+              ),
+            ),
+            const CommonVerticalDivider(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              color: AppColors.grey,
+              thickness: 2,
+            ),
+            const Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: 30.0),
+                child: CommonText(
+                  text: 'Jason Borne',
+                  fontSize: 12,
+                  weight: FontWeight.w500,
+                ),
+              ),
+            ),
+            const CommonVerticalDivider(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              color: AppColors.grey,
+              thickness: 2,
+            ),
+            const Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: 30.0),
+                child: CommonText(
+                  text: 'John William',
+                  fontSize: 12,
+                  weight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+

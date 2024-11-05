@@ -156,7 +156,8 @@ class UserContributerDetails extends StatelessWidget {
                             'Previous Giftings',
                             'Activity'
                           ],
-                          onTap: () {},
+                          onTap: (index) {
+                          }, selectedIndex: 0,
                         ),
                       ],
                     ),

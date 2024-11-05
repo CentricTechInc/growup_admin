@@ -30,7 +30,7 @@ class UserParentPage extends StatelessWidget {
           ParentTableBody(
             onTap: () {
               context
-                  .push(PagePath.userParents + PagePath.parentDetails.toRoute);
+                  .push(PagePath.parentDetails);
             },
           )
         ],

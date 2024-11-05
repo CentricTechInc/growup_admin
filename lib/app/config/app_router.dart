@@ -18,7 +18,6 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/contrib
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/dashboard_page.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/giftings_page.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/payout_page.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/payout_page_desktop.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_contribution_page.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
 import 'package:grow_up_admin_panel/presentation/splash_screen.dart';
@@ -114,19 +113,21 @@ class AppRouter {
                 return MaterialPage(child: DashboardPage());
               }),
           GoRoute(
-              parentNavigatorKey: _shellNavigatorKey,
-              path: PagePath.userParents,
-              pageBuilder: (context, state) {
-                return MaterialPage(child: UserParentPage());
-              },
-              routes: [
-                GoRoute(
-                  path: PagePath.parentDetails,
-                  pageBuilder: (context, state) {
-                    return MaterialPage(child: UserParentDetails());
-                  },
-                ),
-              ]),
+            parentNavigatorKey: _shellNavigatorKey,
+            path: PagePath.userParents,
+            pageBuilder: (context, state) {
+              return MaterialPage(child: UserParentPage());
+            },
+            // routes: [
+            //
+            // ]
+          ),
+          GoRoute(
+            path: PagePath.parentDetails,
+            pageBuilder: (context, state) {
+              return MaterialPage(child: UserParentDetails());
+            },
+          ),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.userContributor,

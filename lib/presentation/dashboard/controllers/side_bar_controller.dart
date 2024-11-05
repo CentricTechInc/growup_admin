@@ -66,12 +66,13 @@ class SideBarController extends GetxController {
     // getDashboardData();
     super.onReady();
   }
-  int selectedIndex = 0;
+  int liveGiftingSelectedIndex = 0;
+  int userParentSelectedIndex = 0;
 
   final liveGiftingPageController = PageController(
-    initialPage: 0,
-    viewportFraction: 1,
-    keepPage: true,
+
+  ); final userParentPageController = PageController(
+
   );
   // void pageRefresh() {
   //   selectedItemIndex = 0;
