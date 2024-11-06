@@ -41,7 +41,10 @@ class ContributionPage extends StatelessWidget {
           const VerticalSpacing(10),
 
           ContributionsTableBody(
-            onTap: () {},
+            onTap: () {
+
+
+            },
           ),
         ],
       ),

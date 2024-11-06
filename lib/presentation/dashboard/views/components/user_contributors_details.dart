@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grow_up_admin_panel/app/util/common_drop_down_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/common_back_button.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_tile.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/profile_tile.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/tab_bar_widget.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_details.dart';
 
 class UserContributerDetails extends StatelessWidget {
   const UserContributerDetails({super.key});
@@ -95,7 +98,7 @@ class UserContributerDetails extends StatelessWidget {
                               Row(
                                 children: List.generate(
                                   3,
-                                      (index) => const Expanded(
+                                  (index) => const Expanded(
                                     child: CommonText(
                                       text: 'Name',
                                       fontSize: 16,
@@ -108,7 +111,7 @@ class UserContributerDetails extends StatelessWidget {
                               Row(
                                 children: List.generate(
                                   3,
-                                      (index) => const Expanded(
+                                  (index) => const Expanded(
                                     child: CommonText(
                                       text: 'Name',
                                       fontSize: 16,
@@ -122,7 +125,7 @@ class UserContributerDetails extends StatelessWidget {
                               Row(
                                 children: List.generate(
                                   3,
-                                      (index) => const Expanded(
+                                  (index) => const Expanded(
                                     child: CommonText(
                                       text: 'Total Gifting',
                                       fontSize: 16,
@@ -135,7 +138,7 @@ class UserContributerDetails extends StatelessWidget {
                               Row(
                                 children: List.generate(
                                   3,
-                                      (index) => const Expanded(
+                                  (index) => const Expanded(
                                     child: CommonText(
                                       text: 'Total Gifting',
                                       fontSize: 16,
@@ -149,15 +152,45 @@ class UserContributerDetails extends StatelessWidget {
                           ),
                         ),
                         const VerticalSpacing(20),
-                        TabBarWidget(
-                          controller: PageController(),
-                          title: const [
-                            'Live Giftings',
-                            'Previous Giftings',
-                            'Activity'
-                          ],
-                          onTap: (index) {
-                          }, selectedIndex: 0,
+                        GetBuilder<SideBarController>(builder: (controller) {
+                          return TabBarWidget(
+                            // selectedIndex:
+                            //     controller.userContributerSelectedIndex,
+                            selectedIndex: 2,
+                            controller: PageController(),
+                            title: const [
+                              'Live Giftings',
+                              'Previous Giftings',
+                              'Activity'
+                            ],
+                            onTap: (index) {
+                              // controller.userContributerPageController
+                              //     .animateToPage(index,
+                              //         duration: const Duration(seconds: 1),
+                              //         curve: Curves.ease);
+                              controller.userContributerPageController
+                                  .animateToPage(2,
+                                      duration: const Duration(seconds: 1),
+                                      curve: Curves.ease);
+
+                              controller.userContributerSelectedIndex = index;
+                              controller.update();
+                            },
+                          );
+                        }),
+                        VerticalSpacing(20),
+                        GetBuilder<SideBarController>(
+                          builder: (controller) {
+                            return SizedBox(
+                              height: context.height / 1.5,
+                              child: PageView(
+                                controller: controller.userContributerPageController,
+                                children: const [
+                                  UserParentsActivity(),
+                                ],
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

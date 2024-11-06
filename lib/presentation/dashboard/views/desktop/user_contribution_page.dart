@@ -32,7 +32,7 @@ class UserContributionPage extends StatelessWidget {
               context
                   .push(PagePath.userContributor + PagePath.contributorDetails.toRoute);
             },
-          )
+          ),
         ],
       ),
     );

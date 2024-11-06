@@ -14,6 +14,7 @@ import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_contributors_details.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_details.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/admin_dashboard_desktop.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/analytics_page.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/contributions_page.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/dashboard_page.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/giftings_page.dart';
@@ -113,21 +114,19 @@ class AppRouter {
                 return MaterialPage(child: DashboardPage());
               }),
           GoRoute(
-            parentNavigatorKey: _shellNavigatorKey,
-            path: PagePath.userParents,
-            pageBuilder: (context, state) {
-              return MaterialPage(child: UserParentPage());
-            },
-            // routes: [
-            //
-            // ]
-          ),
-          GoRoute(
-            path: PagePath.parentDetails,
-            pageBuilder: (context, state) {
-              return MaterialPage(child: UserParentDetails());
-            },
-          ),
+              parentNavigatorKey: _shellNavigatorKey,
+              path: PagePath.userParents,
+              pageBuilder: (context, state) {
+                return MaterialPage(child: UserParentPage());
+              },
+              routes: [
+                GoRoute(
+                  path: PagePath.parentDetails,
+                  pageBuilder: (context, state) {
+                    return MaterialPage(child: UserParentDetails());
+                  },
+                ),
+              ]),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.userContributor,
@@ -166,7 +165,9 @@ class AppRouter {
             parentNavigatorKey: _shellNavigatorKey,
             path: PagePath.analytics,
             pageBuilder: (context, state) {
-              return const MaterialPage(child: SizedBox());
+              return const MaterialPage(
+                child: AnalyticsPage(),
+              );
             },
           ),
         ],

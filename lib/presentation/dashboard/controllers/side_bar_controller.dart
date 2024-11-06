@@ -66,14 +66,15 @@ class SideBarController extends GetxController {
     // getDashboardData();
     super.onReady();
   }
+
   int liveGiftingSelectedIndex = 0;
   int userParentSelectedIndex = 0;
+  int userContributerSelectedIndex = 0;
 
-  final liveGiftingPageController = PageController(
+  final liveGiftingPageController = PageController();
+  final userParentPageController = PageController();
+  final userContributerPageController = PageController();
 
-  ); final userParentPageController = PageController(
-
-  );
   // void pageRefresh() {
   //   selectedItemIndex = 0;
   //   globalContext!.go(PagePath.adminDashboard);
@@ -87,8 +88,6 @@ class SideBarController extends GetxController {
   // TextEditingController registerQrSearchController = TextEditingController();
   // TextEditingController newQrSearchController = TextEditingController();
   // TextEditingController paymentSearchController = TextEditingController();
-
-
 
   //
   // final List<String> selectedQr = [];
@@ -639,117 +638,117 @@ class SideBarController extends GetxController {
     'Status'
   ];
 
-  // paymentSearch(String p0) {
-  //   searchPaymentLogs = paymentObj.where(
-  //     (user) {
-  //       return user.registeredName!.toLowerCase().contains(p0.toLowerCase());
-  //     },
-  //   ).toList();
-  //   if (searchPaymentLogs.isEmpty) {
-  //     paymentNoRecords = true;
-  //   } else {
-  //     paymentNoRecords = false;
-  //   }
-  //   update();
-  // }
+// paymentSearch(String p0) {
+//   searchPaymentLogs = paymentObj.where(
+//     (user) {
+//       return user.registeredName!.toLowerCase().contains(p0.toLowerCase());
+//     },
+//   ).toList();
+//   if (searchPaymentLogs.isEmpty) {
+//     paymentNoRecords = true;
+//   } else {
+//     paymentNoRecords = false;
+//   }
+//   update();
+// }
 
-  // final List<ManageSubscriptionModel> subscriptionList = [];
+// final List<ManageSubscriptionModel> subscriptionList = [];
 
-  // manageSubscriptionList() async {
-  //   try {
-  //     ShowLoader.showLoading(true);
+// manageSubscriptionList() async {
+//   try {
+//     ShowLoader.showLoading(true);
 
-  //     final res = await dashboardRepository.getManageSubscriptionList();
-  //     print(res);
+//     final res = await dashboardRepository.getManageSubscriptionList();
+//     print(res);
 
-  //     if (selectedPageIndex == 0) {
-  //       highlightController.text = res.first.highlights.toString();
-  //       featureController.text = res.first.features.toString();
-  //       priceController.text = res.first.price.toString();
-  //     } else {
-  //       {
-  //         highlightController.text = res[1].highlights.toString();
-  //         featureController.text = res[1].features.toString();
-  //         priceController.text = res[1].price.toString();
-  //       }
-  //     }
-  //     subscriptionList.addAll(res);
-  //     print(subscriptionList);
-  //     // print(paymentObj.first.paymentDateTime);
-  //     update();
-  //     if (ShowLoader.isOpen) {
-  //       ShowLoader.hideLoading();
-  //     }
-  //   } catch (e) {
-  //     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
-  //   }
-  // }
+//     if (selectedPageIndex == 0) {
+//       highlightController.text = res.first.highlights.toString();
+//       featureController.text = res.first.features.toString();
+//       priceController.text = res.first.price.toString();
+//     } else {
+//       {
+//         highlightController.text = res[1].highlights.toString();
+//         featureController.text = res[1].features.toString();
+//         priceController.text = res[1].price.toString();
+//       }
+//     }
+//     subscriptionList.addAll(res);
+//     print(subscriptionList);
+//     // print(paymentObj.first.paymentDateTime);
+//     update();
+//     if (ShowLoader.isOpen) {
+//       ShowLoader.hideLoading();
+//     }
+//   } catch (e) {
+//     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
+//   }
+// }
 
-  // manageSubscriptionUpdate() async {
-  //   try {
-  //     ShowLoader.showLoading(true);
-  //     final ManageSubscriptionModel subscriptionModel = ManageSubscriptionModel(
-  //         highlights: highlightController.text,
-  //         features: featureController.text,
-  //         price: double.tryParse(priceController.text),
-  //         type: selectedPageIndex == 0 ? 'Monthly' : 'Yearly');
+// manageSubscriptionUpdate() async {
+//   try {
+//     ShowLoader.showLoading(true);
+//     final ManageSubscriptionModel subscriptionModel = ManageSubscriptionModel(
+//         highlights: highlightController.text,
+//         features: featureController.text,
+//         price: double.tryParse(priceController.text),
+//         type: selectedPageIndex == 0 ? 'Monthly' : 'Yearly');
 
-  //     final res =
-  //         await dashboardRepository.updateSubscription(subscriptionModel);
+//     final res =
+//         await dashboardRepository.updateSubscription(subscriptionModel);
 
-  //     update();
-  //     if (ShowLoader.isOpen) {
-  //       ShowLoader.hideLoading();
-  //     }
-  //     CommonSnackBar.message(message: res, type: SnackBarType.success);
-  //   } catch (e) {
-  //     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
-  //   }
-  // }
+//     update();
+//     if (ShowLoader.isOpen) {
+//       ShowLoader.hideLoading();
+//     }
+//     CommonSnackBar.message(message: res, type: SnackBarType.success);
+//   } catch (e) {
+//     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
+//   }
+// }
 
-  // List<PaymentModel> paymentObj = [];
-  // List<PaymentModel> paymentHisotryById = [];
-  // List<PaymentModel> searchPaymentLogs = [];
-  // int paymentTotalSum = 0;
+// List<PaymentModel> paymentObj = [];
+// List<PaymentModel> paymentHisotryById = [];
+// List<PaymentModel> searchPaymentLogs = [];
+// int paymentTotalSum = 0;
 
-  // getPayment() async {
-  //   try {
-  //     ShowLoader.showLoading(true);
+// getPayment() async {
+//   try {
+//     ShowLoader.showLoading(true);
 
-  //     final res =
-  //         await dashboardRepository.getPaymentHistory(paymentPageNo, pageSize);
+//     final res =
+//         await dashboardRepository.getPaymentHistory(paymentPageNo, pageSize);
 
-  //     paymentObj.clear();
-  //     paymentObj.addAll(res.data);
-  //     elementCount = res.count ?? 1;
-  //     paymentTotalSum = res.extra ?? 0;
-  //     update();
-  //     if (ShowLoader.isOpen) {
-  //       ShowLoader.hideLoading();
-  //     }
-  //   } catch (e) {
-  //     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
-  //   }
-  // }
+//     paymentObj.clear();
+//     paymentObj.addAll(res.data);
+//     elementCount = res.count ?? 1;
+//     paymentTotalSum = res.extra ?? 0;
+//     update();
+//     if (ShowLoader.isOpen) {
+//       ShowLoader.hideLoading();
+//     }
+//   } catch (e) {
+//     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
+//   }
+// }
 
-  // getPaymentById(String id) async {
-  //   try {
-  //     ShowLoader.showLoading(true);
+// getPaymentById(String id) async {
+//   try {
+//     ShowLoader.showLoading(true);
 
-  //     final res = await dashboardRepository.getPaymentHistoryById(id, 1, 3);
+//     final res = await dashboardRepository.getPaymentHistoryById(id, 1, 3);
 
-  //     paymentHisotryById.clear();
-  //     paymentHisotryById.addAll(res.data);
-  //     // elementCount = res.count ?? 1;
-  //     // paymentTotalSum = res.extra ?? 0;
-  //     update();
-  //     if (ShowLoader.isOpen) {
-  //       ShowLoader.hideLoading();
-  //     }
-  //   } catch (e) {
-  //     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
-  //   }
-  // }
+//     paymentHisotryById.clear();
+//     paymentHisotryById.addAll(res.data);
+//     // elementCount = res.count ?? 1;
+//     // paymentTotalSum = res.extra ?? 0;
+//     update();
+//     if (ShowLoader.isOpen) {
+//       ShowLoader.hideLoading();
+//     }
+//   } catch (e) {
+//     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
+//   }
+// }
 }
 
 class SideBarItemModel {

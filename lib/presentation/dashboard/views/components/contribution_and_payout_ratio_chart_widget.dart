@@ -10,27 +10,65 @@ class ContributionAndPayoutRatioChartWidget extends StatelessWidget {
     return CommonChartWidget(
       title: 'Contribution & Payout Ratio',
       totalStats: '\$300000',
+      // child: Expanded(
+      //   child: SfCartesianChart(
+      //     primaryXAxis: const CategoryAxis(),
+      //     primaryYAxis: const NumericAxis(minimum: -40, maximum: 40),
+      //     trackballBehavior: TrackballBehavior(),
+      //     series: <StackedBarSeries>[
+      //       StackedBarSeries<Map<String, dynamic>, String>(
+      //         dataSource: const [
+      //           {'month': 'Jan', 'contribution': 10},
+      //           {'month': 'Feb', 'contribution': 25},
+      //           {'month': 'Mar', 'contribution': 20},
+      //           {'month': 'Apr', 'contribution': 15},
+      //         ],
+      //         xValueMapper: (Map<String, dynamic> data, _) => data['month'],
+      //         yValueMapper: (Map<String, dynamic> data, _) =>
+      //             data['contribution'],
+      //         color: Colors.teal,
+      //         name: 'Contribution',
+      //       ),
+      //       StackedBarSeries<Map<String, dynamic>, String>(
+      //         dataSource: const [
+      //           {'month': 'Jan', 'payout': -10},
+      //           {'month': 'Feb', 'payout': -35},
+      //           {'month': 'Mar', 'payout': -15},
+      //           {'month': 'Apr', 'payout': -25},
+      //         ],
+      //         xValueMapper: (Map<String, dynamic> data, _) => data['month'],
+      //         yValueMapper: (Map<String, dynamic> data, _) => data['payout'],
+      //         color: Colors.green,
+      //         name: 'Payout',
+      //       ),
+      //     ],
+      //   ),
+      // ),
       child: Expanded(
         child: SfCartesianChart(
-          primaryXAxis: const CategoryAxis(),
-          primaryYAxis: const NumericAxis(minimum: -40, maximum: 40),
-          trackballBehavior: TrackballBehavior(),
-          series: <StackedBarSeries>[
-            StackedBarSeries<Map<String, dynamic>, String>(
-              dataSource: const [
+          primaryXAxis: CategoryAxis(),
+          primaryYAxis: NumericAxis(
+            minimum: -40,
+            maximum: 40,
+            interval: 10,
+            axisLine: AxisLine(width: 1),
+            majorGridLines: MajorGridLines(width: 0),
+          ),
+          series: [
+            BarSeries<Map<String, dynamic>, String>(
+              dataSource: [
                 {'month': 'Jan', 'contribution': 10},
                 {'month': 'Feb', 'contribution': 25},
                 {'month': 'Mar', 'contribution': 20},
                 {'month': 'Apr', 'contribution': 15},
               ],
               xValueMapper: (Map<String, dynamic> data, _) => data['month'],
-              yValueMapper: (Map<String, dynamic> data, _) =>
-                  data['contribution'],
+              yValueMapper: (Map<String, dynamic> data, _) => data['contribution'],
               color: Colors.teal,
               name: 'Contribution',
             ),
-            StackedBarSeries<Map<String, dynamic>, String>(
-              dataSource: const [
+            BarSeries<Map<String, dynamic>, String>(
+              dataSource: [
                 {'month': 'Jan', 'payout': -10},
                 {'month': 'Feb', 'payout': -35},
                 {'month': 'Mar', 'payout': -15},
@@ -42,6 +80,7 @@ class ContributionAndPayoutRatioChartWidget extends StatelessWidget {
               name: 'Payout',
             ),
           ],
+          legend: Legend(isVisible: true),
         ),
       ),
     );

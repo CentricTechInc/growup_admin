@@ -9,9 +9,11 @@ import 'package:grow_up_admin_panel/app/util/common_text_button.dart';
 import 'package:grow_up_admin_panel/app/util/common_text_field.dart';
 import 'package:grow_up_admin_panel/app/util/common_vertical_divider_widget.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
+import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/common_back_button.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_tile.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/icon_button.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/live_gifting_contribution_table_header.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_live_gifting_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
@@ -189,8 +191,8 @@ class UserParentDetails extends StatelessWidget {
                                 children: const [
                                   UserParentLiveGiftingWidget(),
                                   UserParentLiveGiftingWidget(),
-                                  UserParentsLiveGiftingPayout(),
-                                  ],
+                                  UserParentsActivity(),
+                                ],
                               ),
                             );
                           },
@@ -231,68 +233,53 @@ class UserParentDetails extends StatelessWidget {
     );
   }
 }
+
 class UserParentLiveGiftingWidget extends StatelessWidget {
   const UserParentLiveGiftingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<SideBarController>(
-      builder: (controller) {
-        return Container(
-          height: context.height / 1.6,
-          padding: const EdgeInsets.all(30),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: AppColors.cardGrey,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TabBarWidget(
-                selectedIndex:
-                controller.liveGiftingSelectedIndex,
-                controller:
-                controller.liveGiftingPageController,
-                selectedColor: AppColors.white,
-                title: const [
-                  'Gifting Details',
-                  'Contributions',
-                  'Payout'
+    return GetBuilder<SideBarController>(builder: (controller) {
+      return Container(
+        // height: context.height / 1.6,
+        padding: const EdgeInsets.all(30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: AppColors.cardGrey,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TabBarWidget(
+              selectedIndex: controller.liveGiftingSelectedIndex,
+              controller: controller.liveGiftingPageController,
+              selectedColor: AppColors.white,
+              title: const ['Gifting Details', 'Contributions', 'Payout'],
+              onTap: (index) {
+                controller.liveGiftingPageController.animateToPage(index,
+                    duration: const Duration(seconds: 1), curve: Curves.ease);
+                controller.liveGiftingSelectedIndex =
+                    controller.liveGiftingPageController.page?.toInt() ?? 0;
+                controller.liveGiftingSelectedIndex = index;
+                controller.update();
+              },
+            ),
+            const VerticalSpacing(20),
+            SizedBox(
+              height: context.height / 2,
+              child: PageView(
+                controller: controller.liveGiftingPageController,
+                children: const [
+                  ParentLiveGiftingsWidget(),
+                  UserParentsLiveGiftingPayout(),
+                  UserParentsPayout(),
                 ],
-                onTap: (index) {
-                  controller.liveGiftingPageController
-                      .animateToPage(index,
-                      duration:
-                      const Duration(seconds: 1),
-                      curve: Curves.ease);
-                  controller.liveGiftingSelectedIndex =
-                      controller.liveGiftingPageController
-                          .page
-                          ?.toInt() ??
-                          0;
-                  controller.liveGiftingSelectedIndex =
-                      index;
-                  controller.update();
-                },
               ),
-              const VerticalSpacing(20),
-              SizedBox(
-                height: context.height / 2,
-                child: PageView(
-                  controller:
-                  controller.liveGiftingPageController,
-                  children: const [
-                    ParentLiveGiftingsWidget(),
-                    UserParentsLiveGiftingPayout(),
-                    UserParentsPayout(),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    );
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -365,47 +352,145 @@ class UserParentsLiveGiftingPayout extends StatelessWidget {
           ],
         ),
         const VerticalSpacing(10),
+        Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: AppColors.cardGrey,
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 30.0),
+                  child: CommonText(
+                    text: '#HS5896',
+                    fontSize: 12,
+                    weight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              CommonVerticalDivider(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                color: AppColors.grey,
+                thickness: 2,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 30.0),
+                  child: CommonText(
+                    text: 'Jason Borne',
+                    fontSize: 12,
+                    weight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              CommonVerticalDivider(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                color: AppColors.grey,
+                thickness: 2,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 30.0),
+                  child: CommonText(
+                    text: 'jasonborne@abc.com',
+                    fontSize: 12,
+                    weight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              CommonVerticalDivider(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                color: AppColors.grey,
+                thickness: 2,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 30.0),
+                  child: CommonText(
+                    text: '+ 0000 0000 000',
+                    fontSize: 12,
+                    weight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              CommonVerticalDivider(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                color: AppColors.grey,
+                thickness: 2,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 30.0),
+                  child: CommonText(
+                    text: '+ 0000 0000 000',
+                    fontSize: 12,
+                    weight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+class UserParentsActivity extends StatelessWidget {
+  const UserParentsActivity({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const UserParentACtivityTableHeader(
+          titleList: [
+            'Payment ID',
+            'Gifting Title',
+            'Benefeciary Name',
+            'Frequency',
+            'Date & Time',
+            'Amount',
+            'Status',
+          ],
+        ),
+        const VerticalSpacing(10),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) => Dialog(
+                child: PaymentDetailsDialogBox(),
+              ),
+            );
+          },
           child: Container(
             height: 50,
             decoration: BoxDecoration(
-              color: AppColors.white,
+              color: AppColors.cardGrey,
               borderRadius: BorderRadius.circular(6),
             ),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        height: 35,
-                        width: 35,
-                        child: Checkbox(
-                          value: false,
-                          activeColor: AppColors.primary,
-                          splashRadius: 10,
-                          onChanged: (p0) {},
-                          side:
-                              const BorderSide(color: AppColors.grey, width: 1),
-                        ),
-                      ),
-                      const HorizontalSpacing(30),
-                      const CommonText(
-                        text: '#HS5896',
-                        fontSize: 12,
-                        weight: FontWeight.w500,
-                      ),
-                    ],
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 30.0),
+                    child: CommonText(
+                      text: '#HS5896',
+                      fontSize: 12,
+                      weight: FontWeight.w500,
+                    ),
                   ),
                 ),
-                const CommonVerticalDivider(
+                CommonVerticalDivider(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   color: AppColors.grey,
                   thickness: 2,
                 ),
-                const Expanded(
+                Expanded(
                   child: Padding(
                     padding: EdgeInsets.only(left: 30.0),
                     child: CommonText(
@@ -415,12 +500,12 @@ class UserParentsLiveGiftingPayout extends StatelessWidget {
                     ),
                   ),
                 ),
-                const CommonVerticalDivider(
+                CommonVerticalDivider(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   color: AppColors.grey,
                   thickness: 2,
                 ),
-                const Expanded(
+                Expanded(
                   child: Padding(
                     padding: EdgeInsets.only(left: 30.0),
                     child: CommonText(
@@ -430,12 +515,12 @@ class UserParentsLiveGiftingPayout extends StatelessWidget {
                     ),
                   ),
                 ),
-                const CommonVerticalDivider(
+                CommonVerticalDivider(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   color: AppColors.grey,
                   thickness: 2,
                 ),
-                const Expanded(
+                Expanded(
                   child: Padding(
                     padding: EdgeInsets.only(left: 30.0),
                     child: CommonText(
@@ -445,12 +530,42 @@ class UserParentsLiveGiftingPayout extends StatelessWidget {
                     ),
                   ),
                 ),
-                const CommonVerticalDivider(
+                CommonVerticalDivider(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   color: AppColors.grey,
                   thickness: 2,
                 ),
-                const Expanded(
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 30.0),
+                    child: CommonText(
+                      text: '+ 0000 0000 000',
+                      fontSize: 12,
+                      weight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                CommonVerticalDivider(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  color: AppColors.grey,
+                  thickness: 2,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 30.0),
+                    child: CommonText(
+                      text: '+ 0000 0000 000',
+                      fontSize: 12,
+                      weight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                CommonVerticalDivider(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  color: AppColors.grey,
+                  thickness: 2,
+                ),
+                Expanded(
                   child: Padding(
                     padding: EdgeInsets.only(left: 30.0),
                     child: CommonText(
@@ -465,6 +580,132 @@ class UserParentsLiveGiftingPayout extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class PaymentDetailsDialogBox extends StatelessWidget {
+  const PaymentDetailsDialogBox({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding:
+          const EdgeInsets.symmetric(vertical: 36, horizontal: 30),
+      height: context.height / 3,
+      width: context.width / 2,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const CommonText(
+                  text: 'Payment Details',
+                  fontSize: 20,
+                  weight: FontWeight.w700,
+                ),
+                const Spacer(),
+                CommonIconButton(
+                  icon: Assets.cancelIcon,
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  color: AppColors.grey,
+                )
+              ],
+            ),
+            const VerticalSpacing(20),
+            const Divider(
+              color: AppColors.grey,
+              thickness: 1.5,
+            ),
+            const VerticalSpacing(20),
+            Row(
+              children: List.generate(
+                3,
+                (index) => const Expanded(
+                  child: CommonText(
+                    text: 'Total Gifting',
+                    fontSize: 16,
+                    weight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            const VerticalSpacing(10),
+            Row(
+              children: List.generate(
+                3,
+                (index) => const Expanded(
+                  child: CommonText(
+                    text: 'Total Gifting',
+                    fontSize: 16,
+                    weight: FontWeight.w400,
+                    color: AppColors.secondaryText,
+                  ),
+                ),
+              ),
+            ),
+            VerticalSpacing(20),
+            Row(
+              children: List.generate(
+                3,
+                (index) => const Expanded(
+                  child: CommonText(
+                    text: 'Total Gifting',
+                    fontSize: 16,
+                    weight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            const VerticalSpacing(10),
+            Row(
+              children: List.generate(
+                3,
+                (index) => const Expanded(
+                  child: CommonText(
+                    text: 'Total Gifting',
+                    fontSize: 16,
+                    weight: FontWeight.w400,
+                    color: AppColors.secondaryText,
+                  ),
+                ),
+              ),
+            ),
+            VerticalSpacing(20),
+
+            Row(
+              children: List.generate(
+                3,
+                (index) => const Expanded(
+                  child: CommonText(
+                    text: 'Total Gifting',
+                    fontSize: 16,
+                    weight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            const VerticalSpacing(10),
+            Row(
+              children: List.generate(
+                3,
+                (index) => const Expanded(
+                  child: CommonText(
+                    text: 'Total Gifting',
+                    fontSize: 16,
+                    weight: FontWeight.w400,
+                    color: AppColors.secondaryText,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

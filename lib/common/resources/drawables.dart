@@ -1,8 +1,6 @@
 class Assets {
   static const logo = "assets/images/Logo.png";
   static const loader = "assets/images/loader.gif";
-  static const backButton = "assets/images/backButton.svg";
-  static const cancelIcon = "assets/images/cancelIcon.svg";
   static const forwardButton = "assets/images/forwardButton.svg";
   static const hands = "assets/images/hands.png";
 
@@ -22,4 +20,6 @@ class Assets {
   static const deleteIcon = "assets/icons/delete_icon.png";
   static const upChevronIcon = "assets/icons/up_chevron_icon.png";
   static const schoolImg = "assets/images/school_img.png";
+  static const cancelIcon = "assets/icons/cancel_icon.png";
+  static const logoutIcon = "assets/icons/logout_icon.png";
 }
