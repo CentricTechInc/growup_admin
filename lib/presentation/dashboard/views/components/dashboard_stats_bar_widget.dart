@@ -57,6 +57,7 @@ class DashboardStatsBarWidget extends StatelessWidget {
                   HorizontalSpacing(30),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       HorizontalSpacing(30),
                       CommonText(

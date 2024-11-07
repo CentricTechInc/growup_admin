@@ -39,6 +39,7 @@ class LoginDesktop extends StatelessWidget with FieldsValidation {
                   height: 50,
                 ),
                 CommonTextField(
+                  isBorderEnabled: false,
                   controller: controller.emailController,
                   hintText: 'Email',
                   suffixIcon: Icons.alternate_email_outlined,
@@ -49,6 +50,7 @@ class LoginDesktop extends StatelessWidget with FieldsValidation {
                 ),
                 Obx(() {
                   return CommonTextField(
+                    isBorderEnabled: false,
                     controller: controller.passwordController,
                     hintText: 'Password',
                     validator: emptyFieldValidation,

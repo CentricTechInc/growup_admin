@@ -7,6 +7,7 @@ import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
 
 class PayoutPage extends StatelessWidget {
   const PayoutPage({super.key});
@@ -18,14 +19,8 @@ class PayoutPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
-            children: [
-              CommonText(
-                text: 'Payout',
-                fontSize: 24,
-                weight: FontWeight.w700,
-              ),
-            ],
+          const PageHeader(
+            label: 'Payout',
           ),
           const VerticalSpacing(30),
           const PayoutTableHeader(
@@ -41,16 +36,22 @@ class PayoutPage extends StatelessWidget {
           ),
           const VerticalSpacing(10),
           GetBuilder<SideBarController>(builder: (controller) {
-            return PayoutTableBody(
-              onTap: () {
-                context
-                    .go(PagePath.userParents + PagePath.parentDetails.toRoute);
-                controller.selectedItemIndex = 1;
-                controller.sideBarList[1].isSelected = true;
-                controller.sideBarList[5].isSelected = false;
-                controller.liveGiftingSelectedIndex = 2;
-                controller.update();
-              },
+            return Expanded(
+              child: ListView.separated(
+                itemCount: 3,
+                itemBuilder: (context, index) => PayoutTableBody(
+                  onTap: () {
+                    context.go(
+                        PagePath.userParents + PagePath.parentDetails.toRoute);
+                    controller.selectedItemIndex = 1;
+                    controller.sideBarList[1].isSelected = true;
+                    controller.sideBarList[5].isSelected = false;
+                    controller.liveGiftingSelectedIndex = 2;
+                    controller.update();
+                  },
+                ),
+                separatorBuilder: (context, index) => const VerticalSpacing(5),
+              ),
             );
           }),
         ],

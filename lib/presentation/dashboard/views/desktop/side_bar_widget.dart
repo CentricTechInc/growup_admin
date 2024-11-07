@@ -63,6 +63,8 @@ class SideBarWidget extends StatelessWidget {
                         break;
                       case 1:
                         context.go(PagePath.userParents);
+                        controller.liveGiftingSelectedIndex = 0;
+                        controller.userParentSelectedIndex = 0;
                         break;
                       case 2:
                         context.go(PagePath.userContributor);
@@ -133,34 +135,34 @@ class SideBarWidget extends StatelessWidget {
               },
               itemCount: controller.sideBarList.length,
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-              child: InkWell(
-                onTap: () {
-                  // LocalStorageService.instance.logoutUser();
-                },
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.logout,
-                      color: AppColors.red,
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    CommonText(
-                      color: AppColors.grey,
-                      text: 'Log Out',
-                      fontSize: 15,
-                      weight: FontWeight.w700,
-                    )
-                  ],
-                ),
-              ),
-            ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+            //   child: InkWell(
+            //     onTap: () {
+            //       // LocalStorageService.instance.logoutUser();
+            //     },
+            //     child: const Row(
+            //       children: [
+            //         Icon(
+            //           Icons.logout,
+            //           color: AppColors.red,
+            //         ),
+            //         SizedBox(
+            //           width: 20,
+            //         ),
+            //         CommonText(
+            //           color: AppColors.grey,
+            //           text: 'Log Out',
+            //           fontSize: 15,
+            //           weight: FontWeight.w700,
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ]),
         ),
       );
