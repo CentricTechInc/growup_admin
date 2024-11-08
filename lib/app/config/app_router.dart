@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -78,21 +80,27 @@ class AppRouter {
               },
             ),
             GoRoute(
-              path: PagePath.createNewPassword,
+              path: "${PagePath.createNewPassword}/:email",
               builder: (context, state) {
+                String email = state.pathParameters['email'] as String;
                 Get.lazyPut(
                   () => CreateNewPassController(),
                 );
-                return const CreateNewPassMain();
+                return CreateNewPassMain(
+                  email: email,
+                );
               },
             ),
             GoRoute(
-              path: PagePath.otp,
+              path: "${PagePath.otp}/:email",
               builder: (context, state) {
+                String email = state.pathParameters['email'] as String;
                 Get.lazyPut(
                   () => OtpController(),
                 );
-                return const OTPMain();
+                return OTPMain(
+                  email: email,
+                );
               },
             ),
           ]),

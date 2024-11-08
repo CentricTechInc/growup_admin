@@ -8,7 +8,8 @@ import 'package:grow_up_admin_panel/app/util/common_text_field.dart';
 import 'package:grow_up_admin_panel/presentation/auth/controllers/create_new_pass_controller.dart';
 
 class CreateNewPassDesktop extends StatelessWidget with FieldsValidation {
-  CreateNewPassDesktop({super.key});
+  CreateNewPassDesktop({super.key, required this.email});
+  final String email;
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -67,9 +68,9 @@ class CreateNewPassDesktop extends StatelessWidget with FieldsValidation {
                   width: double.maxFinite,
                   height: 50,
                   fontSize: 16,
-                  onPressed: () {
+                  onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      // controller.createNewPassword();
+                      await controller.createNewPassword(email);
                     }
                   },
                   text: 'Save'),

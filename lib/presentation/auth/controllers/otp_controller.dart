@@ -2,9 +2,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:go_router/go_router.dart';
+import 'package:grow_up_admin_panel/app/config/app_router.dart';
+import 'package:grow_up_admin_panel/app/util/common_snack_bar.dart';
+import 'package:grow_up_admin_panel/common/resources/page_path.dart';
+import 'package:grow_up_admin_panel/data/repositories/auth_repo_impl.dart';
+import 'package:grow_up_admin_panel/domain/repositories/auth_repo.dart';
 
 class OtpController extends GetxController {
-  // final AuthRepository _repo = AuthRepositoryImpl();
+  final AuthRepo _repo = AuthRepoImpl();
   TextEditingController emailController = TextEditingController();
   TextEditingController pinController = TextEditingController();
 
@@ -15,7 +21,7 @@ class OtpController extends GetxController {
   void resendCode(String email) {
     secondsRemaining = 60;
     enableResend = false;
-    // generateOtp(email);
+    generateOtp(email);
     update();
   }
 
@@ -37,40 +43,36 @@ class OtpController extends GetxController {
     });
   }
 
-  // Future<void> forgotEmailOtpVerification(String email, String otp) async {
-  //   try {
-  //     ShowLoader.showLoading(false);
-  //     final String result = await _repo.emailVerificationByOtp(email, otp);
-  //     ShowLoader.hideLoading();
-  //     if (result != 'OTP not matched') {
-  //       if (globalContext!.mounted) {
-  //         CommonSnackBar.message(message: result, type: SnackBarType.success);
-  //         // globalContext?.go('${PagePath.createNewPassword}/$email');
-  //         globalContext?.go(PagePath.createNewPassword);
-  //       }
-  //     } else {
-  //       CommonSnackBar.message(message: result);
-  //     }
-  //   } catch (e) {
-  //     ShowLoader.hideLoading();
+  forgotEmailOtpVerification(String email, String otp) async {
+    try {
+      String result = await _repo.verifyOtp(email, otp);
+      CommonSnackBar.message(
+        message: result,
+        type: SnackBarType.success,
+      );
+      globalContext?.push(
+          "${PagePath.login}${PagePath.createNewPassword.toRoute}/$email");
+      print(result);
+    } catch (e) {
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
 
-  //     CommonSnackBar.message(message: e.toString());
-  //   }
-  // }
+  generateOtp(String email) async {
+    try {
+      {
+        String result = await _repo.generateOtp(email);
+        CommonSnackBar.message(
+          message: result,
+          type: SnackBarType.success,
+        );
 
-  // Future generateOtp(String email) async {
-  //   try {
-  //     {
-  //       ShowLoader.showLoading(false);
-  //       final String result = await _repo.generateOtp(email);
-  //       ShowLoader.hideLoading();
-  //       CommonSnackBar.message(message: result, type: SnackBarType.info);
-  //     }
-  //   } catch (e) {
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
-  //   }
-  // }
+        print(result);
+      }
+    } catch (e) {
+      CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
+    }
+  }
 
   // Future forgotPassword() async {
   //   try {

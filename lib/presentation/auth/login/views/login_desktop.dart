@@ -68,8 +68,8 @@ class LoginDesktop extends StatelessWidget with FieldsValidation {
                 ),
                 InkWell(
                   onTap: () {
-                    context.push(
-                        PagePath.login + PagePath.forgotPassword.toRoute);
+                    context
+                        .push(PagePath.login + PagePath.forgotPassword.toRoute);
                   },
                   child: const CommonText(
                     text: 'Forgot Password?',
@@ -79,16 +79,20 @@ class LoginDesktop extends StatelessWidget with FieldsValidation {
                   ),
                 ),
                 const VerticalSpacing(70),
-                CommonTextButton(
-                    width: double.maxFinite,
-                    height: 50,
-                    fontSize: 16,
-                    onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        await controller.login();
-                      }
-                    },
-                    text: 'Login'),
+                controller.isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : CommonTextButton(
+                        width: double.maxFinite,
+                        height: 50,
+                        fontSize: 16,
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            await controller.login();
+                          }
+                        },
+                        text: 'Login'),
               ],
             ),
           );
