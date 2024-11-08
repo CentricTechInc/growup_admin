@@ -2,23 +2,23 @@ import 'package:grow_up_admin_panel/data/provider/network/api_endpoints.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_provider.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_request_representable.dart';
 
-enum UserParentApiType {
-  getParentTable,
+enum ModuleApiType {
+  getGiftingTable,
 }
 
-class UserParentApi implements APIRequestRepresentable {
-  UserParentApiType type;
+class ModuleApi implements APIRequestRepresentable {
+  ModuleApiType type;
   String? search;
 
-  UserParentApi._({
+  ModuleApi._({
     required this.type,
     this.search,
   });
 
-  UserParentApi.getParentTable()
+  ModuleApi.getGiftingTable()
       : this._(
-          type: UserParentApiType.getParentTable,
-        );
+    type: ModuleApiType.getGiftingTable,
+  );
 
   @override
   get body {
@@ -31,15 +31,15 @@ class UserParentApi implements APIRequestRepresentable {
   @override
   String get path {
     switch (type) {
-      case UserParentApiType.getParentTable:
-        return '${APIEndpoint.parentTableUrl}/1';
+      case ModuleApiType.getGiftingTable:
+        return '${APIEndpoint.giftingTableUrl}/1';
     }
   }
 
   @override
   Map<String, String>? get headers {
     switch (type) {
-      case UserParentApiType.getParentTable:
+      case ModuleApiType.getGiftingTable:
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
@@ -54,7 +54,7 @@ class UserParentApi implements APIRequestRepresentable {
   @override
   HTTPMethod get method {
     switch (type) {
-      case UserParentApiType.getParentTable:
+      case ModuleApiType.getGiftingTable:
         return HTTPMethod.get;
     }
   }
@@ -73,7 +73,7 @@ class UserParentApi implements APIRequestRepresentable {
   @override
   Map<String, String>? get urlParams {
     switch (type) {
-      case UserParentApiType.getParentTable:
+      case ModuleApiType.getGiftingTable:
         return {};
     }
   }

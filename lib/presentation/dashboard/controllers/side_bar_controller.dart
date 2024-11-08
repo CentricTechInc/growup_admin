@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:grow_up_admin_panel/app/util/common_snack_bar.dart';
 import 'package:grow_up_admin_panel/common/loader_widget.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
+import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
+import 'package:grow_up_admin_panel/domain/repository/module_repository.dart';
+import 'package:grow_up_admin_panel/domain/repository/user_contributor_repository.dart';
 import 'package:grow_up_admin_panel/domain/repository/user_parent_repository.dart';
 
 class SideBarController extends GetxController {
@@ -44,7 +47,11 @@ class SideBarController extends GetxController {
   final userParentPageController = PageController();
   final userContributerPageController = PageController();
   final UserParentRepository userParentRepository = UserParentRepositoryImpl();
+  final UserContributorRepository userContributorRepository = UserContributorRepositoryImpl();
+  final ModuleRepository moduleRepository = ModuleRepositoryImpl();
   final List<ParentModel> parentModelList = [];
+  final List<ParentModel> contributorModelList = [];
+  final List<GiftingModel> giftingModelList = [];
 
   getParentTable() async {
     try {
@@ -52,6 +59,30 @@ class SideBarController extends GetxController {
       final res = await userParentRepository.getParentTable();
       parentModelList.clear();
       parentModelList.addAll(res);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+  getContributorsTable() async {
+    try {
+      Loader.showLoader();
+      final res = await userContributorRepository.getContributorTable();
+      contributorModelList.clear();
+      contributorModelList.addAll(res);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+  getGiftingTable() async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.getGiftingTable();
+      giftingModelList.clear();
+      giftingModelList.addAll(res);
       Loader.hideLoading();
     } catch (e) {
       Loader.hideLoading();

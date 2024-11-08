@@ -10,5 +10,7 @@ class APIEndpoint {
 
   //===============AUTHENTICATED ROUTES=====================
   static String get parentTableUrl => '/api/users/Parent';
+  static String get contributorTableUrl => '/api/users/Contributor';
+  static String get giftingTableUrl => 'api/gift-contributor';
   //
 }

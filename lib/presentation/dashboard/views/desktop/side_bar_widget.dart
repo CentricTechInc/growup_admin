@@ -69,9 +69,11 @@ class SideBarWidget extends StatelessWidget {
                         break;
                       case 2:
                         context.go(PagePath.userContributor);
+                        await controller.getContributorsTable();
                         break;
                       case 3:
                         context.go(PagePath.giftings);
+                        await controller.getGiftingTable();
                         break;
                       case 4:
                         context.go(PagePath.contrbutions);
