@@ -9,7 +9,7 @@ class Assets {
   static const userParentIcon = "assets/images/User-Parents-Colored-Icon.png";
   static const userContributiorIcon =
       "assets/images/User-Contributors-Icon.png";
-  static const giftingsIcon = "assets/images/Giftings-Icon.png";
+  static const giftingsIcon = "assets/icons/giftings_icon.png";
   static const contributionsIcon = "assets/images/Contributions-Icon.png";
   static const contributerDollorIcon = "assets/icons/contribution_icon.png";
   static const payoutIcon = "assets/images/Payout-Icon.png";
@@ -22,4 +22,7 @@ class Assets {
   static const schoolImg = "assets/images/school_img.png";
   static const cancelIcon = "assets/icons/cancel_icon.png";
   static const logoutIcon = "assets/icons/logout_icon.png";
+  static const profileImg = "assets/images/profile_img.png";
+  static const searchIcon = "assets/icons/search_icon.png";
+  static const calendarIcon = "assets/icons/calendar_icon.png";
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/responsive_builder.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
@@ -62,18 +63,21 @@ class CommonAppBar extends StatelessWidget {
             onTap: () {},
             child: Row(
               children: [
-                // Image.asset(
-                //   AssetIcons.profileIcon,
-                //   scale: 7,
-                //   fit: BoxFit.contain,
-                // ),
-                const SizedBox(
-                  width: 5,
+                ClipOval(
+                  child: Image.asset(
+                    height: 33,
+                    width: 33,
+                    Assets.profileImg,
+                    fit: BoxFit.contain,
+                  ),
                 ),
-                // CommonText(
-                //   text: '${LocalStorageService.instance.user?.firstName}',
-                //   fontSize: 15,
-                // )
+                const SizedBox(
+                  width: 10,
+                ),
+                CommonText(
+                  text: LocalStorageService.instance.user?.userName ?? 'John',
+                  fontSize: 15,
+                )
               ],
             ),
           ),

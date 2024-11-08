@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:grow_up_admin_panel/app/services/local_storage.dart';
-import 'package:grow_up_admin_panel/presentation/app.dart';
+import 'package:grow_up_admin_panel/app/config/app.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
@@ -9,23 +9,7 @@ void main() {
   LocalStorageService.instance.init();
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const GrowUpAdminPanel(),
-    );
-  }
+  runApp(const GrowUpAdminPanel());
 }
 
 class MyHttpOverrides extends HttpOverrides {

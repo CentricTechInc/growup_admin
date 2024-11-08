@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
-import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/active_user__chart_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_list_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/contribution_and_payout_ratio_chart_widget.dart';
@@ -15,6 +14,7 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/rece
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/recent_user_header_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/top_gifting_chart_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/total_users_pie_chart_widget.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
 
 class AnalyticsPage extends StatelessWidget {
   const AnalyticsPage({super.key});
@@ -26,10 +26,9 @@ class AnalyticsPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CommonText(
-            text: 'Analytics & Reports',
-            fontSize: 24,
-            weight: FontWeight.w700,
+          const PageHeader(
+            label: 'Analytics & Reports',
+            showSearch: false,
           ),
           const VerticalSpacing(20),
           const DashboardStatsBarWidget(title: [], subTitle: []),

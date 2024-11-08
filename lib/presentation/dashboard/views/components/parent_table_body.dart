@@ -5,12 +5,14 @@ import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/common_vertical_divider_widget.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
+import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_details.dart';
 
 class ParentTableBody extends StatelessWidget {
-  const ParentTableBody({super.key, required this.onTap});
+  const ParentTableBody({super.key, required this.onTap, required this.model});
 
   final VoidCallback onTap;
+  final ParentModel model;
 
   @override
   Widget build(BuildContext context) {
