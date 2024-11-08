@@ -25,4 +25,5 @@ class Assets {
   static const profileImg = "assets/images/profile_img.png";
   static const searchIcon = "assets/icons/search_icon.png";
   static const calendarIcon = "assets/icons/calendar_icon.png";
+  static const percentIcon = "assets/icons/percent_icon.png";
 }

@@ -438,6 +438,7 @@ class UserParentsLiveGiftingPayout extends StatelessWidget {
     );
   }
 }
+
 class UserParentsActivity extends StatelessWidget {
   const UserParentsActivity({super.key});
 
@@ -461,7 +462,7 @@ class UserParentsActivity extends StatelessWidget {
           onTap: () {
             showDialog(
               context: context,
-              builder: (context) => Dialog(
+              builder: (context) => const Dialog(
                 child: PaymentDetailsDialogBox(),
               ),
             );
@@ -592,8 +593,7 @@ class PaymentDetailsDialogBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          const EdgeInsets.symmetric(vertical: 36, horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 30),
       height: context.height / 3,
       width: context.width / 2,
       child: SingleChildScrollView(
@@ -648,7 +648,7 @@ class PaymentDetailsDialogBox extends StatelessWidget {
                 ),
               ),
             ),
-            VerticalSpacing(20),
+            const VerticalSpacing(20),
             Row(
               children: List.generate(
                 3,
@@ -675,33 +675,132 @@ class PaymentDetailsDialogBox extends StatelessWidget {
                 ),
               ),
             ),
-            VerticalSpacing(20),
+            const VerticalSpacing(20),
+            Row(
+              children: List.generate(
+                3,
+                (index) => const Expanded(
+                  child: CommonText(
+                    text: 'Total Gifting',
+                    fontSize: 16,
+                    weight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            const VerticalSpacing(10),
+            Row(
+              children: List.generate(
+                3,
+                (index) => const Expanded(
+                  child: CommonText(
+                    text: 'Total Gifting',
+                    fontSize: 16,
+                    weight: FontWeight.w400,
+                    color: AppColors.secondaryText,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
+class AdjustTaxDialogBox extends StatelessWidget {
+  const AdjustTaxDialogBox({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 30),
+      height: context.height / 2.4,
+      width: context.width / 2,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Row(
-              children: List.generate(
-                3,
-                (index) => const Expanded(
-                  child: CommonText(
-                    text: 'Total Gifting',
-                    fontSize: 16,
-                    weight: FontWeight.w700,
-                  ),
+              children: [
+                const CommonText(
+                  text: 'Adjust Fees and Taxes',
+                  fontSize: 20,
+                  weight: FontWeight.w700,
+                ),
+                const Spacer(),
+                CommonIconButton(
+                  icon: Assets.cancelIcon,
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  color: AppColors.grey,
+                )
+              ],
+            ),
+            const VerticalSpacing(20),
+            const Divider(
+              color: AppColors.grey,
+              thickness: 1.5,
+            ),
+            const VerticalSpacing(20),
+            const CommonText(
+              text: 'Platform Fees (Deductions)',
+              fontSize: 16,
+              weight: FontWeight.w700,
+            ),
+            const VerticalSpacing(10),
+            SizedBox(
+              width: context.width,
+              child: CommonTextField(
+                controller: TextEditingController(),
+                hintText: '3',
+                isFilledColor: true,
+                borderColor: AppColors.transparent,
+                enableBorder: AppColors.transparent,
+                suffix: Image.asset(
+                  Assets.percentIcon,
+                  scale: 1.5,
                 ),
               ),
             ),
+            const VerticalSpacing(30),
+            const CommonText(
+              text: 'Tax (Deductions)',
+              fontSize: 16,
+              weight: FontWeight.w700,
+            ),
             const VerticalSpacing(10),
-            Row(
-              children: List.generate(
-                3,
-                (index) => const Expanded(
-                  child: CommonText(
-                    text: 'Total Gifting',
-                    fontSize: 16,
-                    weight: FontWeight.w400,
-                    color: AppColors.secondaryText,
-                  ),
+            SizedBox(
+              width: context.width,
+              child: CommonTextField(
+                controller: TextEditingController(),
+                hintText: '5',
+                isFilledColor: true,
+                borderColor: AppColors.transparent,
+                enableBorder: AppColors.transparent,
+                suffix: Image.asset(
+                  Assets.percentIcon,
+                  scale: 1.5,
                 ),
               ),
+            ),
+            const VerticalSpacing(40),
+            Row(
+              children: [
+                const Spacer(),
+                CommonTextButton(
+                  onPressed: () {},
+                  text: 'Save',
+                  height: 40,
+                  width: 120,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ],
             ),
           ],
         ),

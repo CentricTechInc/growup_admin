@@ -42,8 +42,8 @@ class ParentTableBody extends StatelessWidget {
                     ),
                   ),
                   const HorizontalSpacing(30),
-                  const CommonText(
-                    text: '#HS5896',
+                  CommonText(
+                    text: model.id?.toString() ?? '',
                     fontSize: 12,
                     weight: FontWeight.w500,
                   ),
@@ -55,11 +55,11 @@ class ParentTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: 'Jason Borne',
+                  text: model.name ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -70,11 +70,11 @@ class ParentTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: 'jasonborne@abc.com',
+                  text: model.email ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -85,11 +85,11 @@ class ParentTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
                 padding: EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: '+ 0000 0000 000',
+                  text: model.phone ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/responsive_builder.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
@@ -45,7 +44,7 @@ class SideBarWidget extends StatelessWidget {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: () {
+                  onTap: () async {
                     // if (LocalStorageService.instance.user == null) {
                     //   context.go(PagePath.login);
                     //   return;
@@ -63,8 +62,10 @@ class SideBarWidget extends StatelessWidget {
                         break;
                       case 1:
                         context.go(PagePath.userParents);
+                        await controller.getParentTable();
                         controller.liveGiftingSelectedIndex = 0;
                         controller.userParentSelectedIndex = 0;
+
                         break;
                       case 2:
                         context.go(PagePath.userContributor);

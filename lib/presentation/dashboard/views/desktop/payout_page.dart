@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grow_up_admin_panel/app/util/common_pager_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
@@ -54,6 +55,12 @@ class PayoutPage extends StatelessWidget {
               ),
             );
           }),
+          const Spacer(),
+          CommonPagerWidget(
+            currentPage: 1,
+            totalPage: 1,
+            onPageChanged: (page) {},
+          ),
         ],
       ),
     );

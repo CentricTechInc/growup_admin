@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:grow_up_admin_panel/app/util/common_pager_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
@@ -41,6 +42,12 @@ class ContributionPage extends StatelessWidget {
               ),
               separatorBuilder: (context, index) => const VerticalSpacing(5),
             ),
+          ),
+          const Spacer(),
+          CommonPagerWidget(
+            currentPage: 1,
+            totalPage: 1,
+            onPageChanged: (page) {},
           ),
         ],
       ),
