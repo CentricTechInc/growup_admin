@@ -1,39 +1,40 @@
-import 'dart:convert';
+class UserModelDto {
+  int? id;
+  String? name;
+  String? email;
+  String? phone;
+  String? picture;
+  String? role;
+  String? token;
 
-import 'package:grow_up_admin_panel/domain/entities/user_model.dart';
+  UserModelDto(
+      {this.id,
+      this.name,
+      this.email,
+      this.phone,
+      this.picture,
+      this.role,
+      this.token});
 
-class UserDto extends UserModel {
-  UserDto({
-    super.email,
-    super.password,
-    super.role,
-    super.token,
-    super.userId,
-    super.userName,
-    super.message,
-  });
+  UserModelDto.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    phone = json['phone'];
+    picture = json['picture'];
+    role = json['role'];
+    token = json['token'];
+  }
 
-  factory UserDto.fromRawJson(String str) => UserDto.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory UserDto.fromJson(Map<String, dynamic> json) => UserDto(
-        userId: json["userId"],
-        email: json["email"],
-        password: json["password"],
-        token: json["token"],
-        role: json["role"],
-        userName: json["userName"],
-        message: json["message"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "userId": userId,
-        "email": email,
-        "password": password,
-        "token": token,
-        "role": role,
-        "userName": userName,
-        "message": message,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['picture'] = picture;
+    data['role'] = role;
+    data['token'] = token;
+    return data;
+  }
 }

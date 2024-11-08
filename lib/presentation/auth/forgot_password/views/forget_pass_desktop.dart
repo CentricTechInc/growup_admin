@@ -60,9 +60,7 @@ class ForgotPassDesktop extends StatelessWidget with FieldsValidation {
                       fontSize: 16,
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          // await controller.forgotPassword();
-                          context.push(PagePath.login + PagePath.otp.toRoute);
-                          controller.emailController.clear();
+                          await controller.forgotPassword();
                         }
                       },
                       text: 'Send'),

@@ -13,7 +13,7 @@ class APIProvider {
 
   Future request(APIRequestRepresentable request) async {
     try {
-      Uri uri = Uri.https(request.endpoint, request.path, request.urlParams);
+      Uri uri = Uri.http(request.endpoint, request.path, request.urlParams);
       http.Response response;
       switch (request.method) {
         case HTTPMethod.get:

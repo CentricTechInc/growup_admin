@@ -7,13 +7,10 @@ import 'package:grow_up_admin_panel/data/provider/network/api_request_representa
 
 enum AuthApiType {
   login,
-  signup,
   forgot,
+  otpVerification,
   generateOtp,
-  forgotEmailOtpVerification,
   resetPassword,
-  registerEmailVerification,
-  changePassword,
 }
 
 class AuthAPI implements APIRequestRepresentable {
@@ -24,8 +21,7 @@ class AuthAPI implements APIRequestRepresentable {
       otp,
       confirmPassword,
       oldPassword,
-      newPassword,
-      fcmToken;
+      newPassword;
   RegisterModelDto? data;
 
   AuthAPI._({
@@ -37,76 +33,40 @@ class AuthAPI implements APIRequestRepresentable {
     this.confirmPassword,
     this.oldPassword,
     this.newPassword,
-    this.fcmToken,
     this.username,
   });
 
-  AuthAPI.login(String email, String pass, String fcmToken)
+  AuthAPI.login(String email, String pass)
       : this._(
-            type: AuthApiType.login,
-            email: email,
-            password: pass,
-            fcmToken: fcmToken);
-
-  AuthAPI.register(RegisterModelDto data)
-      : this._(type: AuthApiType.signup, data: data);
-
+          type: AuthApiType.login,
+          email: email,
+          password: pass,
+        );
   AuthAPI.generateOtp(String email)
       : this._(type: AuthApiType.generateOtp, email: email);
+  AuthAPI.otpVerification(String email, String otp)
+      : this._(type: AuthApiType.otpVerification, email: email, otp: otp);
 
   AuthAPI.forgotPassword(String email)
       : this._(type: AuthApiType.forgot, email: email);
 
-  AuthAPI.resetPassword(String email, String password, String confirmPassword)
+  AuthAPI.resetPassword(String email, String password)
       : this._(
-            type: AuthApiType.resetPassword,
-            email: email,
-            confirmPassword: confirmPassword,
-            password: password);
-
-  AuthAPI.forgotEmailOtpVerification(String email, String otp)
-      : this._(
-            type: AuthApiType.forgotEmailOtpVerification,
-            email: email,
-            otp: otp);
-
-  AuthAPI.registerEmailVerification(String email, String otp)
-      : this._(
-            type: AuthApiType.registerEmailVerification,
-            email: email,
-            otp: otp);
-
-  AuthAPI.changePassword(
-      String username, String oldPassword, String newPassword)
-      : this._(
-          type: AuthApiType.changePassword,
-          username: username,
-          oldPassword: oldPassword,
-          newPassword: newPassword,
-        );
-
+            type: AuthApiType.resetPassword, email: email, password: password);
   @override
   get body {
     switch (type) {
       case AuthApiType.login:
         return jsonEncode({
-          'userEmail': email,
+          'email': email,
           'password': password,
-          'deviceToken': fcmToken.toString(),
         });
-      case AuthApiType.changePassword:
-        return jsonEncode({
-          "username": username.toString(),
-          "oldPassword": oldPassword.toString(),
-          "newPassword": newPassword.toString(),
-        });
-      case AuthApiType.signup:
-        return data?.toRawJson();
+
       case AuthApiType.resetPassword:
-        return jsonEncode(
-            {'email': email.toString(), 'password': password.toString()});
-      case AuthApiType.forgotEmailOtpVerification:
-      case AuthApiType.registerEmailVerification:
+        return jsonEncode({'email': email, 'password': password});
+
+      case AuthApiType.otpVerification:
+        return jsonEncode({'email': email, 'otp': otp});
       case AuthApiType.forgot:
       case AuthApiType.generateOtp:
         return {};
@@ -118,36 +78,26 @@ class AuthAPI implements APIRequestRepresentable {
     switch (type) {
       case AuthApiType.login:
         return APIEndpoint.loginUrl;
-      case AuthApiType.signup:
-        return APIEndpoint.registerUrl;
       case AuthApiType.generateOtp:
         return APIEndpoint.generateOtpUrl;
       case AuthApiType.forgot:
         return APIEndpoint.forgotPasswordUrl;
       case AuthApiType.resetPassword:
-        return APIEndpoint.resetPasswordUrl;
-      case AuthApiType.forgotEmailOtpVerification:
-        return APIEndpoint.forgotOtpVerificationUrl;
-      case AuthApiType.registerEmailVerification:
-        return APIEndpoint.registerOTpVerificationUrl;
-      case AuthApiType.changePassword:
-        return APIEndpoint.changePasswordUrl;
+        return APIEndpoint.updatePasswordUrl;
+      case AuthApiType.otpVerification:
+        return APIEndpoint.verifyOtpUrl;
     }
   }
 
   @override
   Map<String, String>? get headers {
     switch (type) {
-      case AuthApiType.registerEmailVerification:
-      case AuthApiType.forgotEmailOtpVerification:
-        return {};
       case AuthApiType.generateOtp:
         return {'accept': ' */*'};
       case AuthApiType.forgot:
       case AuthApiType.login:
-      case AuthApiType.signup:
       case AuthApiType.resetPassword:
-      case AuthApiType.changePassword:
+      case AuthApiType.otpVerification:
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*'
@@ -159,14 +109,12 @@ class AuthAPI implements APIRequestRepresentable {
   HTTPMethod get method {
     switch (type) {
       case AuthApiType.login:
-      case AuthApiType.signup:
-      case AuthApiType.registerEmailVerification:
-      case AuthApiType.forgotEmailOtpVerification:
-      case AuthApiType.generateOtp:
-      case AuthApiType.changePassword:
       case AuthApiType.resetPassword:
-      case AuthApiType.forgot:
+      case AuthApiType.otpVerification:
         return HTTPMethod.post;
+      case AuthApiType.generateOtp:
+      case AuthApiType.forgot:
+        return HTTPMethod.get;
     }
   }
 
@@ -185,27 +133,15 @@ class AuthAPI implements APIRequestRepresentable {
   Map<String, String>? get urlParams {
     switch (type) {
       case AuthApiType.login:
-      case AuthApiType.signup:
-      case AuthApiType.changePassword:
-      case AuthApiType.forgot:
-      case AuthApiType.resetPassword:
         return {};
+      case AuthApiType.forgot:
       case AuthApiType.generateOtp:
         return {
-          'email': email.toString(),
+          'email': email ?? '',
         };
-      case AuthApiType.forgotEmailOtpVerification:
-        return {
-          'email': email.toString(),
-          'otp': otp.toString(),
-          'type': 'NewPassword'.toString(),
-        };
-      case AuthApiType.registerEmailVerification:
-        return {
-          'email': email.toString(),
-          'otp': otp.toString(),
-          'type': 'Registration'.toString()
-        };
+      case AuthApiType.resetPassword:
+      case AuthApiType.otpVerification:
+        return {};
     }
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:grow_up_admin_panel/data/dto/user_dto.dart';
 import 'package:grow_up_admin_panel/domain/entities/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,81 +24,18 @@ class LocalStorageService {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  UserModel? get user {
-    final rawJson = _prefs?.getString(Key.user.toString());
-    if (rawJson == null) {
-      return null;
-    }
-    return UserDto.fromRawJson(rawJson);
-  }
-
-  set voiceCommand(List<String> voiceCommand) {
-    if (voiceCommand.isNotEmpty) {
-      _prefs?.setStringList(Key.audioCommand.toString(), voiceCommand);
-    }
-  }
-
-  List<String>? get getVoiceCommand {
-    final commands = _prefs?.getStringList(Key.audioCommand.toString());
-    if (commands == null) {
-      return null;
-    }
-    return commands;
-  }
-
-  set user(UserModel? value) {
+  // UserModelDto? get user {
+  //   final rawJson = _prefs?.getString(Key.user.toString());
+  //   if (rawJson == null) {
+  //     return null;
+  //   }
+  //   return UserModelDto.fromRawJson(rawJson);
+  // }
+  set user(UserModelDto? value) {
     if (value != null) {
       _prefs?.setString(Key.user.toString(), json.encode(value).toString());
     } else {
       _prefs?.remove(Key.user.toString());
-    }
-  }
-
-  String? get fcmToken {
-    final token = _prefs?.getString(Key.fcmToken.toString());
-    if (token == null) {
-      return null;
-    }
-    return token;
-  }
-
-  set fcmToken(String? token) {
-    if (token != null) {
-      _prefs?.setString(Key.fcmToken.toString(), token);
-    } else {
-      _prefs?.remove(Key.fcmToken.toString());
-    }
-  }
-
-  String? get deviceName {
-    final deviceName = _prefs?.getString(Key.deviceName.toString());
-    if (deviceName == null) {
-      return null;
-    }
-    return deviceName;
-  }
-
-  set deviceName(String? token) {
-    if (token != null) {
-      _prefs?.setString(Key.deviceName.toString(), token);
-    } else {
-      _prefs?.remove(Key.deviceName.toString());
-    }
-  }
-
-  bool get isFirstTime {
-    final isFirst = _prefs?.getBool(Key.isFirstTime.name);
-    if (isFirst == null) {
-      return true;
-    }
-    return isFirst;
-  }
-
-  set isFirstTime(bool? isFirst) {
-    if (isFirst != null) {
-      _prefs?.setBool(Key.isFirstTime.name, isFirst);
-    } else {
-      _prefs?.remove(Key.isFirstTime.name);
     }
   }
 
@@ -120,7 +56,6 @@ class LocalStorageService {
   }
 
   logoutUser() async {
-    await _prefs?.remove(Key.audioCommand.toString());
     await _prefs?.remove(Key.user.toString());
   }
 }
