@@ -55,7 +55,6 @@ class GiftingsPage extends StatelessWidget {
               ),
             );
           }),
-          const Spacer(),
           CommonPagerWidget(
             currentPage: 1,
             totalPage: 1,

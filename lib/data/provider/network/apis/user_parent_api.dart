@@ -32,7 +32,7 @@ class UserParentApi implements APIRequestRepresentable {
   String get path {
     switch (type) {
       case UserParentApiType.getParentTable:
-        return '${APIEndpoint.parentTableUrl}/1';
+        return '${APIEndpoint.userParentTableUrl}/1';
     }
   }
 

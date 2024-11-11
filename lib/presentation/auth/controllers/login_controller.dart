@@ -13,7 +13,7 @@ class LoginController extends GetxController {
   TextEditingController emailController =
       TextEditingController(text: 'saad.naeem@centrictech.co');
   TextEditingController passwordController =
-      TextEditingController(text: '123456789');
+      TextEditingController(text: '123456');
 
   RxBool showPassword = false.obs;
   AuthRepo authRepo = AuthRepoImpl();

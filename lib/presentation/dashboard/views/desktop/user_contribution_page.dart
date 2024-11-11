@@ -31,18 +31,17 @@ class UserContributionPage extends StatelessWidget {
             const VerticalSpacing(10),
             Expanded(
               child: ListView.separated(
-                itemCount: controller.contributorModelList.length,
+                itemCount: controller.userContributorModelList.length,
                 itemBuilder: (context, index) => ParentTableBody(
                   onTap: () {
                     context.push(
                         PagePath.userParents + PagePath.parentDetails.toRoute);
                   },
-                  model: controller.contributorModelList[index],
+                  model: controller.userContributorModelList[index],
                 ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
-            const Spacer(),
             CommonPagerWidget(
               currentPage: 1,
               totalPage: 1,

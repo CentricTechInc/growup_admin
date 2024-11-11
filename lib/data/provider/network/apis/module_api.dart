@@ -1,9 +1,12 @@
+import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_endpoints.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_provider.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_request_representable.dart';
 
 enum ModuleApiType {
   getGiftingTable,
+  getPayoutTable,
+  getContributionTable,
 }
 
 class ModuleApi implements APIRequestRepresentable {
@@ -17,8 +20,18 @@ class ModuleApi implements APIRequestRepresentable {
 
   ModuleApi.getGiftingTable()
       : this._(
-    type: ModuleApiType.getGiftingTable,
-  );
+          type: ModuleApiType.getGiftingTable,
+        );
+
+  ModuleApi.getPayoutTable()
+      : this._(
+          type: ModuleApiType.getPayoutTable,
+        );
+
+  ModuleApi.getContributionTable()
+      : this._(
+          type: ModuleApiType.getContributionTable,
+        );
 
   @override
   get body {
@@ -33,21 +46,23 @@ class ModuleApi implements APIRequestRepresentable {
     switch (type) {
       case ModuleApiType.getGiftingTable:
         return '${APIEndpoint.giftingTableUrl}/1';
+      case ModuleApiType.getPayoutTable:
+        return '${APIEndpoint.payoutTableUrl}/1';
+      case ModuleApiType.getContributionTable:
+        return '${APIEndpoint.contributionTableUrl}/1';
     }
   }
 
   @override
   Map<String, String>? get headers {
     switch (type) {
-      case ModuleApiType.getGiftingTable:
+      default:
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
-          // 'authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
-          'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWduYXR1cmUiOjE3MzEwODA5Njk2NDAsImVtYWlsIjoic2FhZC5uYWVlbUBjZW50cmljdGVjaC5jbyIsImlhdCI6MTczMTA4MDk2OX0.8YHvoOlwd-aA519uG7kdKA0dXPnrO2nOwfWDQCiL3vA',
+          'authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
+          // 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWduYXR1cmUiOjE3MzEwODA5Njk2NDAsImVtYWlsIjoic2FhZC5uYWVlbUBjZW50cmljdGVjaC5jbyIsImlhdCI6MTczMTA4MDk2OX0.8YHvoOlwd-aA519uG7kdKA0dXPnrO2nOwfWDQCiL3vA',
         };
-      default:
-        return {};
     }
   }
 
@@ -55,6 +70,8 @@ class ModuleApi implements APIRequestRepresentable {
   HTTPMethod get method {
     switch (type) {
       case ModuleApiType.getGiftingTable:
+      case ModuleApiType.getPayoutTable:
+      case ModuleApiType.getContributionTable:
         return HTTPMethod.get;
     }
   }
@@ -73,7 +90,7 @@ class ModuleApi implements APIRequestRepresentable {
   @override
   Map<String, String>? get urlParams {
     switch (type) {
-      case ModuleApiType.getGiftingTable:
+      default:
         return {};
     }
   }
