@@ -31,7 +31,7 @@ class AnalyticsPage extends StatelessWidget {
             showSearch: false,
           ),
           const VerticalSpacing(20),
-          const DashboardStatsBarWidget(title: [], subTitle: []),
+          const DashboardStatsBarWidget(),
           const VerticalSpacing(20),
           Wrap(spacing: 20, runSpacing: 10, children: [
             const SizedBox(

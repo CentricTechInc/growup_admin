@@ -12,6 +12,7 @@ import 'package:grow_up_admin_panel/presentation/auth/create_new_pass/create_new
 import 'package:grow_up_admin_panel/presentation/auth/forgot_password/forget_pass_main.dart';
 import 'package:grow_up_admin_panel/presentation/auth/login/login_main.dart';
 import 'package:grow_up_admin_panel/presentation/auth/otp/otp_main.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/controllers/dashboard_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_contributors_details.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_details.dart';
@@ -119,7 +120,10 @@ class AppRouter {
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.dashboard,
               pageBuilder: (context, state) {
-                return MaterialPage(child: DashboardPage());
+                Get.lazyPut(
+                  () => DashboardController(),
+                );
+                return const MaterialPage(child: DashboardPage());
               }),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,

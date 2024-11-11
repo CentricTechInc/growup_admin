@@ -1,6 +1,7 @@
 class APIEndpoint {
-  static String get baseUrl => '192.168.0.124:8000';
-
+  static String get baseUrl => '192.168.0.125:8000';
+  // ---------------- Dashboard --------------------
+  static String get dashboardListingUrl => '/api/dashboard-chart';
   // ---------------- Authorization --------------------
   static String get loginUrl => '/api/auth/login';
   static String get verifyOtpUrl => '/api/auth/verify-otp';

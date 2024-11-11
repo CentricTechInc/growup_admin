@@ -5,7 +5,7 @@ import 'package:grow_up_admin_panel/app/config/app_router.dart';
 import 'package:grow_up_admin_panel/app/util/common_snack_bar.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/data/repositories/auth_repo_impl.dart';
-import 'package:grow_up_admin_panel/domain/repositories/auth_repo.dart';
+import 'package:grow_up_admin_panel/domain/repository/auth_repo.dart';
 
 class ForgetPassController extends GetxController {
   TextEditingController emailController = TextEditingController();

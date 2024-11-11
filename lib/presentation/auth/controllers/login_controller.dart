@@ -7,7 +7,7 @@ import 'package:grow_up_admin_panel/app/util/common_snack_bar.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/data/dto/user_dto.dart';
 import 'package:grow_up_admin_panel/data/repositories/auth_repo_impl.dart';
-import 'package:grow_up_admin_panel/domain/repositories/auth_repo.dart';
+import 'package:grow_up_admin_panel/domain/repository/auth_repo.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController =

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:grow_up_admin_panel/data/dto/user_dto.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/auth_api.dart';
-import 'package:grow_up_admin_panel/domain/repositories/auth_repo.dart';
+import 'package:grow_up_admin_panel/domain/repository/auth_repo.dart';
 
 class AuthRepoImpl extends AuthRepo {
   @override

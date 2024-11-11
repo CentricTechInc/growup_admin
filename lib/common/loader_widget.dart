@@ -14,25 +14,18 @@ class Loader {
         context: globalContext!,
         barrierDismissible: dismisss ?? false,
         builder: (context) {
-          return PopScope(
-            onPopInvokedWithResult: (val, _) async {
-              // When back button is pressed, close the loader and set isOpen to false
-              isOpen = false;
-              // return true; // Allow the dialog to close
-            },
-            child: Container(
-              width: 130,
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-              height: 130,
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CupertinoActivityIndicator(
-                    radius: 30,
-                    color: AppColors.white,
-                  ),
-                ],
-              ),
+          return Container(
+            width: 130,
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+            height: 130,
+            child: const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CupertinoActivityIndicator(
+                  radius: 30,
+                  color: AppColors.white,
+                ),
+              ],
             ),
           );
         }).then((value) {
