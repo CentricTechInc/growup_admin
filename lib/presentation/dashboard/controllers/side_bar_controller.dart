@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grow_up_admin_panel/app/util/common_snack_bar.dart';
+import 'package:grow_up_admin_panel/common/loader_widget.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
+import 'package:grow_up_admin_panel/data/repositories/module_repo_impl.dart';
+import 'package:grow_up_admin_panel/data/repositories/user_contributer_repo_impl.dart';
+import 'package:grow_up_admin_panel/data/repositories/user_parent_repo_impl.dart';
+import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/payout_model.dart';
+import 'package:grow_up_admin_panel/domain/repository/module_repository.dart';
+import 'package:grow_up_admin_panel/domain/repository/user_contributor_repository.dart';
+import 'package:grow_up_admin_panel/domain/repository/user_parent_repository.dart';
 
 class SideBarController extends GetxController {
   int selectedItemIndex = 0;
   final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<FormState> notificationFormKey = GlobalKey<FormState>();
 
   List<SideBarItemModel> sideBarList = [
     SideBarItemModel(
@@ -16,18 +27,12 @@ class SideBarController extends GetxController {
         itemName: 'User : Parents', imageUrl: Assets.userParentIcon),
     SideBarItemModel(
         itemName: 'User : Contributors', imageUrl: Assets.userContributiorIcon),
-    SideBarItemModel(itemName: 'Gifings', imageUrl: Assets.giftingsIcon),
+    SideBarItemModel(itemName: 'Giftings', imageUrl: Assets.giftingsIcon),
     SideBarItemModel(
         itemName: 'Contributions', imageUrl: Assets.contributionsIcon),
     SideBarItemModel(itemName: 'Payout', imageUrl: Assets.payoutIcon),
     SideBarItemModel(
         itemName: 'Analytics & Reports', imageUrl: Assets.analyticsIcon),
-  ];
-  final List<String> newQRTableHeaderList = [
-    'SR. No.',
-    'QR ID',
-    'Category',
-    'Register Date & Time',
   ];
 
   ///PAGINATION+++++++++++++++++++++_---------
@@ -35,135 +40,91 @@ class SideBarController extends GetxController {
   int pageSize = 10;
 
   ///Registered QR------
-  int registeredQrPageNo = 1;
-
-  ///Generated QR------
-  int generatedQrPageNo = 1;
-
-  ///Payment QR------
-  int paymentPageNo = 1;
-
-  ///Notification QR------
-  int notificationPageNo = 1;
-
-  ///PrintingRequest QR------
-  int printReqPageNo = 1;
-
-  ///PrintingRequest QR------
-  int usersPageNo = 1;
-
-  ///Complaints------
-  int complaintsPageNo = 1;
+  int payoutPageNo = 1;
 
   ///++++++++++++++++++++++++++++++++++++++++++++++
-  @override
-  onReady() {
-    // if (LocalStorageService.instance.user == null) {
-    //   globalContext!.go(PagePath.login);
-    //   return;
-    // }
-    // pageRefresh();
-    // getDashboardData();
-    super.onReady();
+
+  int liveGiftingSelectedIndex = 0;
+  int userParentSelectedIndex = 0;
+  int userContributerSelectedIndex = 0;
+
+  final liveGiftingPageController = PageController();
+  final userParentPageController = PageController();
+  final userContributerPageController = PageController();
+  final UserParentRepository userParentRepository = UserParentRepositoryImpl();
+  final UserContributorRepository userContributorRepository =
+      UserContributorRepositoryImpl();
+  final ModuleRepository moduleRepository = ModuleRepositoryImpl();
+  final List<ParentModel> userParentModelList = [];
+  final List<ParentModel> userContributorModelList = [];
+  final List<GiftingModel> giftingModelList = [];
+  final List<PayoutModel> payoutModelList = [];
+  final List<ContributionModel> contributionModelList = [];
+
+  getParentTable() async {
+    try {
+      Loader.showLoader();
+      final res = await userParentRepository.getParentTable();
+      userParentModelList.clear();
+      userParentModelList.addAll(res);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
   }
 
-  // void pageRefresh() {
-  //   selectedItemIndex = 0;
-  //   globalContext!.go(PagePath.adminDashboard);
-  // }
+  getContributorsTable() async {
+    try {
+      Loader.showLoader();
+      final res = await userContributorRepository.getContributorTable();
+      userContributorModelList.clear();
+      userContributorModelList.addAll(res);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
 
-//
-  // DashboardRepository dashboardRepository = DashboardRepositoryImpl();
+  getGiftingTable() async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.getGiftingTable();
+      giftingModelList.clear();
+      giftingModelList.addAll(res);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
 
-  //
-  TextEditingController userSearchController = TextEditingController();
-  TextEditingController registerQrSearchController = TextEditingController();
-  TextEditingController newQrSearchController = TextEditingController();
-  TextEditingController paymentSearchController = TextEditingController();
+  getPayoutTable() async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.getPayoutTable();
+      payoutModelList.clear();
+      payoutModelList.addAll(res);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
 
-  //
-  final List<String> selectedQr = [];
-  // List<RegisteredQRDto> registeredQrsList = [];
-  // List<RegisteredQRDto> searchRegisteredQrsList = [];
-  // List<RegisteredQRDto> newQrsList = [];
-  // final List<RegisteredQRDto> enabledUsers = [];
-  // List<PaymentModel> paymentLogs = [];
-
-  // DashboardCountsDto? dashboardCountsDto;
-  // List<ProgressTileModel> progressTileList = [
-  //   ProgressTileModel(
-  //       title: 'Total QR Codes',
-  //       progressScore: 850,
-  //       progressPercent: 3.0,
-  //       isNegative: false,
-  //       color: Colors.blue.shade50),
-  //   ProgressTileModel(
-  //       title: 'Un-Registered',
-  //       progressScore: 261,
-  //       progressPercent: 6.0,
-  //       isNegative: true,
-  //       color: const Color(0xffF7EDD5)),
-  //   ProgressTileModel(
-  //       title: 'Registered',
-  //       progressScore: 312,
-  //       progressPercent: 3.0,
-  //       color: const Color(0xffF5F5F5)),
-  //   ProgressTileModel(
-  //       title: 'Enabled', progressScore: 250, color: const Color(0xffE9F7F2)),
-  //   ProgressTileModel(
-  //       title: 'Disabled',
-  //       progressScore: 62,
-  //       progressPercent: 2.0,
-  //       isNegative: true,
-  //       color: const Color(0xffFFECEE))
-  // ];
-  final List<String> complainListHeader = [
-    'Complaint no',
-    'Complainer Name',
-    'Subject',
-    'Description',
-    'Date',
-  ];
-
-  //
-  // userExportData() async {
-  //   try {
-  //     ShowLoader.showLoading(false);
-  //     await dashboardRepository.getUsersExport();
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(
-  //         message: 'File Downloaded', type: SnackBarType.success);
-  //   } catch (e) {
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(message: e.toString());
-  //   }
-  // }
-
-  // registeredQrExport() async {
-  //   try {
-  //     ShowLoader.showLoading(false);
-  //     await dashboardRepository.registeredQrExport();
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(
-  //         message: 'File Downloaded', type: SnackBarType.success);
-  //   } catch (e) {
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(message: e.toString());
-  //   }
-  // }
-
-  // unRegisteredQrExport() async {
-  //   try {
-  //     ShowLoader.showLoading(false);
-  //     await dashboardRepository.unRegisteredQrExport();
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(
-  //         message: 'File Downloaded', type: SnackBarType.success);
-  //   } catch (e) {
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(message: e.toString());
-  //   }
-  // }
+  getContributionTable() async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.getContributionTable();
+      contributionModelList.clear();
+      contributionModelList.addAll(res);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
 
   // getDashboardData() async {
   //   try {
@@ -630,117 +591,117 @@ class SideBarController extends GetxController {
     'Status'
   ];
 
-  // paymentSearch(String p0) {
-  //   searchPaymentLogs = paymentObj.where(
-  //     (user) {
-  //       return user.registeredName!.toLowerCase().contains(p0.toLowerCase());
-  //     },
-  //   ).toList();
-  //   if (searchPaymentLogs.isEmpty) {
-  //     paymentNoRecords = true;
-  //   } else {
-  //     paymentNoRecords = false;
-  //   }
-  //   update();
-  // }
+// paymentSearch(String p0) {
+//   searchPaymentLogs = paymentObj.where(
+//     (user) {
+//       return user.registeredName!.toLowerCase().contains(p0.toLowerCase());
+//     },
+//   ).toList();
+//   if (searchPaymentLogs.isEmpty) {
+//     paymentNoRecords = true;
+//   } else {
+//     paymentNoRecords = false;
+//   }
+//   update();
+// }
 
-  // final List<ManageSubscriptionModel> subscriptionList = [];
+// final List<ManageSubscriptionModel> subscriptionList = [];
 
-  // manageSubscriptionList() async {
-  //   try {
-  //     ShowLoader.showLoading(true);
+// manageSubscriptionList() async {
+//   try {
+//     ShowLoader.showLoading(true);
 
-  //     final res = await dashboardRepository.getManageSubscriptionList();
-  //     print(res);
+//     final res = await dashboardRepository.getManageSubscriptionList();
+//     print(res);
 
-  //     if (selectedPageIndex == 0) {
-  //       highlightController.text = res.first.highlights.toString();
-  //       featureController.text = res.first.features.toString();
-  //       priceController.text = res.first.price.toString();
-  //     } else {
-  //       {
-  //         highlightController.text = res[1].highlights.toString();
-  //         featureController.text = res[1].features.toString();
-  //         priceController.text = res[1].price.toString();
-  //       }
-  //     }
-  //     subscriptionList.addAll(res);
-  //     print(subscriptionList);
-  //     // print(paymentObj.first.paymentDateTime);
-  //     update();
-  //     if (ShowLoader.isOpen) {
-  //       ShowLoader.hideLoading();
-  //     }
-  //   } catch (e) {
-  //     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
-  //   }
-  // }
+//     if (selectedPageIndex == 0) {
+//       highlightController.text = res.first.highlights.toString();
+//       featureController.text = res.first.features.toString();
+//       priceController.text = res.first.price.toString();
+//     } else {
+//       {
+//         highlightController.text = res[1].highlights.toString();
+//         featureController.text = res[1].features.toString();
+//         priceController.text = res[1].price.toString();
+//       }
+//     }
+//     subscriptionList.addAll(res);
+//     print(subscriptionList);
+//     // print(paymentObj.first.paymentDateTime);
+//     update();
+//     if (ShowLoader.isOpen) {
+//       ShowLoader.hideLoading();
+//     }
+//   } catch (e) {
+//     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
+//   }
+// }
 
-  // manageSubscriptionUpdate() async {
-  //   try {
-  //     ShowLoader.showLoading(true);
-  //     final ManageSubscriptionModel subscriptionModel = ManageSubscriptionModel(
-  //         highlights: highlightController.text,
-  //         features: featureController.text,
-  //         price: double.tryParse(priceController.text),
-  //         type: selectedPageIndex == 0 ? 'Monthly' : 'Yearly');
+// manageSubscriptionUpdate() async {
+//   try {
+//     ShowLoader.showLoading(true);
+//     final ManageSubscriptionModel subscriptionModel = ManageSubscriptionModel(
+//         highlights: highlightController.text,
+//         features: featureController.text,
+//         price: double.tryParse(priceController.text),
+//         type: selectedPageIndex == 0 ? 'Monthly' : 'Yearly');
 
-  //     final res =
-  //         await dashboardRepository.updateSubscription(subscriptionModel);
+//     final res =
+//         await dashboardRepository.updateSubscription(subscriptionModel);
 
-  //     update();
-  //     if (ShowLoader.isOpen) {
-  //       ShowLoader.hideLoading();
-  //     }
-  //     CommonSnackBar.message(message: res, type: SnackBarType.success);
-  //   } catch (e) {
-  //     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
-  //   }
-  // }
+//     update();
+//     if (ShowLoader.isOpen) {
+//       ShowLoader.hideLoading();
+//     }
+//     CommonSnackBar.message(message: res, type: SnackBarType.success);
+//   } catch (e) {
+//     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
+//   }
+// }
 
-  // List<PaymentModel> paymentObj = [];
-  // List<PaymentModel> paymentHisotryById = [];
-  // List<PaymentModel> searchPaymentLogs = [];
-  // int paymentTotalSum = 0;
+// List<PaymentModel> paymentObj = [];
+// List<PaymentModel> paymentHisotryById = [];
+// List<PaymentModel> searchPaymentLogs = [];
+// int paymentTotalSum = 0;
 
-  // getPayment() async {
-  //   try {
-  //     ShowLoader.showLoading(true);
+// getPayment() async {
+//   try {
+//     ShowLoader.showLoading(true);
 
-  //     final res =
-  //         await dashboardRepository.getPaymentHistory(paymentPageNo, pageSize);
+//     final res =
+//         await dashboardRepository.getPaymentHistory(paymentPageNo, pageSize);
 
-  //     paymentObj.clear();
-  //     paymentObj.addAll(res.data);
-  //     elementCount = res.count ?? 1;
-  //     paymentTotalSum = res.extra ?? 0;
-  //     update();
-  //     if (ShowLoader.isOpen) {
-  //       ShowLoader.hideLoading();
-  //     }
-  //   } catch (e) {
-  //     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
-  //   }
-  // }
+//     paymentObj.clear();
+//     paymentObj.addAll(res.data);
+//     elementCount = res.count ?? 1;
+//     paymentTotalSum = res.extra ?? 0;
+//     update();
+//     if (ShowLoader.isOpen) {
+//       ShowLoader.hideLoading();
+//     }
+//   } catch (e) {
+//     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
+//   }
+// }
 
-  // getPaymentById(String id) async {
-  //   try {
-  //     ShowLoader.showLoading(true);
+// getPaymentById(String id) async {
+//   try {
+//     ShowLoader.showLoading(true);
 
-  //     final res = await dashboardRepository.getPaymentHistoryById(id, 1, 3);
+//     final res = await dashboardRepository.getPaymentHistoryById(id, 1, 3);
 
-  //     paymentHisotryById.clear();
-  //     paymentHisotryById.addAll(res.data);
-  //     // elementCount = res.count ?? 1;
-  //     // paymentTotalSum = res.extra ?? 0;
-  //     update();
-  //     if (ShowLoader.isOpen) {
-  //       ShowLoader.hideLoading();
-  //     }
-  //   } catch (e) {
-  //     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
-  //   }
-  // }
+//     paymentHisotryById.clear();
+//     paymentHisotryById.addAll(res.data);
+//     // elementCount = res.count ?? 1;
+//     // paymentTotalSum = res.extra ?? 0;
+//     update();
+//     if (ShowLoader.isOpen) {
+//       ShowLoader.hideLoading();
+//     }
+//   } catch (e) {
+//     CommonSnackBar.message(message: e.toString(), type: SnackBarType.error);
+//   }
+// }
 }
 
 class SideBarItemModel {

@@ -20,7 +20,7 @@ class CommonText extends StatelessWidget {
     this.maxLines,
     this.color,
     this.textOverflow = TextOverflow.visible,
-    this.fontFamily = 'Poppins',
+    this.fontFamily = 'Cabin',
     this.weight = FontWeight.w400,
     this.fontSize,
     this.textAlign = TextAlign.left,

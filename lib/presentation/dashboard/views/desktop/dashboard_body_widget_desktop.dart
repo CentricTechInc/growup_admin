@@ -12,26 +12,24 @@ class DashboardBodyWidgetDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SideBarController>(builder: (controller) {
-      return Expanded(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          // width: context.width * 0.85,
-          color: AppColors.white,
-          child: Column(
-            children: [
-              CommonAppBar(),
-              Container(
-                height: context.height - 80,
-                decoration: const BoxDecoration(
-                  color: AppColors.greyish,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                  ),
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        width: context.width * 0.85,
+        color: AppColors.white,
+        child: Column(
+          children: [
+            CommonAppBar(),
+            Container(
+              height: context.height - 80,
+              decoration: const BoxDecoration(
+                color: AppColors.greyish,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
                 ),
-                child: child,
-              )
-            ],
-          ),
+              ),
+              child: child,
+            )
+          ],
         ),
       );
     });

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -11,7 +13,16 @@ import 'package:grow_up_admin_panel/presentation/auth/forgot_password/forget_pas
 import 'package:grow_up_admin_panel/presentation/auth/login/login_main.dart';
 import 'package:grow_up_admin_panel/presentation/auth/otp/otp_main.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_contributors_details.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_details.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/admin_dashboard_desktop.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/analytics_page.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/contributions_page.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/dashboard_page.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/giftings_page.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/payout_page.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_contribution_page.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
 import 'package:grow_up_admin_panel/presentation/splash_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -26,6 +37,22 @@ class AppRouter {
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     initialLocation: PagePath.slash,
+    // redirect: (context, state) {
+    //   if (LocalStorageService.instance.user == null) {
+    //     switch (state.uri.path) {
+    //       case PagePath.login:
+    //         return PagePath.login;
+    //       case PagePath.forgotPassword:
+    //         return PagePath.forgotPassword;
+    //       case PagePath.otp:
+    //         return PagePath.otp;
+    //       case PagePath.createNewPassword:
+    //         return PagePath.createNewPassword;
+    //     }
+    //     return PagePath.login;
+    //   }
+    //   return null;
+    // },
     observers: [],
     routes: [
       GoRoute(
@@ -53,21 +80,27 @@ class AppRouter {
               },
             ),
             GoRoute(
-              path: PagePath.createNewPassword,
+              path: "${PagePath.createNewPassword}/:email",
               builder: (context, state) {
+                String email = state.pathParameters['email'] as String;
                 Get.lazyPut(
                   () => CreateNewPassController(),
                 );
-                return const CreateNewPassMain();
+                return CreateNewPassMain(
+                  email: email,
+                );
               },
             ),
             GoRoute(
-              path: PagePath.otp,
+              path: "${PagePath.otp}/:email",
               builder: (context, state) {
+                String email = state.pathParameters['email'] as String;
                 Get.lazyPut(
                   () => OtpController(),
                 );
-                return const OTPMain();
+                return OTPMain(
+                  email: email,
+                );
               },
             ),
           ]),
@@ -86,42 +119,63 @@ class AppRouter {
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.dashboard,
               pageBuilder: (context, state) {
-                return const MaterialPage(child: SizedBox());
+                return MaterialPage(child: DashboardPage());
               }),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.userParents,
               pageBuilder: (context, state) {
-                return MaterialPage(child: SizedBox());
-              }),
+                return MaterialPage(child: UserParentPage());
+              },
+              routes: [
+                GoRoute(
+                  path: PagePath.parentDetails,
+                  pageBuilder: (context, state) {
+                    return MaterialPage(child: UserParentDetails());
+                  },
+                ),
+              ]),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.userContributor,
-              pageBuilder: (context, state) => MaterialPage(child: SizedBox())),
+              pageBuilder: (context, state) {
+                return MaterialPage(child: UserContributionPage());
+              },
+              routes: [
+                GoRoute(
+                  parentNavigatorKey: _shellNavigatorKey,
+                  path: PagePath.contributorDetails,
+                  pageBuilder: (context, state) {
+                    return MaterialPage(child: UserContributerDetails());
+                  },
+                ),
+              ]),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.giftings,
               pageBuilder: (context, state) {
-                return MaterialPage(child: SizedBox());
+                return MaterialPage(child: GiftingsPage());
               }),
           GoRoute(
             parentNavigatorKey: _shellNavigatorKey,
-            path: PagePath.contrbutors,
+            path: PagePath.contrbutions,
             pageBuilder: (context, state) {
-              return const MaterialPage(child: SizedBox());
+              return const MaterialPage(child: ContributionPage());
             },
           ),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.payouts,
               pageBuilder: (context, state) {
-                return MaterialPage(child: SizedBox());
+                return MaterialPage(child: PayoutPage());
               }),
           GoRoute(
             parentNavigatorKey: _shellNavigatorKey,
             path: PagePath.analytics,
             pageBuilder: (context, state) {
-              return const MaterialPage(child: SizedBox());
+              return const MaterialPage(
+                child: AnalyticsPage(),
+              );
             },
           ),
         ],

@@ -21,78 +21,82 @@ class LoginDesktop extends StatelessWidget with FieldsValidation {
     return CommonAuthWidget(
       child: Form(
         key: formKey,
-        child: SingleChildScrollView(
-          child: GetBuilder<LoginController>(builder: (controller) {
-            return SizedBox(
-              height: context.height,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Image.asset(
-                      Assets.logo,
-                      height: 180,
-                      width: 180,
-                    ),
+        child: GetBuilder<LoginController>(builder: (controller) {
+          return SizedBox(
+            height: context.height,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Image.asset(
+                    Assets.logo,
+                    height: 180,
+                    width: 180,
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  CommonTextField(
-                    controller: controller.emailController,
-                    hintText: 'Email',
-                    suffixIcon: Icons.alternate_email_outlined,
-                    validator: validateEmail,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Obx(() {
-                    return CommonTextField(
-                      controller: controller.passwordController,
-                      hintText: 'Password',
-                      validator: emptyFieldValidation,
-                      pass: !controller.showPassword.value,
-                      suffixIcon: !controller.showPassword.value
-                          ? Icons.lock_outline
-                          : Icons.lock_open_outlined,
-                      suffixIconOnTap: () {
-                        controller.showPassword.toggle();
-                      },
-                    );
-                  }),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      context.push(
-                          PagePath.login + PagePath.forgotPassword.toRoute);
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                CommonTextField(
+                  isBorderEnabled: false,
+                  controller: controller.emailController,
+                  hintText: 'Email',
+                  suffixIcon: Icons.alternate_email_outlined,
+                  validator: validateEmail,
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Obx(() {
+                  return CommonTextField(
+                    isBorderEnabled: false,
+                    controller: controller.passwordController,
+                    hintText: 'Password',
+                    validator: emptyFieldValidation,
+                    pass: !controller.showPassword.value,
+                    suffixIcon: !controller.showPassword.value
+                        ? Icons.lock_outline
+                        : Icons.lock_open_outlined,
+                    suffixIconOnTap: () {
+                      controller.showPassword.toggle();
                     },
-                    child: const CommonText(
-                      text: 'Forgot Password?',
-                      fontSize: 16,
-                      weight: FontWeight.w400,
-                      color: AppColors.primary,
-                    ),
+                  );
+                }),
+                const SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  onTap: () {
+                    context
+                        .push(PagePath.login + PagePath.forgotPassword.toRoute);
+                  },
+                  child: const CommonText(
+                    text: 'Forgot Password?',
+                    fontSize: 16,
+                    weight: FontWeight.w400,
+                    color: AppColors.primary,
                   ),
-                  const VerticalSpacing(70),
-                  CommonTextButton(
-                      width: double.maxFinite,
-                      height: 50,
-                      fontSize: 16,
-                      onPressed: () async {
-                        if (formKey.currentState!.validate()) {
-                          await controller.login();
-                        }
-                      },
-                      text: 'Login'),
-                ],
-              ),
-            );
-          }),
-        ),
+                ),
+                const VerticalSpacing(70),
+                controller.isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : CommonTextButton(
+                        width: double.maxFinite,
+                        height: 50,
+                        fontSize: 16,
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            await controller.login();
+                          }
+                        },
+                        text: 'Login'),
+              ],
+            ),
+          );
+        }),
       ),
     );
   }

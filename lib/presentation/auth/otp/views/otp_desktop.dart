@@ -13,9 +13,9 @@ import 'package:grow_up_admin_panel/presentation/auth/controllers/otp_controller
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPDesktop extends StatefulWidget with FieldsValidation {
-  OTPDesktop({super.key});
+  OTPDesktop({super.key, required this.email});
 
-  // final String email;
+  final String email;
 
   @override
   State<OTPDesktop> createState() => _OTPDesktopState();
@@ -136,7 +136,7 @@ class _OTPDesktopState extends State<OTPDesktop> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               controller.enableResend
-                                  ? controller.resendCode(controller.otpEmail)
+                                  ? controller.resendCode(widget.email)
                                   : null;
                             },
                         )
@@ -149,12 +149,11 @@ class _OTPDesktopState extends State<OTPDesktop> {
                     width: context.width * .2,
                     height: 55,
                     fontSize: 16,
-                    onPressed: () {
+                    onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        // controller.forgotEmailOtpVerification(
-                        //     controller.otpEmail, pinController.text);
-                        context.push(PagePath.login +
-                            PagePath.createNewPassword.toRoute);
+                        await controller.forgotEmailOtpVerification(
+                            widget.email, controller.pinController.text);
+
                         controller.pinController.clear();
                       }
                     },

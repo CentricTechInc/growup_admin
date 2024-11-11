@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen>
         top: false,
         child: Container(
           decoration: const BoxDecoration(
-            color: AppColors.primary,
+            color: AppColors.white,
           ),
           child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {

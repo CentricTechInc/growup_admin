@@ -20,7 +20,7 @@ class CommonBackButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
         ),
         child: Image.asset(
-          Assets.backButton,
+          Assets.backIcon,
           height: 20,
         ),
       ),

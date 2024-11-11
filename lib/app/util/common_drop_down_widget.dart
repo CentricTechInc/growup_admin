@@ -5,8 +5,8 @@ import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/strings.dart';
 
 // ignore: must_be_immutable
-class DropDownWidget<T> extends StatelessWidget {
-  DropDownWidget(
+class CommonDropDownWidget<T> extends StatelessWidget {
+  CommonDropDownWidget(
       {super.key,
       required this.onChanged,
       this.compareFn,

@@ -1,15 +1,18 @@
 class APIEndpoint {
-  // TODO: Update the server URL
-  static String get baseUrl => 'UPDATE_SERVER_URL_HERE';
+  static String get baseUrl => '192.168.0.125:8000';
+
   // ---------------- Authorization --------------------
-  static String get loginUrl => '/api/Authenticate/login';
-  static String get registerUrl => '/api/Authenticate/register';
-  static String get registerOTpVerificationUrl =>
-      '/api/Authenticate/OTPVerify';
-  static String get generateOtpUrl => '/api/Authenticate/OtpGenerator';
-  static String get forgotPasswordUrl => '/api/Vendor/vendor/ForgetPassword';
-  static String get forgotOtpVerificationUrl =>
-      '/api/Authenticate/OTPVerify';
-  static String get resetPasswordUrl => '/api/Authenticate/forgot-password';
-  static String get changePasswordUrl => '/api/Authenticate/change-password';
+  static String get loginUrl => '/api/auth/login';
+  static String get verifyOtpUrl => '/api/auth/verify-otp';
+  static String get forgotPasswordUrl => '/api/auth/forgot-password';
+  static String get generateOtpUrl => '/api/auth/regenerate-otp';
+  static String get updatePasswordUrl => '/api/auth/update-password';
+
+  //===============AUTHENTICATED ROUTES=====================
+  static String get userParentTableUrl => '/api/users/Parent';
+  static String get userContributorTableUrl => '/api/users/Contributor';
+  static String get giftingTableUrl => '/api/gifts/listing';
+  static String get payoutTableUrl => '/api/payouts';
+  static String get contributionTableUrl => '/api/contributions';
+  //
 }
