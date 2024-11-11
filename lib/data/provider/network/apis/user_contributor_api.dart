@@ -32,7 +32,7 @@ class UserContributorApi implements APIRequestRepresentable {
   String get path {
     switch (type) {
       case UserContrbutorApiType.getContributorTable:
-        return '${APIEndpoint.contributorTableUrl}/1';
+        return '${APIEndpoint.userContributorTableUrl}/1';
     }
   }
 

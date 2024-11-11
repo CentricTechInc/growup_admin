@@ -9,9 +9,9 @@ import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/adjust_tax_dialog_box.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_details.dart';
 
 class UserParentPage extends StatelessWidget {
   const UserParentPage({super.key});
@@ -45,18 +45,17 @@ class UserParentPage extends StatelessWidget {
             const VerticalSpacing(10),
             Expanded(
               child: ListView.separated(
-                itemCount: controller.parentModelList.length,
+                itemCount: controller.userParentModelList.length,
                 itemBuilder: (context, index) => ParentTableBody(
                   onTap: () {
                     context.push(
                         PagePath.userParents + PagePath.parentDetails.toRoute);
                   },
-                  model: controller.parentModelList[index],
+                  model: controller.userParentModelList[index],
                 ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
-            const Spacer(),
             CommonPagerWidget(
               currentPage: 1,
               totalPage: 1,

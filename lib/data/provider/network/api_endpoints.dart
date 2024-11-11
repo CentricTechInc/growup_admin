@@ -1,5 +1,5 @@
 class APIEndpoint {
-  static String get baseUrl => '192.168.0.124:8000';
+  static String get baseUrl => '192.168.0.125:8000';
 
   // ---------------- Authorization --------------------
   static String get loginUrl => '/api/auth/login';
@@ -9,8 +9,10 @@ class APIEndpoint {
   static String get updatePasswordUrl => '/api/auth/update-password';
 
   //===============AUTHENTICATED ROUTES=====================
-  static String get parentTableUrl => '/api/users/Parent';
-  static String get contributorTableUrl => '/api/users/Contributor';
-  static String get giftingTableUrl => 'api/gift-contributor';
+  static String get userParentTableUrl => '/api/users/Parent';
+  static String get userContributorTableUrl => '/api/users/Contributor';
+  static String get giftingTableUrl => '/api/gifts/listing';
+  static String get payoutTableUrl => '/api/payouts';
+  static String get contributionTableUrl => '/api/contributions';
   //
 }
