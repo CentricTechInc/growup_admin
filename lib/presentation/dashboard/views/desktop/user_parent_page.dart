@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grow_up_admin_panel/app/util/common_pager_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/common_text_field.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
-import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/adjust_tax_dialog_box.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
 
@@ -17,34 +20,50 @@ class UserParentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const PageHeader(
-            label: 'Parents',
-            showTaxBtn: true,
-          ),
-          const VerticalSpacing(30),
-          const ParentTableHeader(
-            // value: false,
-            titleList: ['User ID', 'Name', 'Email', 'Phone'],
-          ),
-          const VerticalSpacing(10),
-          Expanded(
-            child: ListView.separated(
-              itemCount: 5,
-              itemBuilder: (context, index) => ParentTableBody(
-                onTap: () {
-                  context.push(
-                      PagePath.userParents + PagePath.parentDetails.toRoute);
-                },
-                model: ParentModel(),
-              ),
-              separatorBuilder: (context, index) => const VerticalSpacing(5),
+      child: GetBuilder<SideBarController>(builder: (controller) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PageHeader(
+              label: 'Parents',
+              showTaxBtn: true,
+              taxBtnOnTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => const Dialog(
+                    backgroundColor: AppColors.greyish,
+                    child: AdjustTaxDialogBox(),
+                  ),
+                );
+              },
             ),
-          )
-        ],
-      ),
+            const VerticalSpacing(30),
+            const ParentTableHeader(
+              // value: false,
+              titleList: ['User ID', 'Name', 'Email', 'Phone'],
+            ),
+            const VerticalSpacing(10),
+            Expanded(
+              child: ListView.separated(
+                itemCount: controller.userParentModelList.length,
+                itemBuilder: (context, index) => ParentTableBody(
+                  onTap: () {
+                    context.push(
+                        PagePath.userParents + PagePath.parentDetails.toRoute);
+                  },
+                  model: controller.userParentModelList[index],
+                ),
+                separatorBuilder: (context, index) => const VerticalSpacing(5),
+              ),
+            ),
+            CommonPagerWidget(
+              currentPage: 1,
+              totalPage: 1,
+              onPageChanged: (page) {},
+            ),
+          ],
+        );
+      }),
     );
   }
 }
@@ -54,11 +73,13 @@ class PageHeader extends StatelessWidget {
       {super.key,
       required this.label,
       this.showTaxBtn = false,
-      this.showSearch = true});
+      this.showSearch = true,
+      this.taxBtnOnTap});
 
   final String label;
   final bool showTaxBtn;
   final bool showSearch;
+  final VoidCallback? taxBtnOnTap;
 
   @override
   Widget build(BuildContext context) {
@@ -99,16 +120,19 @@ class PageHeader extends StatelessWidget {
         ),
         if (showTaxBtn) const HorizontalSpacing(10),
         if (showTaxBtn)
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.primary, width: 0.5),
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: const CommonText(
-              text: 'Adjust Fees and Taxes',
-              fontSize: 16,
-              weight: FontWeight.w500,
+          InkWell(
+            onTap: taxBtnOnTap,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.primary, width: 0.5),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: const CommonText(
+                text: 'Adjust Fees and Taxes',
+                fontSize: 16,
+                weight: FontWeight.w500,
+              ),
             ),
           ),
         if (showSearch) const HorizontalSpacing(10),
@@ -132,56 +156,3 @@ class PageHeader extends StatelessWidget {
     );
   }
 }
-
-// class TableHeader extends StatelessWidget {
-//   const TableHeader({super.key, required this.value, required this.titleList});
-//
-//   final bool value;
-//   final List<String> titleList;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       height: 50,
-//       decoration: BoxDecoration(
-//         color: AppColors.primary.withOpacity(0.2),
-//         borderRadius: BorderRadius.circular(6),
-//       ),
-//       child: Row(
-//         children: List.generate(
-//           titleList.length,
-//           (index) => Expanded(
-//             child: Visibility(
-//               visible: index != 0,
-//               replacement: Padding(
-//                 padding: const EdgeInsets.only(left: 70),
-//                 child: CommonText(
-//                   text: titleList[index],
-//                   weight: FontWeight.w700,
-//                   fontSize: 12,
-//                 ),
-//               ),
-//               child: Row(
-//                 children: [
-//                   const CommonVerticalDivider(
-//                     padding: EdgeInsets.symmetric(vertical: 10),
-//                     color: AppColors.primary,
-//                     thickness: 2,
-//                   ),
-//                   Padding(
-//                     padding: const EdgeInsets.only(left: 30),
-//                     child: CommonText(
-//                       text: titleList[index],
-//                       weight: FontWeight.w700,
-//                       fontSize: 12,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grow_up_admin_panel/app/util/common_snack_bar.dart';
+import 'package:grow_up_admin_panel/common/loader_widget.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
+import 'package:grow_up_admin_panel/data/repositories/module_repo_impl.dart';
+import 'package:grow_up_admin_panel/data/repositories/user_contributer_repo_impl.dart';
+import 'package:grow_up_admin_panel/data/repositories/user_parent_repo_impl.dart';
+import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/payout_model.dart';
+import 'package:grow_up_admin_panel/domain/repository/module_repository.dart';
+import 'package:grow_up_admin_panel/domain/repository/user_contributor_repository.dart';
+import 'package:grow_up_admin_panel/domain/repository/user_parent_repository.dart';
 
 class SideBarController extends GetxController {
   int selectedItemIndex = 0;
   final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<FormState> notificationFormKey = GlobalKey<FormState>();
 
   List<SideBarItemModel> sideBarList = [
     SideBarItemModel(
@@ -23,12 +34,6 @@ class SideBarController extends GetxController {
     SideBarItemModel(
         itemName: 'Analytics & Reports', imageUrl: Assets.analyticsIcon),
   ];
-  final List<String> newQRTableHeaderList = [
-    'SR. No.',
-    'QR ID',
-    'Category',
-    'Register Date & Time',
-  ];
 
   ///PAGINATION+++++++++++++++++++++_---------
   int elementCount = 1;
@@ -37,35 +42,7 @@ class SideBarController extends GetxController {
   ///Registered QR------
   int payoutPageNo = 1;
 
-  ///Generated QR------
-  int generatedQrPageNo = 1;
-
-  ///Payment QR------
-  int paymentPageNo = 1;
-
-  ///Notification QR------
-  int notificationPageNo = 1;
-
-  ///PrintingRequest QR------
-  int printReqPageNo = 1;
-
-  ///PrintingRequest QR------
-  int usersPageNo = 1;
-
-  ///Complaints------
-  int complaintsPageNo = 1;
-
   ///++++++++++++++++++++++++++++++++++++++++++++++
-  @override
-  onReady() {
-    // if (LocalStorageService.instance.user == null) {
-    //   globalContext!.go(PagePath.login);
-    //   return;
-    // }
-    // pageRefresh();
-    // getDashboardData();
-    super.onReady();
-  }
 
   int liveGiftingSelectedIndex = 0;
   int userParentSelectedIndex = 0;
@@ -74,104 +51,80 @@ class SideBarController extends GetxController {
   final liveGiftingPageController = PageController();
   final userParentPageController = PageController();
   final userContributerPageController = PageController();
+  final UserParentRepository userParentRepository = UserParentRepositoryImpl();
+  final UserContributorRepository userContributorRepository =
+      UserContributorRepositoryImpl();
+  final ModuleRepository moduleRepository = ModuleRepositoryImpl();
+  final List<ParentModel> userParentModelList = [];
+  final List<ParentModel> userContributorModelList = [];
+  final List<GiftingModel> giftingModelList = [];
+  final List<PayoutModel> payoutModelList = [];
+  final List<ContributionModel> contributionModelList = [];
 
-  // void pageRefresh() {
-  //   selectedItemIndex = 0;
-  //   globalContext!.go(PagePath.adminDashboard);
-  // }
+  getParentTable() async {
+    try {
+      Loader.showLoader();
+      final res = await userParentRepository.getParentTable();
+      userParentModelList.clear();
+      userParentModelList.addAll(res);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
 
-//
-  // DashboardRepository dashboardRepository = DashboardRepositoryImpl();
+  getContributorsTable() async {
+    try {
+      Loader.showLoader();
+      final res = await userContributorRepository.getContributorTable();
+      userContributorModelList.clear();
+      userContributorModelList.addAll(res);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
 
-  //
-  // TextEditingController userSearchController = TextEditingController();
-  // TextEditingController registerQrSearchController = TextEditingController();
-  // TextEditingController newQrSearchController = TextEditingController();
-  // TextEditingController paymentSearchController = TextEditingController();
+  getGiftingTable() async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.getGiftingTable();
+      giftingModelList.clear();
+      giftingModelList.addAll(res);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
 
-  //
-  // final List<String> selectedQr = [];
-  // List<RegisteredQRDto> registeredQrsList = [];
-  // List<RegisteredQRDto> searchRegisteredQrsList = [];
-  // List<RegisteredQRDto> newQrsList = [];
-  // final List<RegisteredQRDto> enabledUsers = [];
-  // List<PaymentModel> paymentLogs = [];
+  getPayoutTable() async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.getPayoutTable();
+      payoutModelList.clear();
+      payoutModelList.addAll(res);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
 
-  // DashboardCountsDto? dashboardCountsDto;
-  // List<ProgressTileModel> progressTileList = [
-  //   ProgressTileModel(
-  //       title: 'Total QR Codes',
-  //       progressScore: 850,
-  //       progressPercent: 3.0,
-  //       isNegative: false,
-  //       color: Colors.blue.shade50),
-  //   ProgressTileModel(
-  //       title: 'Un-Registered',
-  //       progressScore: 261,
-  //       progressPercent: 6.0,
-  //       isNegative: true,
-  //       color: const Color(0xffF7EDD5)),
-  //   ProgressTileModel(
-  //       title: 'Registered',
-  //       progressScore: 312,
-  //       progressPercent: 3.0,
-  //       color: const Color(0xffF5F5F5)),
-  //   ProgressTileModel(
-  //       title: 'Enabled', progressScore: 250, color: const Color(0xffE9F7F2)),
-  //   ProgressTileModel(
-  //       title: 'Disabled',
-  //       progressScore: 62,
-  //       progressPercent: 2.0,
-  //       isNegative: true,
-  //       color: const Color(0xffFFECEE))
-  // ];
-  final List<String> complainListHeader = [
-    'Complaint no',
-    'Complainer Name',
-    'Subject',
-    'Description',
-    'Date',
-  ];
-
-  //
-  // userExportData() async {
-  //   try {
-  //     ShowLoader.showLoading(false);
-  //     await dashboardRepository.getUsersExport();
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(
-  //         message: 'File Downloaded', type: SnackBarType.success);
-  //   } catch (e) {
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(message: e.toString());
-  //   }
-  // }
-
-  // registeredQrExport() async {
-  //   try {
-  //     ShowLoader.showLoading(false);
-  //     await dashboardRepository.registeredQrExport();
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(
-  //         message: 'File Downloaded', type: SnackBarType.success);
-  //   } catch (e) {
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(message: e.toString());
-  //   }
-  // }
-
-  // unRegisteredQrExport() async {
-  //   try {
-  //     ShowLoader.showLoading(false);
-  //     await dashboardRepository.unRegisteredQrExport();
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(
-  //         message: 'File Downloaded', type: SnackBarType.success);
-  //   } catch (e) {
-  //     ShowLoader.hideLoading();
-  //     CommonSnackBar.message(message: e.toString());
-  //   }
-  // }
+  getContributionTable() async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.getContributionTable();
+      contributionModelList.clear();
+      contributionModelList.addAll(res);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
 
   // getDashboardData() async {
   //   try {

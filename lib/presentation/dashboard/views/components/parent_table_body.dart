@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:grow_up_admin_panel/app/util/common_drop_down_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/common_vertical_divider_widget.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
+import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_details.dart';
+import 'package:grow_up_admin_panel/domain/entities/payout_model.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/payment_details_dialog_box.dart';
 
 class ParentTableBody extends StatelessWidget {
   const ParentTableBody({super.key, required this.onTap, required this.model});
@@ -42,8 +44,8 @@ class ParentTableBody extends StatelessWidget {
                     ),
                   ),
                   const HorizontalSpacing(30),
-                  const CommonText(
-                    text: '#HS5896',
+                  CommonText(
+                    text: model.id?.toString() ?? '',
                     fontSize: 12,
                     weight: FontWeight.w500,
                   ),
@@ -55,11 +57,11 @@ class ParentTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: 'Jason Borne',
+                  text: model.name ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -70,11 +72,11 @@ class ParentTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: 'jasonborne@abc.com',
+                  text: model.email ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -85,11 +87,11 @@ class ParentTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: '+ 0000 0000 000',
+                  text: model.phone ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -110,9 +112,11 @@ class ParentTableBody extends StatelessWidget {
 }
 
 class GiftingsTableBody extends StatelessWidget {
-  const GiftingsTableBody({super.key, required this.onTap});
+  const GiftingsTableBody(
+      {super.key, required this.onTap, required this.model});
 
   final VoidCallback onTap;
+  final GiftingModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -142,8 +146,8 @@ class GiftingsTableBody extends StatelessWidget {
                     ),
                   ),
                   const HorizontalSpacing(30),
-                  const CommonText(
-                    text: '#HS5896',
+                  CommonText(
+                    text: model.id?.toString() ?? '',
                     fontSize: 12,
                     weight: FontWeight.w500,
                   ),
@@ -155,11 +159,11 @@ class GiftingsTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: 'Dream Weaver',
+                  text: model.title ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -170,11 +174,11 @@ class GiftingsTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: 'Jason Borne',
+                  text: model.user?.name ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -185,11 +189,11 @@ class GiftingsTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: 'John William',
+                  text: model.beneficiary?.name ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -200,11 +204,11 @@ class GiftingsTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: '16 Jul 2024 at 6:43 PM',
+                  text: model.createdAt ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -215,12 +219,12 @@ class GiftingsTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0, right: 30),
+                padding: const EdgeInsets.only(left: 30.0, right: 30),
                 child: CommonText(
                   textAlign: TextAlign.right,
-                  text: '\$  15.00',
+                  text: '\$ ${model.contributionTotal ?? ''}',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -234,7 +238,9 @@ class GiftingsTableBody extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: CommonDropDownWidget(onChanged: (p0) {}, arryList: []),
+                child: StatusCardWidget(
+                  title: model.status?.name ?? '',
+                ),
               ),
             ),
             SizedBox(
@@ -252,9 +258,11 @@ class GiftingsTableBody extends StatelessWidget {
 }
 
 class ContributionsTableBody extends StatelessWidget {
-  const ContributionsTableBody({super.key, required this.onTap});
+  const ContributionsTableBody(
+      {super.key, required this.onTap, required this.model});
 
   final VoidCallback onTap;
+  final ContributionModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -284,10 +292,12 @@ class ContributionsTableBody extends StatelessWidget {
                     ),
                   ),
                   const HorizontalSpacing(30),
-                  const CommonText(
-                    text: '#HS5896',
-                    fontSize: 12,
-                    weight: FontWeight.w500,
+                  Expanded(
+                    child: CommonText(
+                      text: model.transactionId ?? '',
+                      fontSize: 12,
+                      weight: FontWeight.w500,
+                    ),
                   ),
                 ],
               ),
@@ -297,11 +307,11 @@ class ContributionsTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: 'Dream Weaver',
+                  text: model.gift?.title ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -312,11 +322,11 @@ class ContributionsTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: 'Jason Borne',
+                  text: model.contributor ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -327,11 +337,11 @@ class ContributionsTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: 'John William',
+                  text: model.beneficiary ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -342,11 +352,11 @@ class ContributionsTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0),
+                padding: const EdgeInsets.only(left: 30.0),
                 child: CommonText(
-                  text: '16 Jul 2024 at 6:43 PM',
+                  text: model.createdAt ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -357,12 +367,12 @@ class ContributionsTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0, right: 30),
+                padding: const EdgeInsets.only(left: 30.0, right: 30),
                 child: CommonText(
                   textAlign: TextAlign.right,
-                  text: '\$  15.00',
+                  text: '\$  ${model.amount}',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -373,12 +383,12 @@ class ContributionsTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0, right: 30),
+                padding: const EdgeInsets.only(left: 30.0, right: 30),
                 child: CommonText(
                   textAlign: TextAlign.right,
-                  text: '\$  15.00',
+                  text: '\$  ${model.amount}',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -389,12 +399,12 @@ class ContributionsTableBody extends StatelessWidget {
               color: AppColors.grey,
               thickness: 2,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 30.0, right: 30),
+                padding: const EdgeInsets.only(left: 30.0, right: 30),
                 child: CommonText(
                   textAlign: TextAlign.right,
-                  text: '\$  15.00',
+                  text: '\$  ${model.frequency?.name}',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -408,7 +418,9 @@ class ContributionsTableBody extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: CommonDropDownWidget(onChanged: (p0) {}, arryList: []),
+                child: StatusCardWidget(
+                  title: model.frequency?.name ?? '',
+                ),
               ),
             ),
             InkWell(
@@ -435,10 +447,36 @@ class ContributionsTableBody extends StatelessWidget {
   }
 }
 
+class StatusCardWidget extends StatelessWidget {
+  const StatusCardWidget({super.key, required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 18),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        color: title != 'Expired'
+            ? AppColors.primary.withOpacity(0.4)
+            : AppColors.grey,
+      ),
+      child: CommonText(
+        textAlign: TextAlign.center,
+        text: title,
+        fontSize: 12,
+        weight: FontWeight.w400,
+      ),
+    );
+  }
+}
+
 class PayoutTableBody extends StatelessWidget {
-  const PayoutTableBody({super.key, required this.onTap});
+  const PayoutTableBody({super.key, required this.onTap, required this.model});
 
   final VoidCallback onTap;
+  final PayoutModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -466,8 +504,8 @@ class PayoutTableBody extends StatelessWidget {
                   ),
                 ),
                 const HorizontalSpacing(30),
-                const CommonText(
-                  text: '#HS5896',
+                CommonText(
+                  text: model.id?.toString() ?? '',
                   fontSize: 12,
                   weight: FontWeight.w500,
                 ),
@@ -479,11 +517,11 @@ class PayoutTableBody extends StatelessWidget {
             color: AppColors.grey,
             thickness: 2,
           ),
-          const Expanded(
+          Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 30.0),
+              padding: const EdgeInsets.only(left: 30.0),
               child: CommonText(
-                text: 'Dream Weaver',
+                text: model.gift?.title ?? '',
                 fontSize: 12,
                 weight: FontWeight.w500,
               ),
@@ -494,11 +532,11 @@ class PayoutTableBody extends StatelessWidget {
             color: AppColors.grey,
             thickness: 2,
           ),
-          const Expanded(
+          Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 30.0),
+              padding: const EdgeInsets.only(left: 30.0),
               child: CommonText(
-                text: 'Jason Borne',
+                text: model.postedBy ?? '',
                 fontSize: 12,
                 weight: FontWeight.w500,
               ),
@@ -509,11 +547,11 @@ class PayoutTableBody extends StatelessWidget {
             color: AppColors.grey,
             thickness: 2,
           ),
-          const Expanded(
+          Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 30.0),
+              padding: const EdgeInsets.only(left: 30.0),
               child: CommonText(
-                text: 'John William',
+                text: model.beneficiary ?? '',
                 fontSize: 12,
                 weight: FontWeight.w500,
               ),
@@ -524,11 +562,11 @@ class PayoutTableBody extends StatelessWidget {
             color: AppColors.grey,
             thickness: 2,
           ),
-          const Expanded(
+          Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 30.0),
+              padding: const EdgeInsets.only(left: 30.0),
               child: CommonText(
-                text: '16 Jul 2024 at 6:43 PM',
+                text: model.createdAt ?? '',
                 fontSize: 12,
                 weight: FontWeight.w500,
               ),
@@ -539,12 +577,12 @@ class PayoutTableBody extends StatelessWidget {
             color: AppColors.grey,
             thickness: 2,
           ),
-          const Expanded(
+          Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 30.0, right: 30),
+              padding: const EdgeInsets.only(left: 30.0, right: 30),
               child: CommonText(
                 textAlign: TextAlign.right,
-                text: '\$  15.00',
+                text: '\$  ${model.amount}',
                 fontSize: 12,
                 weight: FontWeight.w500,
               ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
-import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 
 class CommonTextField extends StatelessWidget {
@@ -39,8 +37,7 @@ class CommonTextField extends StatelessWidget {
     this.cursorColor = AppColors.secondary,
     this.padding = const EdgeInsets.all(0.0),
     this.contentPadding =
-    const EdgeInsets.only(
-        right: 10.0, top: 18, bottom: 14, left: 10),
+        const EdgeInsets.only(right: 10.0, top: 18, bottom: 14, left: 10),
     this.prefix,
     this.isBorderEnabled = true,
     this.isSuffix = true,
@@ -51,7 +48,8 @@ class CommonTextField extends StatelessWidget {
     this.fillColor,
     this.borderRadius,
     this.textAlign,
-    this.inputFormatter, this.suffixIcon,
+    this.inputFormatter,
+    this.suffixIcon,
   });
 
   final double suffixPadding;
@@ -112,7 +110,6 @@ class CommonTextField extends StatelessWidget {
         obscureText: pass,
         readOnly: readOnly,
         minLines: minLines,
-
         maxLines: maxLines,
         onTap: textOnTap,
         validator: validator,
@@ -130,29 +127,29 @@ class CommonTextField extends StatelessWidget {
         decoration: InputDecoration(
           errorMaxLines: 6,
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          label: labelIcon != null
-              ? Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                labelIcon ?? '',
-                color: AppColors.primary,
-                // scale: 1.7,
-                height: 20,
-              ),
-              const HorizontalSpacing(5),
-              CommonText(
-                text: label ?? '',
-                fontSize: 15,
-                weight: FontWeight.w700,
-              ),
-            ],
-          )
-              : CommonText(
-            text: label ?? '',
-            fontSize: 15,
-            weight: FontWeight.w700,
-          ),
+          // label: labelIcon != null
+          //     ? Row(
+          //         mainAxisSize: MainAxisSize.min,
+          //         children: [
+          //           Image.asset(
+          //             labelIcon ?? '',
+          //             color: AppColors.primary,
+          //             // scale: 1.7,
+          //             height: 20,
+          //           ),
+          //           const HorizontalSpacing(5),
+          //           CommonText(
+          //             text: label ?? '',
+          //             fontSize: 15,
+          //             weight: FontWeight.w700,
+          //           ),
+          //         ],
+          //       )
+          //     : CommonText(
+          //         text: label ?? '',
+          //         fontSize: 15,
+          //         weight: FontWeight.w700,
+          //       ),
           fillColor: fillColor ?? Colors.white,
           filled: isFilledColor,
           hintText: hintText,
@@ -160,16 +157,21 @@ class CommonTextField extends StatelessWidget {
             onTap: suffixIconOnTap,
             child: Padding(
               padding: const EdgeInsets.only(right: 10, left: 5),
-              child: suffix ?? Icon(suffixIcon, color: AppColors.grey,),
+              child: suffix ??
+                  Icon(
+                    suffixIcon,
+                    color: AppColors.grey,
+                  ),
             ),
           ),
           prefixIcon: Padding(
-            padding: prefixPadding ?? const EdgeInsets.only(left: 14.0, right: 8),
+            padding:
+                prefixPadding ?? const EdgeInsets.only(left: 14.0, right: 8),
             child: prefix,
           ),
           prefixIconConstraints: const BoxConstraints(maxHeight: 26),
           suffixIconConstraints: const BoxConstraints(maxHeight: 56),
-          contentPadding: contentPadding ,
+          contentPadding: contentPadding,
           hintStyle: TextStyle(
               color: hintColor.withOpacity(0.7),
               fontFamily: fontFamily,
@@ -177,27 +179,30 @@ class CommonTextField extends StatelessWidget {
               fontWeight: hintweight),
           focusedBorder: isBorderEnabled
               ? OutlineInputBorder(
-              borderSide: BorderSide(color: borderColor, width: .5),
-              borderRadius: BorderRadius.circular(borderRadius ?? 8))
+                  borderSide: BorderSide(color: borderColor, width: .5),
+                  borderRadius: BorderRadius.circular(borderRadius ?? 8))
               : UnderlineInputBorder(
-            borderSide: BorderSide(color: borderColor, width: .5),
-          ),
+                  borderSide: BorderSide(color: borderColor, width: .5),
+                ),
           border: isBorderEnabled
               ? OutlineInputBorder(
-              borderSide: BorderSide(color: borderColor, width: .5),
-              borderRadius: BorderRadius.circular(borderRadius ?? 8))
+                  borderSide: BorderSide(color: borderColor, width: .5),
+                  borderRadius: BorderRadius.circular(borderRadius ?? 8))
               : UnderlineInputBorder(
-            borderSide: BorderSide(color: disableBorder, width: .5),
-          ),
+                  borderSide: BorderSide(color: disableBorder, width: .5),
+                ),
           disabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: disableBorder, width: .5)),
           enabledBorder: isBorderEnabled
               ? OutlineInputBorder(
-              borderSide: BorderSide(color: enableBorder, width: .5),
-              borderRadius: BorderRadius.circular(borderRadius ?? 8))
+                  borderSide: BorderSide(color: enableBorder, width: .5),
+                  borderRadius: BorderRadius.circular(borderRadius ?? 8))
               : UnderlineInputBorder(
-            borderSide: BorderSide(color: enableBorder, width: .5,),
-          ),
+                  borderSide: BorderSide(
+                    color: enableBorder,
+                    width: .5,
+                  ),
+                ),
           errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.red, width: 1.25)),
           alignLabelWithHint: true,

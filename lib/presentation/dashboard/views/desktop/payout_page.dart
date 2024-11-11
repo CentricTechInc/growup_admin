@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grow_up_admin_panel/app/util/common_pager_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
-import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
@@ -38,8 +38,9 @@ class PayoutPage extends StatelessWidget {
           GetBuilder<SideBarController>(builder: (controller) {
             return Expanded(
               child: ListView.separated(
-                itemCount: 3,
+                itemCount: controller.payoutModelList.length,
                 itemBuilder: (context, index) => PayoutTableBody(
+                  model: controller.payoutModelList[index],
                   onTap: () {
                     context.go(
                         PagePath.userParents + PagePath.parentDetails.toRoute);
@@ -54,6 +55,11 @@ class PayoutPage extends StatelessWidget {
               ),
             );
           }),
+          CommonPagerWidget(
+            currentPage: 1,
+            totalPage: 1,
+            onPageChanged: (page) {},
+          ),
         ],
       ),
     );

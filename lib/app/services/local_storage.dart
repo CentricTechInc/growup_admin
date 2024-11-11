@@ -1,6 +1,6 @@
 import 'dart:convert';
+
 import 'package:grow_up_admin_panel/data/dto/user_dto.dart';
-import 'package:grow_up_admin_panel/domain/entities/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum Key {
@@ -24,13 +24,14 @@ class LocalStorageService {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  // UserModelDto? get user {
-  //   final rawJson = _prefs?.getString(Key.user.toString());
-  //   if (rawJson == null) {
-  //     return null;
-  //   }
-  //   return UserModelDto.fromRawJson(rawJson);
-  // }
+  UserModelDto? get user {
+    final rawJson = _prefs?.getString(Key.user.toString());
+    if (rawJson == null) {
+      return null;
+    }
+    return UserModelDto.fromJson(json.decode(rawJson));
+  }
+
   set user(UserModelDto? value) {
     if (value != null) {
       _prefs?.setString(Key.user.toString(), json.encode(value).toString());

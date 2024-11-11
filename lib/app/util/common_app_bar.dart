@@ -10,8 +10,11 @@ import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 
 class CommonAppBar extends StatelessWidget {
-  CommonAppBar(
-      {super.key, this.showSearchBar = false, this.onChanged,});
+  CommonAppBar({
+    super.key,
+    this.showSearchBar = false,
+    this.onChanged,
+  });
 
   final bool? showSearchBar;
   final void Function(String)? onChanged;
@@ -75,7 +78,7 @@ class CommonAppBar extends StatelessWidget {
                   width: 10,
                 ),
                 CommonText(
-                  text: LocalStorageService.instance.user?.userName ?? 'John',
+                  text: LocalStorageService.instance.user?.name ?? 'John',
                   fontSize: 15,
                 )
               ],
@@ -90,7 +93,12 @@ class CommonAppBar extends StatelessWidget {
             },
             child: Row(
               children: [
-                Image.asset(height: 20, width: 20, Assets.logoutIcon, scale: 1.5,),
+                Image.asset(
+                  height: 20,
+                  width: 20,
+                  Assets.logoutIcon,
+                  scale: 1.5,
+                ),
                 const SizedBox(
                   width: 10,
                 ),

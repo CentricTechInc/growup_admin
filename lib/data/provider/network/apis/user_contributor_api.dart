@@ -2,23 +2,23 @@ import 'package:grow_up_admin_panel/data/provider/network/api_endpoints.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_provider.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_request_representable.dart';
 
-enum UserParentApiType {
-  getParentTable,
+enum UserContrbutorApiType {
+  getContributorTable,
 }
 
-class UserParentApi implements APIRequestRepresentable {
-  UserParentApiType type;
+class UserContributorApi implements APIRequestRepresentable {
+  UserContrbutorApiType type;
   String? search;
 
-  UserParentApi._({
+  UserContributorApi._({
     required this.type,
     this.search,
   });
 
-  UserParentApi.getParentTable()
+  UserContributorApi.getContributorTable()
       : this._(
-          type: UserParentApiType.getParentTable,
-        );
+    type: UserContrbutorApiType.getContributorTable,
+  );
 
   @override
   get body {
@@ -31,15 +31,15 @@ class UserParentApi implements APIRequestRepresentable {
   @override
   String get path {
     switch (type) {
-      case UserParentApiType.getParentTable:
-        return '${APIEndpoint.userParentTableUrl}/1';
+      case UserContrbutorApiType.getContributorTable:
+        return '${APIEndpoint.userContributorTableUrl}/1';
     }
   }
 
   @override
   Map<String, String>? get headers {
     switch (type) {
-      case UserParentApiType.getParentTable:
+      case UserContrbutorApiType.getContributorTable:
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
@@ -54,7 +54,7 @@ class UserParentApi implements APIRequestRepresentable {
   @override
   HTTPMethod get method {
     switch (type) {
-      case UserParentApiType.getParentTable:
+      case UserContrbutorApiType.getContributorTable:
         return HTTPMethod.get;
     }
   }
@@ -73,7 +73,7 @@ class UserParentApi implements APIRequestRepresentable {
   @override
   Map<String, String>? get urlParams {
     switch (type) {
-      case UserParentApiType.getParentTable:
+      case UserContrbutorApiType.getContributorTable:
         return {};
     }
   }

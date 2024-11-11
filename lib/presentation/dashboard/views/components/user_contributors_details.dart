@@ -10,6 +10,7 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/common_back_but
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_tile.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/profile_tile.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/tab_bar_widget.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_activity.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_details.dart';
 
 class UserContributerDetails extends StatelessWidget {

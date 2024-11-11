@@ -9,8 +9,8 @@ enum SnackBarType { warn, error, info, success }
 class CommonSnackBar {
   static message(
       {required String message,
-      SnackBarType type = SnackBarType.error,
-      bool? showConfirmBtn}) async {
+        SnackBarType type = SnackBarType.error,
+        bool? showConfirmBtn}) async {
     toastification.dismissAll();
     toastification.show(
       context: globalContext,
@@ -38,17 +38,17 @@ class CommonSnackBar {
       icon: type == SnackBarType.error
           ? const Icon(Icons.cancel)
           : type == SnackBarType.warn
-              ? const Icon(Icons.warning_amber_rounded)
-              : type == SnackBarType.success
-                  ? const Icon(Icons.check_circle_outline)
-                  : const Icon(Icons.info_outline),
+          ? const Icon(Icons.warning_amber_rounded)
+          : type == SnackBarType.success
+          ? const Icon(Icons.check_circle_outline)
+          : const Icon(Icons.info_outline),
       primaryColor: type == SnackBarType.error
           ? AppColors.red
           : type == SnackBarType.warn
-              ? AppColors.orange
-              : type == SnackBarType.success
-                  ? AppColors.green
-                  : AppColors.blue,
+          ? AppColors.orange
+          : type == SnackBarType.success
+          ? AppColors.green
+          : AppColors.blue,
       backgroundColor: AppColors.white,
       // foregroundColor: Colors.black,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
@@ -70,8 +70,7 @@ class CommonSnackBar {
       applyBlurEffect: true,
       callbacks: ToastificationCallbacks(
         onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
-        onCloseButtonTap: (toastItem) =>
-            toastification.dismissById(toastItem.id),
+        onCloseButtonTap: (toastItem) =>toastification.dismissById(toastItem.id),
         onAutoCompleteCompleted: (toastItem) =>
             print('Toast ${toastItem.id} auto complete completed'),
         onDismissed: (toastItem) => false,
