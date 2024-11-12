@@ -60,7 +60,9 @@ class AnalyticsPage extends StatelessWidget {
                 child: CommonListWidget(
                   title: "Recent Users",
                   header: const RecentUsersHeaderWidget(),
-                  body: const RecentUsersBodyWidget(),
+                  body: const RecentUsersBodyWidget(
+                    recentUsersObject: [],
+                  ),
                 )),
             const SizedBox(
                 width: 450, height: 350, child: TotalUsersPieChartWidget()),

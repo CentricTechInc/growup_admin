@@ -62,7 +62,9 @@ class DashboardPage extends StatelessWidget {
                   child: CommonListWidget(
                     title: "Recent Users",
                     header: const RecentUsersHeaderWidget(),
-                    body: const RecentUsersBodyWidget(),
+                    body: RecentUsersBodyWidget(
+                      recentUsersObject: controller.recentUsersObject,
+                    ),
                   )),
               SizedBox(
                   width: 750,
