@@ -50,7 +50,9 @@ class AnalyticsPage extends StatelessWidget {
                 child: CommonListWidget(
                   title: "Payout",
                   header: const PayoutHeaderWidget(),
-                  body: const PayoutBodyWidget(),
+                  body: const PayoutBodyWidget(
+                    payoutList: [],
+                  ),
                 )),
             SizedBox(
                 width: 750,

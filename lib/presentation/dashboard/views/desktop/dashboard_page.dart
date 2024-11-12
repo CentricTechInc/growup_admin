@@ -21,7 +21,7 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DashboardController>(builder: (context) {
+    return GetBuilder<DashboardController>(builder: (controller) {
       return SingleChildScrollView(
         padding: const EdgeInsets.all(30),
         child: Column(
@@ -52,7 +52,9 @@ class DashboardPage extends StatelessWidget {
                   child: CommonListWidget(
                     title: "Payout",
                     header: const PayoutHeaderWidget(),
-                    body: const PayoutBodyWidget(),
+                    body: PayoutBodyWidget(
+                      payoutList: controller.payoutObject,
+                    ),
                   )),
               SizedBox(
                   width: 750,

@@ -2,67 +2,66 @@ import 'package:flutter/material.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/common_vertical_divider_widget.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
+import 'package:grow_up_admin_panel/data/dto/dashboard_listing_dto.dart';
 
 class PayoutBodyWidget extends StatelessWidget {
-  const PayoutBodyWidget({
-    super.key,
-  });
-
+  const PayoutBodyWidget({super.key, required this.payoutList});
+  final List<PayoutObject>? payoutList;
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
-        itemCount: 2,
+        itemCount: payoutList?.length ?? 0,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         itemBuilder: (context, index) {
-          return const SizedBox(
+          return SizedBox(
             height: 30,
             child: Row(
               children: [
                 Expanded(
                   child: CommonText(
                       weight: FontWeight.bold,
-                      text: 'QR ID',
+                      text: '${payoutList?[index].id ?? 0}',
                       textAlign: TextAlign.center,
                       fontSize: 10),
                 ),
-                CommonVerticalDivider(),
+                const CommonVerticalDivider(),
                 Expanded(
                     child: CommonText(
                         weight: FontWeight.bold,
-                        text: 'Registered Name',
+                        text: payoutList?[index].gift?.title ?? '',
                         textAlign: TextAlign.center,
                         fontSize: 10)),
-                CommonVerticalDivider(),
+                const CommonVerticalDivider(),
                 Expanded(
                   child: CommonText(
                       weight: FontWeight.bold,
-                      text: 'Plan',
+                      text: payoutList?[index].parent ?? '',
                       textAlign: TextAlign.center,
                       fontSize: 10),
                 ),
-                CommonVerticalDivider(),
+                const CommonVerticalDivider(),
                 Expanded(
                     child: CommonText(
                         weight: FontWeight.bold,
-                        text: 'Payment Date',
+                        text: payoutList?[index].beneficiary ?? '',
                         textAlign: TextAlign.center,
                         fontSize: 10)),
-                CommonVerticalDivider(),
+                const CommonVerticalDivider(),
                 Expanded(
                   child: CommonText(
                       weight: FontWeight.bold,
-                      text: 'Payment',
+                      text: payoutList?[index].createdAt ?? '',
                       textAlign: TextAlign.center,
                       fontSize: 9),
                 ),
-                CommonVerticalDivider(),
+                const CommonVerticalDivider(),
                 Expanded(
                   child: CommonText(
                       weight: FontWeight.bold,
                       textAlign: TextAlign.center,
-                      text: 'Status',
+                      text: payoutList?[index].amount ?? '',
                       fontSize: 10),
                 )
               ],
