@@ -72,7 +72,9 @@ class DashboardPage extends StatelessWidget {
                   child: CommonListWidget(
                     title: "Recent Contributions",
                     header: const RecentContributionHeaderWidget(),
-                    body: const RecentContributionBodyWidget(),
+                    body: RecentContributionBodyWidget(
+                      recentContributions: controller.recentContributions,
+                    ),
                   ))
             ])
           ],

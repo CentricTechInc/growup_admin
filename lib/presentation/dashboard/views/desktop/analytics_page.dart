@@ -74,7 +74,9 @@ class AnalyticsPage extends StatelessWidget {
                 child: CommonListWidget(
                   title: "Recent Contributions",
                   header: const RecentContributionHeaderWidget(),
-                  body: const RecentContributionBodyWidget(),
+                  body: const RecentContributionBodyWidget(
+                    recentContributions: [],
+                  ),
                 ))
           ])
         ],

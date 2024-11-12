@@ -199,14 +199,20 @@ class RecentContributions {
   String? createdAt;
   String? amount;
   String? transactionId;
+  String? frequency;
   Gift? gift;
 
   RecentContributions(
-      {this.createdAt, this.amount, this.transactionId, this.gift});
+      {this.createdAt,
+      this.amount,
+      this.transactionId,
+      this.gift,
+      this.frequency});
 
   RecentContributions.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
     amount = json['amount'];
+    frequency = json['frequency'];
     transactionId = json['TransactionId'];
     gift = json['Gift'] != null ? Gift.fromJson(json['Gift']) : null;
   }
