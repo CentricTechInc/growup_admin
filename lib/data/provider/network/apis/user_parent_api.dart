@@ -1,29 +1,39 @@
+import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_endpoints.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_provider.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_request_representable.dart';
 
-enum UserParentApiType {
-  getParentTable,
-}
+enum UserParentApiType { getParentTable, getDetail, getUserBeneficiary }
 
 class UserParentApi implements APIRequestRepresentable {
   UserParentApiType type;
   String? search;
-
-  UserParentApi._({
-    required this.type,
-    this.search,
-  });
+  String? userId, pageId;
+  UserParentApi._({required this.type, this.search, this.userId, this.pageId});
 
   UserParentApi.getParentTable()
       : this._(
           type: UserParentApiType.getParentTable,
         );
+  UserParentApi.getDetail(
+    String userId,
+  ) : this._(
+          type: UserParentApiType.getDetail,
+          userId: userId,
+        );
+  UserParentApi.getUserBeneficiary(String userId, String pageId)
+      : this._(
+          type: UserParentApiType.getUserBeneficiary,
+          userId: userId,
+          pageId: pageId,
+        );
 
   @override
   get body {
     switch (type) {
-      default:
+      case UserParentApiType.getParentTable:
+      case UserParentApiType.getDetail:
+      case UserParentApiType.getUserBeneficiary:
         return {};
     }
   }
@@ -33,6 +43,10 @@ class UserParentApi implements APIRequestRepresentable {
     switch (type) {
       case UserParentApiType.getParentTable:
         return '${APIEndpoint.userParentTableUrl}/1';
+      case UserParentApiType.getDetail:
+        return APIEndpoint.userParentDetailsUrl;
+      case UserParentApiType.getUserBeneficiary:
+        return APIEndpoint.userBeneficiariesUrl;
     }
   }
 
@@ -40,14 +54,13 @@ class UserParentApi implements APIRequestRepresentable {
   Map<String, String>? get headers {
     switch (type) {
       case UserParentApiType.getParentTable:
+      case UserParentApiType.getDetail:
+      case UserParentApiType.getUserBeneficiary:
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
-          // 'authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
-          'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWduYXR1cmUiOjE3MzEwODA5Njk2NDAsImVtYWlsIjoic2FhZC5uYWVlbUBjZW50cmljdGVjaC5jbyIsImlhdCI6MTczMTA4MDk2OX0.8YHvoOlwd-aA519uG7kdKA0dXPnrO2nOwfWDQCiL3vA',
+          'Authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
         };
-      default:
-        return {};
     }
   }
 
@@ -55,6 +68,8 @@ class UserParentApi implements APIRequestRepresentable {
   HTTPMethod get method {
     switch (type) {
       case UserParentApiType.getParentTable:
+      case UserParentApiType.getDetail:
+      case UserParentApiType.getUserBeneficiary:
         return HTTPMethod.get;
     }
   }
@@ -74,7 +89,10 @@ class UserParentApi implements APIRequestRepresentable {
   Map<String, String>? get urlParams {
     switch (type) {
       case UserParentApiType.getParentTable:
-        return {};
+      case UserParentApiType.getDetail:
+        return {'userId': userId ?? ''};
+      case UserParentApiType.getUserBeneficiary:
+        return {'userId': userId ?? '', 'pageNumber': pageId ?? ''};
     }
   }
 }

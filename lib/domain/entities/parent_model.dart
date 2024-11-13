@@ -12,9 +12,11 @@ class ParentModel {
   final String? appleId;
   final String? registrationType;
   final int? roleId;
+  bool? isSelected;
 
   ParentModel({
     this.picture,
+    this.isSelected = false,
     this.id,
     this.name,
     this.email,
@@ -27,35 +29,36 @@ class ParentModel {
     this.roleId,
   });
 
-  factory ParentModel.fromRawJson(String str) => ParentModel.fromJson(json.decode(str));
+  factory ParentModel.fromRawJson(String str) =>
+      ParentModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory ParentModel.fromJson(Map<String, dynamic> json) => ParentModel(
-    picture: json["picture"],
-    id: json["id"],
-    name: json["name"],
-    email: json["email"],
-    phone: json["phone"],
-    isVerified: json["isVerified"],
-    status: json["status"],
-    googleId: json["googleId"],
-    appleId: json["appleId"],
-    registrationType: json["registration_type"],
-    roleId: json["RoleId"],
-  );
+        picture: json["picture"],
+        id: json["id"],
+        name: json["name"],
+        email: json["email"],
+        phone: json["phone"],
+        isVerified: json["isVerified"],
+        status: json["status"],
+        googleId: json["googleId"],
+        appleId: json["appleId"],
+        registrationType: json["registration_type"],
+        roleId: json["RoleId"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "picture": picture,
-    "id": id,
-    "name": name,
-    "email": email,
-    "phone": phone,
-    "isVerified": isVerified,
-    "status": status,
-    "googleId": googleId,
-    "appleId": appleId,
-    "registration_type": registrationType,
-    "RoleId": roleId,
-  };
+        "picture": picture,
+        "id": id,
+        "name": name,
+        "email": email,
+        "phone": phone,
+        "isVerified": isVerified,
+        "status": status,
+        "googleId": googleId,
+        "appleId": appleId,
+        "registration_type": registrationType,
+        "RoleId": roleId,
+      };
 }

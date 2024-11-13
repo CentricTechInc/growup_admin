@@ -16,4 +16,8 @@ class APIEndpoint {
   static String get payoutTableUrl => '/api/payouts';
   static String get contributionTableUrl => '/api/contributions';
   //
+
+  //--------------- Details ---------------------
+  static String get userParentDetailsUrl => '/api/gifts/details';
+  static String get userBeneficiariesUrl => '/api/users-benefeciaries';
 }
