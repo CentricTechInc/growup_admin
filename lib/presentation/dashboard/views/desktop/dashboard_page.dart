@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/dashboard_controller.dart';
@@ -27,8 +28,8 @@ class DashboardPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CommonText(
-              text: 'Hi John!',
+            CommonText(
+              text: 'Hi ${LocalStorageService.instance.user!.name}',
               fontSize: 24,
               weight: FontWeight.w700,
             ),
@@ -38,8 +39,7 @@ class DashboardPage extends StatelessWidget {
             Wrap(spacing: 20, runSpacing: 10, children: [
               const SizedBox(
                   width: 600, height: 350, child: ActiveUserChartWidget()),
-              const SizedBox(
-                  width: 450, height: 350, child: TopGiftingChartWidget()),
+              SizedBox(width: 450, height: 350, child: TopGiftingChartWidget()),
               const SizedBox(
                   width: 450, height: 350, child: ContributionsChartWidget()),
               const SizedBox(

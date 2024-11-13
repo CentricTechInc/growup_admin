@@ -1,6 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grow_up_admin_panel/app/util/common_snack_bar.dart';
+import 'package:grow_up_admin_panel/data/dto/active_users_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/dashboard_listing_dto.dart';
+import 'package:grow_up_admin_panel/data/dto/top_contributors_chart_dto.dart';
+import 'package:grow_up_admin_panel/data/dto/top_gifting_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/repositories/dashboard_repo_impl.dart';
 import 'package:grow_up_admin_panel/domain/repository/dashboard_repo.dart';
 
@@ -9,8 +13,15 @@ class DashboardController extends GetxController {
 
   @override
   void onInit() {
-    getDashboardListingData();
+    init();
     super.onInit();
+  }
+
+  init() async {
+    getDashboardListingData();
+    getActiveUsersChart();
+    getTopContributorsChart();
+    getTopGiftingChart();
   }
 
   DashboardListingDto? dashboardListingDto;
@@ -18,6 +29,26 @@ class DashboardController extends GetxController {
   List<PayoutObject>? payoutObject;
   List<RecentUsersObject>? recentUsersObject;
   List<RecentContributions>? recentContributions;
+
+  ActiveUsersChartDto? activeUsersChartDto;
+  TopContributorsChartDto? topContributorsChartDto;
+  TopGiftingChartDto? topGiftingChartDto;
+
+  String selectedUserFilter = 'half-yearly';
+  String selectedGiftFilter = 'this-week';
+  String selectedContributorFilter = 'last90days';
+
+  List<String> userFilters = ['last-week', 'half-yearly'];
+  List<String> giftFilters = [
+    'this-week',
+    'quarterly',
+    'last-week',
+    'last-month'
+  ];
+  List<String> contributorFilters = ['last90days'];
+  final List<ChartData> contributorData = [];
+  final List<ChartData> parentData = [];
+  final List<ChartData> topGiftingData = [];
   getDashboardListingData() async {
     try {
       dashboardListingDto = await dashboardRepository.dashboardListingData();
@@ -31,4 +62,75 @@ class DashboardController extends GetxController {
       CommonSnackBar.message(message: e.toString());
     }
   }
+
+  bool isUserLoading = false;
+  bool isGiftLoading = false;
+  bool isContributorLoading = false;
+  getActiveUsersChart() async {
+    try {
+      parentData.clear();
+      contributorData.clear();
+      isUserLoading = true;
+      update();
+      await Future.delayed(const Duration(milliseconds: 500));
+      activeUsersChartDto =
+          await dashboardRepository.activeUsersChart(selectedUserFilter);
+
+      activeUsersChartDto?.data?.contributorusers?.forEach((element) {
+        contributorData
+            .add(ChartData(element.date!, double.parse(element.total!)));
+      });
+      activeUsersChartDto?.data?.parentusers?.forEach((element) {
+        parentData.add(ChartData(element.date!, double.parse(element.total!)));
+      });
+      isUserLoading = false;
+      update();
+    } catch (e) {
+      isUserLoading = false;
+      update();
+      print(e);
+    }
+  }
+
+  getTopContributorsChart() async {
+    try {
+      topContributorsChartDto = await dashboardRepository
+          .topContributorsChart(selectedContributorFilter);
+
+      // print(topContributorsChartDto!.toJson());
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getTopGiftingChart() async {
+    try {
+      topGiftingData.clear();
+      isGiftLoading = true;
+      await Future.delayed(const Duration(milliseconds: 500));
+      update();
+      topGiftingChartDto =
+          await dashboardRepository.topGiftingChart(selectedGiftFilter);
+      print(topGiftingChartDto?.toJson());
+      topGiftingChartDto?.data?.records?.forEach((element) {
+        topGiftingData.add(ChartData(
+          element.gift?.title ?? '',
+          double.parse(element.totalAmount ?? ''),
+        ));
+      });
+      isGiftLoading = false;
+      update();
+    } catch (e) {
+      isGiftLoading = false;
+      update();
+      print(e);
+    }
+  }
+}
+
+class ChartData {
+  final String month;
+  final double value;
+
+  ChartData(this.month, this.value);
 }

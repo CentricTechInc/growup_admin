@@ -2,6 +2,10 @@ class APIEndpoint {
   static String get baseUrl => '192.168.0.125:8000';
   // ---------------- Dashboard --------------------
   static String get dashboardListingUrl => '/api/dashboard-chart';
+  //Graphs Apis
+  static String get topContributorUrl => '/api/dashboard/top-contributions';
+  static String get topGiftingsUrl => '/api/dashboard/top-gifts';
+  static String get activeUsersUrl => '/api/dashboard/active-users';
   // ---------------- Authorization --------------------
   static String get loginUrl => '/api/auth/login';
   static String get verifyOtpUrl => '/api/auth/verify-otp';

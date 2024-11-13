@@ -60,6 +60,7 @@ class APIProvider {
           final res = await req.send();
           response =
               http.Response(await res.stream.bytesToString(), res.statusCode);
+          print(response.body);
           break;
       }
       return _returnResponse(response);

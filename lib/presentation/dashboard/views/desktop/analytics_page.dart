@@ -36,8 +36,7 @@ class AnalyticsPage extends StatelessWidget {
           Wrap(spacing: 20, runSpacing: 10, children: [
             const SizedBox(
                 width: 600, height: 350, child: ActiveUserChartWidget()),
-            const SizedBox(
-                width: 450, height: 350, child: TopGiftingChartWidget()),
+            SizedBox(width: 450, height: 350, child: TopGiftingChartWidget()),
             const SizedBox(
                 width: 450, height: 350, child: ContributionsChartWidget()),
             const SizedBox(

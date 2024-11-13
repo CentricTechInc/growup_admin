@@ -3,17 +3,32 @@ import 'package:grow_up_admin_panel/data/provider/network/api_endpoints.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_provider.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_request_representable.dart';
 
-enum ApiType { dashboardListing }
+enum ApiType {
+  dashboardListing,
+  topGiftingChart,
+  topContributorsChart,
+  activeUsersChart
+}
 
 class DashboardApi extends APIRequestRepresentable {
   ApiType apiType;
-  DashboardApi._({required this.apiType});
+  String? filter;
+  DashboardApi._({required this.apiType, this.filter});
   DashboardApi.dashboardListing() : this._(apiType: ApiType.dashboardListing);
+  DashboardApi.topGiftingChart(String filter)
+      : this._(apiType: ApiType.topGiftingChart, filter: filter);
+  DashboardApi.topContributorsChart(String filter)
+      : this._(apiType: ApiType.topContributorsChart, filter: filter);
+  DashboardApi.activeUsersChart(String filter)
+      : this._(apiType: ApiType.activeUsersChart, filter: filter);
 
   @override
   get body {
     switch (apiType) {
       case ApiType.dashboardListing:
+      case ApiType.topGiftingChart:
+      case ApiType.topContributorsChart:
+      case ApiType.activeUsersChart:
         return {};
     }
   }
@@ -25,6 +40,9 @@ class DashboardApi extends APIRequestRepresentable {
   Map<String, String>? get headers {
     switch (apiType) {
       case ApiType.dashboardListing:
+      case ApiType.topGiftingChart:
+      case ApiType.topContributorsChart:
+      case ApiType.activeUsersChart:
         return {
           'accept': ' */*',
           'Content-Type': 'application/json; charset=utf-8',
@@ -38,6 +56,9 @@ class DashboardApi extends APIRequestRepresentable {
   HTTPMethod get method {
     switch (apiType) {
       case ApiType.dashboardListing:
+      case ApiType.topGiftingChart:
+      case ApiType.topContributorsChart:
+      case ApiType.activeUsersChart:
         return HTTPMethod.get;
     }
   }
@@ -47,9 +68,12 @@ class DashboardApi extends APIRequestRepresentable {
     switch (apiType) {
       case ApiType.dashboardListing:
         return APIEndpoint.dashboardListingUrl;
-
-      default:
-        return '';
+      case ApiType.topGiftingChart:
+        return APIEndpoint.topGiftingsUrl;
+      case ApiType.topContributorsChart:
+        return APIEndpoint.topContributorUrl;
+      case ApiType.activeUsersChart:
+        return APIEndpoint.activeUsersUrl;
     }
   }
 
@@ -66,6 +90,10 @@ class DashboardApi extends APIRequestRepresentable {
     switch (apiType) {
       case ApiType.dashboardListing:
         return {};
+      case ApiType.topGiftingChart:
+      case ApiType.topContributorsChart:
+      case ApiType.activeUsersChart:
+        return {'filter': filter ?? ''};
     }
   }
 }

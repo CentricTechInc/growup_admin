@@ -139,8 +139,6 @@ class AppRouter {
                 GoRoute(
                   path: PagePath.parentDetails,
                   pageBuilder: (context, state) {
-                    //  'giftDetailDto': giftDetailDto,
-                    //   'giftBenesDto': giftBenesDto
                     Map<String, dynamic> data =
                         state.extra as Map<String, dynamic>;
 

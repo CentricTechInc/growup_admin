@@ -11,13 +11,18 @@ class CommonChartWidget extends StatelessWidget {
       required this.child,
       this.legend,
       required this.title,
-      required this.totalStats});
+      required this.totalStats,
+      this.selectedItem,
+      this.onChanged,
+      this.arryList});
 
   final String title;
   final String totalStats;
   final Widget child;
   final Widget? legend;
-
+  final String? selectedItem;
+  final dynamic Function(String?)? onChanged;
+  final List<String>? arryList;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,10 +48,10 @@ class CommonChartWidget extends StatelessWidget {
               ),
               SizedBox(
                 width: 150,
-                child: CommonDropDownWidget(
-                  selectedItem: 'This Week',
-                  onChanged: (value) {},
-                  arryList: const ['This Week', 'Last Week'],
+                child: CommonDropDownWidget<String>(
+                  selectedItem: selectedItem ?? 'This Week',
+                  onChanged: onChanged,
+                  arryList: arryList ?? [],
                 ),
               ),
             ],
