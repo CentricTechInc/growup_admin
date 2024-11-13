@@ -23,16 +23,16 @@ class RecentContributionBodyWidget extends StatelessWidget {
             height: 30,
             child: Row(
               children: [
-                Expanded(
-                    child: CommonText(
-                        weight: FontWeight.bold,
-                        text: recentContributions?[index]
-                                .transactionId
-                                .toString() ??
-                            '',
-                        textAlign: TextAlign.center,
-                        fontSize: 10)),
-                const CommonVerticalDivider(),
+                // Expanded(
+                //     child: CommonText(
+                //         weight: FontWeight.bold,
+                //         text: recentContributions?[index]
+                //                 .transactionId
+                //                 .toString() ??
+                //             '',
+                //         textAlign: TextAlign.center,
+                //         fontSize: 10)),
+                // const CommonVerticalDivider(),
                 Expanded(
                   child: CommonText(
                       weight: FontWeight.bold,

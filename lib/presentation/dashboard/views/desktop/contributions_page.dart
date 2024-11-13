@@ -17,8 +17,11 @@ class ContributionPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PageHeader(
+          PageHeader(
             label: 'Contributions',
+            showSearch: true,
+            searchController: TextEditingController(),
+            onChanged: (p0) {},
           ),
           const VerticalSpacing(30),
           const ContributionTableHeader(
@@ -26,7 +29,7 @@ class ContributionPage extends StatelessWidget {
             titleList: [
               'Payment ID',
               'Gifting Title',
-              'Parent Name',
+              'Contributor',
               'Benefeciary Name',
               'Payment Gateway',
               'Date & Time',

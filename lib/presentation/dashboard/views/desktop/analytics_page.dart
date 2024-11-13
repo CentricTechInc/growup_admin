@@ -26,7 +26,7 @@ class AnalyticsPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PageHeader(
+          PageHeader(
             label: 'Analytics & Reports',
             showSearch: false,
           ),

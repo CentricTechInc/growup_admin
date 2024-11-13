@@ -20,7 +20,7 @@ class UserContributionPage extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const PageHeader(
+            PageHeader(
               label: 'Contributors',
             ),
             const VerticalSpacing(30),

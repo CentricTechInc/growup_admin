@@ -44,7 +44,8 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
                       ),
                     ),
                     const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,22 +68,35 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
                   children: [
                     const VerticalSpacing(20),
                     Row(
-                      children: List.generate(
-                        3,
-                            (index) => const Expanded(
+                      children: [
+                        const Expanded(
                           child: CommonText(
                             text: 'Total Gifting',
                             fontSize: 16,
                             weight: FontWeight.w700,
                           ),
                         ),
-                      ),
+                        const Expanded(
+                          child: CommonText(
+                            text: 'Total Gifting 2',
+                            fontSize: 16,
+                            weight: FontWeight.w700,
+                          ),
+                        ),
+                        const Expanded(
+                          child: CommonText(
+                            text: 'Total Gifting 3',
+                            fontSize: 16,
+                            weight: FontWeight.w700,
+                          ),
+                        )
+                      ],
                     ),
                     const VerticalSpacing(10),
                     Row(
                       children: List.generate(
                         3,
-                            (index) => const Expanded(
+                        (index) => const Expanded(
                           child: CommonText(
                             text: 'Total Gifting',
                             fontSize: 16,
@@ -96,7 +110,7 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
                     Row(
                       children: List.generate(
                         3,
-                            (index) => const Expanded(
+                        (index) => const Expanded(
                           child: CommonText(
                             text: 'Total Gifting',
                             fontSize: 16,
@@ -109,7 +123,7 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
                     Row(
                       children: List.generate(
                         3,
-                            (index) => const Expanded(
+                        (index) => const Expanded(
                           child: CommonText(
                             text: 'Total Gifting',
                             fontSize: 16,
@@ -133,7 +147,7 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
           const VerticalSpacing(10),
           const CommonText(
             text:
-            'Help John achieve his dream of attending college! Your contributions will cover tuition, books, and living expenses, enabling him to focus on his studies. Every donation brings him one step closer to a bright future. Thank you for your support!',
+                'Help John achieve his dream of attending college! Your contributions will cover tuition, books, and living expenses, enabling him to focus on his studies. Every donation brings him one step closer to a bright future. Thank you for your support!',
             fontSize: 16,
             weight: FontWeight.w400,
             color: AppColors.secondaryText,
@@ -152,7 +166,7 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
           Row(
             children: List.generate(
               4,
-                  (index) => const Expanded(
+              (index) => const Expanded(
                 child: CommonText(
                   text: 'Bank',
                   fontSize: 16,
@@ -165,7 +179,7 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
           Row(
             children: List.generate(
               4,
-                  (index) => const Expanded(
+              (index) => const Expanded(
                 child: CommonText(
                   text: 'City Bank',
                   fontSize: 16,
@@ -179,31 +193,31 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
           Row(
             children: List.generate(
               4,
-                  (index) => index == 3
+              (index) => index == 3
                   ? const Spacer()
                   : const Expanded(
-                child: CommonText(
-                  text: 'Bank',
-                  fontSize: 16,
-                  weight: FontWeight.w700,
-                ),
-              ),
+                      child: CommonText(
+                        text: 'Bank',
+                        fontSize: 16,
+                        weight: FontWeight.w700,
+                      ),
+                    ),
             ),
           ),
           const VerticalSpacing(10),
           Row(
             children: List.generate(
               4,
-                  (index) => index == 3
+              (index) => index == 3
                   ? const Spacer()
                   : const Expanded(
-                child: CommonText(
-                  text: 'City Bank',
-                  fontSize: 16,
-                  weight: FontWeight.w400,
-                  color: AppColors.secondaryText,
-                ),
-              ),
+                      child: CommonText(
+                        text: 'City Bank',
+                        fontSize: 16,
+                        weight: FontWeight.w400,
+                        color: AppColors.secondaryText,
+                      ),
+                    ),
             ),
           ),
         ],

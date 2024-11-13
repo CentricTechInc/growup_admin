@@ -19,7 +19,7 @@ class PayoutPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PageHeader(
+          PageHeader(
             label: 'Payout',
           ),
           const VerticalSpacing(30),

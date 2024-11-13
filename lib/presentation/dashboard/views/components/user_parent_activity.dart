@@ -27,12 +27,12 @@ class UserParentsActivity extends StatelessWidget {
         const VerticalSpacing(10),
         InkWell(
           onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) => const Dialog(
-                child: PaymentDetailsDialogBox(),
-              ),
-            );
+            // showDialog(
+            //   context: context,
+            //   builder: (context) => const Dialog(
+            //     child: PaymentDetailsDialogBox(),
+            //   ),
+            // );
           },
           child: Container(
             height: 50,

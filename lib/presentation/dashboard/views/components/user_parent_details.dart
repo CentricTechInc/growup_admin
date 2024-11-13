@@ -7,6 +7,8 @@ import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
+import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
+import 'package:grow_up_admin_panel/data/dto/user_bene_dto.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/common_back_button.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/benefeciary_expansion_tile.dart';
@@ -18,12 +20,16 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_widget.dart';
 
 class UserParentDetails extends StatelessWidget {
-  UserParentDetails({super.key});
-
+  UserParentDetails(
+      {super.key, required this.giftDetailDto, required this.giftBeneDto});
+  GiftDetailDto giftDetailDto = GiftDetailDto();
+  UserBeneficiaryDto giftBeneDto = UserBeneficiaryDto();
   bool isCollapsed = true;
 
   @override
   Widget build(BuildContext context) {
+    print(giftDetailDto.toJson());
+    print(giftBeneDto.toJson());
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: SingleChildScrollView(
@@ -87,7 +93,9 @@ class UserParentDetails extends StatelessWidget {
                           ),
                         ),
                         const VerticalSpacing(20),
-                        const ParentDetailsCardWidget(),
+                        ParentDetailsCardWidget(
+                          data: giftDetailDto,
+                        ),
                         const VerticalSpacing(20),
                         GetBuilder<SideBarController>(builder: (controller) {
                           return TabBarWidget(
@@ -202,18 +210,28 @@ class UserParentDetails extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                       color: AppColors.white,
                     ),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CommonText(
+                        const CommonText(
                           text: 'Beneficiaries',
                           fontSize: 20,
                           weight: FontWeight.w600,
                         ),
-                        VerticalSpacing(20),
-                        BenefeciaryExpansionTile(),
-                        VerticalSpacing(20),
-                        BenefeciaryExpansionTile(),
+                        const VerticalSpacing(20),
+                        ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return BenefeciaryExpansionTile(
+                              data: giftBeneDto.data![index],
+                            );
+                          },
+                          itemCount: giftBeneDto.data?.length ?? 0,
+                          separatorBuilder: (context, index) {
+                            return const VerticalSpacing(20);
+                          },
+                        )
                       ],
                     ),
                   ),

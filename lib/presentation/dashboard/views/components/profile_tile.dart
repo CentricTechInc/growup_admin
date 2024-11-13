@@ -6,8 +6,8 @@ import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/icon_button.dart';
 
 class ProfileTile extends StatelessWidget {
-  const ProfileTile({super.key});
-
+  const ProfileTile({super.key, required this.name, required this.relation});
+  final String name, relation;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,8 +25,8 @@ class ProfileTile extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CommonText(
-              text: 'Mathew Machelle',
+            CommonText(
+              text: name,
               fontSize: 20,
               weight: FontWeight.w600,
               color: AppColors.primary,
@@ -38,8 +38,8 @@ class ProfileTile extends StatelessWidget {
                   scale: 2,
                 ),
                 const HorizontalSpacing(5),
-                const CommonText(
-                  text: 'Nephew',
+                CommonText(
+                  text: relation,
                   fontSize: 16,
                   weight: FontWeight.w500,
                   color: AppColors.secondaryText,

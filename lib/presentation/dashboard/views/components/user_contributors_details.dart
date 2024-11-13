@@ -185,7 +185,8 @@ class UserContributerDetails extends StatelessWidget {
                             return SizedBox(
                               height: context.height / 1.5,
                               child: PageView(
-                                controller: controller.userContributerPageController,
+                                controller:
+                                    controller.userContributerPageController,
                                 children: const [
                                   UserParentsActivity(),
                                 ],
@@ -223,7 +224,7 @@ class UserContributerDetails extends StatelessWidget {
                           child: const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ProfileTile(),
+                              // ProfileTile(),
                               VerticalSpacing(18),
                               CommonTile(
                                 title: 'Age',
@@ -267,13 +268,13 @@ class UserContributerDetails extends StatelessWidget {
                           ),
                         ),
                         const VerticalSpacing(20),
-                        Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: AppColors.cardGrey,
-                            ),
-                            child: const ProfileTile()),
+                        // Container(
+                        //     padding: const EdgeInsets.all(20),
+                        //     decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(20),
+                        //       color: AppColors.cardGrey,
+                        //     ),
+                        //     child: const ProfileTile()),
                       ],
                     ),
                   ),

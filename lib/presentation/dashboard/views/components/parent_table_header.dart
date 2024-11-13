@@ -81,6 +81,7 @@ class ParentTableHeader extends StatelessWidget {
     );
   }
 }
+
 class GiftingTableHeader extends StatelessWidget {
   const GiftingTableHeader({super.key, required this.titleList});
 
@@ -173,7 +174,7 @@ class GiftingTableHeader extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30,right: 30),
+              padding: const EdgeInsets.only(left: 30, right: 30),
               child: CommonText(
                 textAlign: TextAlign.right,
                 text: titleList[5],
@@ -205,6 +206,7 @@ class GiftingTableHeader extends StatelessWidget {
     );
   }
 }
+
 class PayoutTableHeader extends StatelessWidget {
   const PayoutTableHeader({super.key, required this.titleList});
 
@@ -297,7 +299,7 @@ class PayoutTableHeader extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30,right: 30),
+              padding: const EdgeInsets.only(left: 30, right: 30),
               child: CommonText(
                 textAlign: TextAlign.right,
                 text: titleList[5],
@@ -314,6 +316,7 @@ class PayoutTableHeader extends StatelessWidget {
     );
   }
 }
+
 class ContributionTableHeader extends StatelessWidget {
   const ContributionTableHeader({super.key, required this.titleList});
 
@@ -329,21 +332,6 @@ class ContributionTableHeader extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 30),
-              child: CommonText(
-                text: titleList[0],
-                weight: FontWeight.w700,
-                fontSize: 12,
-              ),
-            ),
-          ),
-          const CommonVerticalDivider(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            color: AppColors.primary,
-            thickness: 2,
-          ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: 30),
@@ -391,24 +379,8 @@ class ContributionTableHeader extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30),
+              padding: const EdgeInsets.only(left: 30, right: 30),
               child: CommonText(
-                text: titleList[4],
-                weight: FontWeight.w700,
-                fontSize: 12,
-              ),
-            ),
-          ),
-          const CommonVerticalDivider(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            color: AppColors.primary,
-            thickness: 2,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 30,right: 30),
-              child: CommonText(
-                textAlign: TextAlign.right,
                 text: titleList[5],
                 weight: FontWeight.w700,
                 fontSize: 12,
@@ -445,31 +417,15 @@ class ContributionTableHeader extends StatelessWidget {
               ),
             ),
           ),
-          const CommonVerticalDivider(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            color: AppColors.primary,
-            thickness: 2,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 30),
-              child: CommonText(
-                text: titleList[8],
-                weight: FontWeight.w700,
-                fontSize: 12,
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 50,
-          ),
         ],
       ),
     );
   }
 }
+
 class UserParentLiveGfitingPayoutTableHeader extends StatelessWidget {
-  const UserParentLiveGfitingPayoutTableHeader({super.key, required this.titleList});
+  const UserParentLiveGfitingPayoutTableHeader(
+      {super.key, required this.titleList});
 
   final List<String> titleList;
 
@@ -543,6 +499,7 @@ class UserParentLiveGfitingPayoutTableHeader extends StatelessWidget {
     );
   }
 }
+
 class UserParentACtivityTableHeader extends StatelessWidget {
   const UserParentACtivityTableHeader({super.key, required this.titleList});
 
@@ -613,7 +570,6 @@ class UserParentACtivityTableHeader extends StatelessWidget {
               ),
             ),
           ),
-
           const CommonVerticalDivider(
             padding: EdgeInsets.symmetric(vertical: 10),
             color: AppColors.primary,
@@ -629,7 +585,6 @@ class UserParentACtivityTableHeader extends StatelessWidget {
               ),
             ),
           ),
-
           const CommonVerticalDivider(
             padding: EdgeInsets.symmetric(vertical: 10),
             color: AppColors.primary,
@@ -645,7 +600,6 @@ class UserParentACtivityTableHeader extends StatelessWidget {
               ),
             ),
           ),
-
           const CommonVerticalDivider(
             padding: EdgeInsets.symmetric(vertical: 10),
             color: AppColors.primary,

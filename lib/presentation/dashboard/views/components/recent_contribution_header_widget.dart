@@ -9,14 +9,14 @@ class RecentContributionHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Row(
       children: [
-        Expanded(
-          child: CommonText(
-              weight: FontWeight.bold,
-              text: 'Payment ID',
-              textAlign: TextAlign.center,
-              fontSize: 10),
-        ),
-        CommonVerticalDivider(),
+        // Expanded(
+        //   child: CommonText(
+        //       weight: FontWeight.bold,
+        //       text: 'Payment ID',
+        //       textAlign: TextAlign.center,
+        //       fontSize: 10),
+        // ),
+        // CommonVerticalDivider(),
         Expanded(
             child: CommonText(
                 weight: FontWeight.bold,
