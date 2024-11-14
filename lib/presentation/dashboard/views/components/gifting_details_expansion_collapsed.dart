@@ -85,7 +85,8 @@ class GiftingDeatilsExpansionCollapsed extends StatelessWidget {
           width: 131,
           child: CommonDropDownWidget(
             onChanged: (p0) {},
-            arryList: ['Paid', 'Un-Paid'],
+            arryList: const ['Paid', 'Un-Paid'],
+            borderColor: AppColors.transparent,
             selectedItem: 'Paid',
           ),
         ),

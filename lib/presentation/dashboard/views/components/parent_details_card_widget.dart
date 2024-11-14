@@ -51,7 +51,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
           Row(children: [
             Expanded(
               child: CommonText(
-                text: data.data!.user?.name ?? '',
+                text: data.data?.user?.name ?? '',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -59,7 +59,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
             ),
             Expanded(
               child: CommonText(
-                text: data.data!.user?.email ?? '',
+                text: data.data?.user?.email ?? '',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -67,7 +67,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
             ),
             Expanded(
               child: CommonText(
-                text: data.data!.user?.phone ?? '',
+                text: data.data?.user?.phone ?? '',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -102,7 +102,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
           Row(children: [
             Expanded(
               child: CommonText(
-                text: '${data.data!.user?.totalGifts ?? 0}',
+                text: '${data.data?.user?.totalGifts ?? 0}',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,

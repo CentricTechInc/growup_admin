@@ -22,6 +22,7 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user
 class UserParentDetails extends StatelessWidget {
   UserParentDetails(
       {super.key, required this.giftDetailDto, required this.giftBeneDto});
+
   GiftDetailDto giftDetailDto = GiftDetailDto();
   UserBeneficiaryDto giftBeneDto = UserBeneficiaryDto();
   bool isCollapsed = true;
@@ -83,6 +84,11 @@ class UserParentDetails extends StatelessWidget {
                               SizedBox(
                                 width: 160,
                                 child: CommonDropDownWidget(
+                                  fillColor: AppColors.primary.withOpacity(0.2),
+                                  selectedItem: 'Active',
+                                  selectedItemColor: AppColors.primary,
+                                  borderColor: AppColors.transparent,
+                                  iconColor: AppColors.primary,
                                   onChanged: (p0) {},
                                   arryList: const [],
                                 ),

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/user_bene_dto.dart';
+import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 import 'package:grow_up_admin_panel/presentation/auth/controllers/create_new_pass_controller.dart';
 import 'package:grow_up_admin_panel/presentation/auth/controllers/forget_pass_controller.dart';
 import 'package:grow_up_admin_panel/presentation/auth/controllers/login_controller.dart';
@@ -139,13 +140,13 @@ class AppRouter {
                 GoRoute(
                   path: PagePath.parentDetails,
                   pageBuilder: (context, state) {
-                    Map<String, dynamic> data =
-                        state.extra as Map<String, dynamic>;
+                    Map<String, dynamic>? data =
+                        state.extra as Map<String, dynamic>?;
 
                     GiftDetailDto giftDetailDto =
-                        data['giftDetailDto'] as GiftDetailDto;
+                        data?['giftDetailDto'] ?? GiftDetailDto();
                     UserBeneficiaryDto gifBeneDto =
-                        data['giftBenesDto'] as UserBeneficiaryDto;
+                        data?['giftBenesDto'] ?? UserBeneficiaryDto();
                     return MaterialPage(
                         child: UserParentDetails(
                       giftBeneDto: gifBeneDto,

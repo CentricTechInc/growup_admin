@@ -15,6 +15,7 @@ class CommonDropDownWidget<T> extends StatelessWidget {
       this.suffixSearchIcon = '',
       required this.arryList,
       this.selectedItem,
+      this.selectedItemColor,
       this.validator,
       this.borderEnable = false,
       this.iconColor = AppColors.grey,
@@ -82,6 +83,7 @@ class CommonDropDownWidget<T> extends StatelessWidget {
   final Color? fillColor;
   final double? dropDownHeight;
   final double? selectedItemHeight;
+  final Color? selectedItemColor;
   final Widget? suffix;
   final Widget? prefix;
 
@@ -119,7 +121,7 @@ class CommonDropDownWidget<T> extends StatelessWidget {
             dropdownButtonProps: DropdownButtonProps(
               padding: const EdgeInsets.all(0),
               icon: Icon(
-                Icons.arrow_drop_down,
+                Icons.keyboard_arrow_down,
                 size: iconSize,
                 color: iconColor,
               ),
@@ -185,7 +187,9 @@ class CommonDropDownWidget<T> extends StatelessWidget {
             dropdownDecoratorProps: DropDownDecoratorProps(
               baseStyle: TextStyle(
                   fontFamily: Strings.fontFamily,
-                  fontSize: selectedFontSize ?? 12),
+                  fontSize: selectedFontSize ?? 12,
+              color: selectedItemColor
+              ),
               dropdownSearchDecoration: InputDecoration(
                 fillColor: fillColor,
                 filled: isFilledColor,
