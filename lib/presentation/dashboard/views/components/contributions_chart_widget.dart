@@ -26,11 +26,7 @@ class ContributionsChartWidget extends StatelessWidget {
             primaryXAxis: const CategoryAxis(
               majorGridLines: MajorGridLines(width: 0),
             ),
-            primaryYAxis: const NumericAxis(
-              minimum: 0,
-              maximum: 150,
-              interval: 30,
-            ),
+            primaryYAxis: const NumericAxis(),
             legend: const Legend(
               isVisible: true,
               position: LegendPosition.bottom,

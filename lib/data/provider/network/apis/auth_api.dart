@@ -57,10 +57,10 @@ class AuthAPI implements APIRequestRepresentable {
   get body {
     switch (type) {
       case AuthApiType.login:
-        return jsonEncode({
+        return {
           'email': email,
           'password': password,
-        });
+        };
 
       case AuthApiType.resetPassword:
         return jsonEncode({'email': email, 'password': password});
@@ -99,7 +99,7 @@ class AuthAPI implements APIRequestRepresentable {
       case AuthApiType.resetPassword:
       case AuthApiType.otpVerification:
         return {
-          'Content-Type': 'application/json; charset=utf-8',
+          // 'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*'
         };
     }
