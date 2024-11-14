@@ -23,10 +23,10 @@ class TotalUsersChartDto {
 }
 
 class Data {
-  int? totalUsers;
-  int? parents;
+  double? totalUsers;
+  double? parents;
   double? parentsPercentage;
-  int? contributors;
+  double? contributors;
   double? contributorPecentage;
 
   Data(
@@ -37,11 +37,12 @@ class Data {
       this.contributorPecentage});
 
   Data.fromJson(Map<String, dynamic> json) {
-    totalUsers = json['totalUsers'];
-    parents = json['parents'];
-    parentsPercentage = json['parentsPercentage'];
-    contributors = json['contributors'];
-    contributorPecentage = json['contributorPecentage'];
+    totalUsers = double.parse(json['totalUsers'].toString());
+    parents = double.parse(json['parents'].toString());
+    parentsPercentage = double.parse(json['parentsPercentage'].toString());
+    contributors = double.parse(json['contributors'].toString());
+    contributorPecentage =
+        double.parse(json['contributorPecentage'].toString());
   }
 
   Map<String, dynamic> toJson() {

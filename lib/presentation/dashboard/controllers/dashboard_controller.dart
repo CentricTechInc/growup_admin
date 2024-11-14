@@ -77,6 +77,8 @@ class DashboardController extends GetxController {
   bool isUserLoading = false;
   bool isGiftLoading = false;
   bool isContributorLoading = false;
+  bool totalUsersLoading = false;
+
   getActiveUsersChart() async {
     try {
       parentData.clear();
@@ -150,7 +152,6 @@ class DashboardController extends GetxController {
     }
   }
 
-  bool totalUsersLoading = false;
   getTotalUsersChart() async {
     try {
       totalUsersLoading = true;
@@ -158,6 +159,7 @@ class DashboardController extends GetxController {
       await Future.delayed(const Duration(milliseconds: 500));
       totalUsersChartDto =
           await dashboardRepository.totalUsersChart(selectedTotalUsersFilter);
+      print(totalUsersChartDto?.toJson());
       totalUsersLoading = false;
       update();
     } catch (e) {

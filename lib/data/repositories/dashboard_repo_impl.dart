@@ -60,6 +60,7 @@ class DashboardRepoImpl extends DashboardRepository {
     try {
       final response = await DashboardApi.totalUsersChart(filter).request();
       var json = jsonDecode(response);
+
       return TotalUsersChartDto.fromJson(json);
     } catch (e) {
       rethrow;
