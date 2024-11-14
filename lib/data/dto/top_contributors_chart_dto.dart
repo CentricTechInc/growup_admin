@@ -24,16 +24,16 @@ class TopContributorsChartDto {
 
 class Data {
   double? total;
-  List<ChartData>? chartData;
+  List<ContributorChartData>? chartData;
 
   Data({this.total, this.chartData});
 
   Data.fromJson(Map<String, dynamic> json) {
     total = json['total'];
     if (json['chartData'] != null) {
-      chartData = <ChartData>[];
+      chartData = <ContributorChartData>[];
       json['chartData'].forEach((v) {
-        chartData!.add(ChartData.fromJson(v));
+        chartData!.add(ContributorChartData.fromJson(v));
       });
     }
   }
@@ -41,31 +41,20 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['total'] = total;
-    if (chartData != null) {
-      data['chartData'] = chartData!.map((v) => v.toJson()).toList();
-    }
     return data;
   }
 }
 
-class ChartData {
+class ContributorChartData {
   String? month;
-  String? role;
-  double? total;
+  double? parent;
+  double? contributor;
 
-  ChartData({this.month, this.role, this.total});
+  ContributorChartData({this.month, this.parent, this.contributor});
 
-  ChartData.fromJson(Map<String, dynamic> json) {
+  ContributorChartData.fromJson(Map<String, dynamic> json) {
     month = json['month'];
-    role = json['role'];
-    total = double.tryParse(json['total'].toString());
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['month'] = month;
-    data['role'] = role;
-    data['total'] = total;
-    return data;
+    parent = double.tryParse(json['parent'].toString());
+    contributor = double.tryParse(json['contributor'].toString());
   }
 }

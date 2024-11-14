@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:grow_up_admin_panel/common/resources/colors.dart';
+import 'package:get/get.dart';
+import 'package:grow_up_admin_panel/data/dto/top_contributors_chart_dto.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/controllers/dashboard_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_chart_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -8,61 +10,54 @@ class ContributionsChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CommonChartWidget(
-      title: 'Contributions',
-      totalStats: '\$ 15,000.00',
-      child: Expanded(
-        child: SfCartesianChart(
-          legend: const Legend(isVisible: true),
-          primaryXAxis: const CategoryAxis(),
-// X-axis is categorical (for bar labels)
-          primaryYAxis: const NumericAxis(),
-// Y-axis is numeric (for bar values)
-          series: <BarSeries<int, double>>[
-// First bar series (Parent)
-            BarSeries<int, double>(
-              legendIconType: LegendIconType.circle,
-              dataSource: const <int>[0, 5, 2, 7, 1],
-              xValueMapper: (int datum, int index) {
-                return index
-                    .toDouble(); // The categories or labels for the bars
-              },
-              yValueMapper: (int datum, int index) {
-                return datum * 0.5; // Values for the bars
-              },
-              name: 'Parents',
-              pointColorMapper: (int datum, int index) {
-// Assign different colors for each bar
-                return AppColors.primaryLight;
-              },
-              dataLabelSettings: const DataLabelSettings(
-                isVisible: true, // Show labels on the bars
-              ),
+    return GetBuilder<DashboardController>(builder: (controller) {
+      return CommonChartWidget(
+        arryList: controller.contributorFilters,
+        selectedItem: controller.selectedContributorFilter,
+        onChanged: (p0) {
+          controller.selectedContributorFilter = p0 ?? '';
+          controller.getTopContributorsChart();
+          controller.update();
+        },
+        title: 'Contributions',
+        totalStats: '\$${controller.topContributorsChartDto?.data?.total ?? 0}',
+        child: Expanded(
+          child: SfCartesianChart(
+            primaryXAxis: const CategoryAxis(
+              majorGridLines: MajorGridLines(width: 0),
             ),
-
-// Second bar series (Contributor)
-            BarSeries<int, double>(
-              legendIconType: LegendIconType.circle,
-              dataSource: const <int>[2, 3, 1, 10, 4],
-              xValueMapper: (int datum, int index) {
-                return index
-                    .toDouble(); // The categories or labels for the bars
-              },
-              yValueMapper: (int datum, int index) {
-                return datum * 0.7; // Values for the bars
-              },
-              name: 'Contributors',
-              pointColorMapper: (int datum, int index) {
-// Assign different colors for each bar
-                return AppColors.secondary;
-              },
-              dataLabelSettings: const DataLabelSettings(
-                isVisible: false, // Show labels on the bars
-              ),
+            primaryYAxis: const NumericAxis(
+              minimum: 0,
+              maximum: 150,
+              interval: 30,
             ),
-          ],
+            legend: const Legend(
+              isVisible: true,
+              position: LegendPosition.bottom,
+              overflowMode: LegendItemOverflowMode.wrap,
+            ),
+            series: <CartesianSeries<ContributorChartData, String>>[
+              BarSeries<ContributorChartData, String>(
+                dataSource: controller.topContributorChartData,
+                xValueMapper: (ContributorChartData data, _) => data.month,
+                yValueMapper: (ContributorChartData data, _) =>
+                    data.contributor,
+                name: 'Contributors',
+                color: Colors.green,
+                dataLabelSettings: const DataLabelSettings(isVisible: true),
+              ),
+              BarSeries<ContributorChartData, String>(
+                dataSource: controller.topContributorChartData,
+                xValueMapper: (ContributorChartData data, _) => data.month,
+                yValueMapper: (ContributorChartData data, _) => data.parent,
+                name: 'Parents',
+                color: Colors.teal,
+                dataLabelSettings: const DataLabelSettings(isVisible: true),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

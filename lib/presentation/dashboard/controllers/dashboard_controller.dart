@@ -49,6 +49,7 @@ class DashboardController extends GetxController {
   final List<ChartData> contributorData = [];
   final List<ChartData> parentData = [];
   final List<ChartData> topGiftingData = [];
+  final List<ContributorChartData> topContributorChartData = [];
   getDashboardListingData() async {
     try {
       dashboardListingDto = await dashboardRepository.dashboardListingData();
@@ -94,11 +95,23 @@ class DashboardController extends GetxController {
 
   getTopContributorsChart() async {
     try {
+      topContributorChartData.clear();
+      isContributorLoading = true;
+      update();
       topContributorsChartDto = await dashboardRepository
           .topContributorsChart(selectedContributorFilter);
-
-      // print(topContributorsChartDto!.toJson());
+      topContributorsChartDto?.data?.chartData?.forEach((element) {
+        topContributorChartData.add(ContributorChartData(
+          month: element.month,
+          parent: element.parent,
+          contributor: element.contributor,
+        ));
+      });
+      isContributorLoading = false;
+      update();
     } catch (e) {
+      isContributorLoading = false;
+      update();
       print(e);
     }
   }
@@ -134,3 +147,11 @@ class ChartData {
 
   ChartData(this.month, this.value);
 }
+
+// class ContributorChartData {
+//   final String month;
+//   final double parents;
+//   final double contributors;
+
+//   ContributorChartData(this.month, this.parents, this.contributors);
+// }
