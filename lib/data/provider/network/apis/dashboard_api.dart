@@ -7,7 +7,8 @@ enum ApiType {
   dashboardListing,
   topGiftingChart,
   topContributorsChart,
-  activeUsersChart
+  activeUsersChart,
+  totalUsersChart,
 }
 
 class DashboardApi extends APIRequestRepresentable {
@@ -21,6 +22,8 @@ class DashboardApi extends APIRequestRepresentable {
       : this._(apiType: ApiType.topContributorsChart, filter: filter);
   DashboardApi.activeUsersChart(String filter)
       : this._(apiType: ApiType.activeUsersChart, filter: filter);
+  DashboardApi.totalUsersChart(String filter)
+      : this._(apiType: ApiType.totalUsersChart, filter: filter);
 
   @override
   get body {
@@ -29,6 +32,7 @@ class DashboardApi extends APIRequestRepresentable {
       case ApiType.topGiftingChart:
       case ApiType.topContributorsChart:
       case ApiType.activeUsersChart:
+      case ApiType.totalUsersChart:
         return {};
     }
   }
@@ -43,6 +47,7 @@ class DashboardApi extends APIRequestRepresentable {
       case ApiType.topGiftingChart:
       case ApiType.topContributorsChart:
       case ApiType.activeUsersChart:
+      case ApiType.totalUsersChart:
         return {
           'accept': ' */*',
           'Content-Type': 'application/json; charset=utf-8',
@@ -59,6 +64,7 @@ class DashboardApi extends APIRequestRepresentable {
       case ApiType.topGiftingChart:
       case ApiType.topContributorsChart:
       case ApiType.activeUsersChart:
+      case ApiType.totalUsersChart:
         return HTTPMethod.get;
     }
   }
@@ -74,6 +80,8 @@ class DashboardApi extends APIRequestRepresentable {
         return APIEndpoint.topContributorUrl;
       case ApiType.activeUsersChart:
         return APIEndpoint.activeUsersUrl;
+      case ApiType.totalUsersChart:
+        return APIEndpoint.totalUserUrl;
     }
   }
 
@@ -93,6 +101,7 @@ class DashboardApi extends APIRequestRepresentable {
       case ApiType.topGiftingChart:
       case ApiType.topContributorsChart:
       case ApiType.activeUsersChart:
+      case ApiType.totalUsersChart:
         return {'filter': filter ?? ''};
     }
   }

@@ -34,22 +34,24 @@ class ParentTableBody extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                  GetBuilder<UserParentController>(builder: (controller) {
-                    return SizedBox(
-                      height: 35,
-                      width: 35,
-                      child: Checkbox(
-                        value: model.isSelected ?? false,
-                        activeColor: AppColors.primary,
-                        splashRadius: 10,
-                        onChanged: (p0) {
-                          model.isSelected = p0;
-                          controller.update();
-                        },
-                        side: const BorderSide(color: AppColors.grey, width: 1),
-                      ),
-                    );
-                  }),
+                  // GetBuilder<UserParentController>(builder: (controller) {
+                  // return
+                  SizedBox(
+                    height: 35,
+                    width: 35,
+                    child: Checkbox(
+                      value: model.isSelected ?? false,
+                      activeColor: AppColors.primary,
+                      splashRadius: 10,
+                      onChanged: (p0) {
+                        // model.isSelected = p0;
+                        // controller.update();
+                      },
+                      side: const BorderSide(color: AppColors.grey, width: 1),
+                    ),
+                  ),
+                  // ;
+                  // }),
                   const HorizontalSpacing(30),
                   CommonText(
                     text: model.id?.toString() ?? '',

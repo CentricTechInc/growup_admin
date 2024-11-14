@@ -4,6 +4,7 @@ import 'package:grow_up_admin_panel/data/dto/active_users_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/dashboard_listing_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/top_contributors_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/top_gifting_chart_dto.dart';
+import 'package:grow_up_admin_panel/data/dto/total_users_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/dashboard_api.dart';
 import 'package:grow_up_admin_panel/domain/repository/dashboard_repo.dart';
 
@@ -49,6 +50,17 @@ class DashboardRepoImpl extends DashboardRepository {
       final response = await DashboardApi.topGiftingChart(filter).request();
       var json = jsonDecode(response);
       return TopGiftingChartDto.fromJson(json);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<TotalUsersChartDto> totalUsersChart(String filter) async {
+    try {
+      final response = await DashboardApi.totalUsersChart(filter).request();
+      var json = jsonDecode(response);
+      return TotalUsersChartDto.fromJson(json);
     } catch (e) {
       rethrow;
     }

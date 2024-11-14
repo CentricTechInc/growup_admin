@@ -6,6 +6,7 @@ class APIEndpoint {
   static String get topContributorUrl => '/api/dashboard/top-contributions';
   static String get topGiftingsUrl => '/api/dashboard/top-gifts';
   static String get activeUsersUrl => '/api/dashboard/active-users';
+  static String get totalUserUrl => '/api/analytics-reports/percentage-users';
   // ---------------- Authorization --------------------
   static String get loginUrl => '/api/auth/login';
   static String get verifyOtpUrl => '/api/auth/verify-otp';

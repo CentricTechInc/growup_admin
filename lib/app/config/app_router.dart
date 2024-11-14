@@ -192,6 +192,9 @@ class AppRouter {
             parentNavigatorKey: _shellNavigatorKey,
             path: PagePath.analytics,
             pageBuilder: (context, state) {
+              Get.lazyPut(
+                () => DashboardController(),
+              );
               return const MaterialPage(
                 child: AnalyticsPage(),
               );

@@ -5,6 +5,7 @@ import 'package:grow_up_admin_panel/data/dto/active_users_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/dashboard_listing_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/top_contributors_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/top_gifting_chart_dto.dart';
+import 'package:grow_up_admin_panel/data/dto/total_users_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/repositories/dashboard_repo_impl.dart';
 import 'package:grow_up_admin_panel/domain/repository/dashboard_repo.dart';
 
@@ -22,6 +23,7 @@ class DashboardController extends GetxController {
     getActiveUsersChart();
     getTopContributorsChart();
     getTopGiftingChart();
+    getTotalUsersChart();
   }
 
   DashboardListingDto? dashboardListingDto;
@@ -33,10 +35,12 @@ class DashboardController extends GetxController {
   ActiveUsersChartDto? activeUsersChartDto;
   TopContributorsChartDto? topContributorsChartDto;
   TopGiftingChartDto? topGiftingChartDto;
+  TotalUsersChartDto? totalUsersChartDto;
 
   String selectedUserFilter = 'half-yearly';
   String selectedGiftFilter = 'this-week';
   String selectedContributorFilter = 'last90days';
+  String selectedTotalUsersFilter = 'this-week';
 
   List<String> userFilters = ['last-week', 'half-yearly'];
   List<String> giftFilters = [
@@ -46,6 +50,12 @@ class DashboardController extends GetxController {
     'last-month'
   ];
   List<String> contributorFilters = ['last90days'];
+  List<String> totalUsersFilters = [
+    'this-week',
+    'last-week',
+    'last-month',
+    'quarterly'
+  ];
   final List<ChartData> contributorData = [];
   final List<ChartData> parentData = [];
   final List<ChartData> topGiftingData = [];
@@ -139,6 +149,23 @@ class DashboardController extends GetxController {
       print(e);
     }
   }
+
+  bool totalUsersLoading = false;
+  getTotalUsersChart() async {
+    try {
+      totalUsersLoading = true;
+      update();
+      await Future.delayed(const Duration(milliseconds: 500));
+      totalUsersChartDto =
+          await dashboardRepository.totalUsersChart(selectedTotalUsersFilter);
+      totalUsersLoading = false;
+      update();
+    } catch (e) {
+      totalUsersLoading = false;
+      update();
+      print(e);
+    }
+  }
 }
 
 class ChartData {
@@ -147,11 +174,3 @@ class ChartData {
 
   ChartData(this.month, this.value);
 }
-
-// class ContributorChartData {
-//   final String month;
-//   final double parents;
-//   final double contributors;
-
-//   ContributorChartData(this.month, this.parents, this.contributors);
-// }
