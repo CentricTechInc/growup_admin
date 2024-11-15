@@ -60,7 +60,7 @@ class DashboardController extends GetxController {
     'quarterly'
   ];
   List<String> contributionFrequencyFilters = [
-    'last-week',
+    'this-week',
     'last-week',
     'half-yearly'
   ];
