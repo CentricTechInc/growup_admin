@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/controllers/dashboard_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_chart_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-class  ContributionFrequencyWidget extends StatelessWidget {
+
+class ContributionFrequencyWidget extends StatelessWidget {
   const ContributionFrequencyWidget({super.key});
 
   @override
@@ -21,51 +23,51 @@ class  ContributionFrequencyWidget extends StatelessWidget {
           ),
           legend: Legend(isVisible: true, position: LegendPosition.bottom),
           series: [
-            StackedBarSeries<Map<String, dynamic>, String>(
+            StackedBarSeries<ChartData, String>(
               dataSource: [
-                {'month': 'Jan', 'value': 20},
-                {'month': 'Feb', 'value': 30},
-                {'month': 'Mar', 'value': 25},
-                {'month': 'Apr', 'value': 10},
+                ChartData('Jan', 20),
+                ChartData('Feb', 25),
+                ChartData('Mar', 30),
+                ChartData('Apr', 10),
               ],
-              xValueMapper: (Map<String, dynamic> data, _) => data['month'],
-              yValueMapper: (Map<String, dynamic> data, _) => data['value'],
+              xValueMapper: (ChartData data, _) => data.month,
+              yValueMapper: (ChartData data, _) => data.value,
               color: Colors.red,
               name: 'Segment 1',
             ),
-            StackedBarSeries<Map<String, dynamic>, String>(
+            StackedBarSeries<ChartData, String>(
               dataSource: [
-                {'month': 'Jan', 'value': 15},
-                {'month': 'Feb', 'value': 10},
-                {'month': 'Mar', 'value': 20},
-                {'month': 'Apr', 'value': 15},
+                ChartData('Jan', 20),
+                ChartData('Feb', 25),
+                ChartData('Mar', 30),
+                ChartData('Apr', 10),
               ],
-              xValueMapper: (Map<String, dynamic> data, _) => data['month'],
-              yValueMapper: (Map<String, dynamic> data, _) => data['value'],
+              xValueMapper: (ChartData data, _) => data.month,
+              yValueMapper: (ChartData data, _) => data.value,
               color: Colors.yellow,
               name: 'Segment 2',
             ),
-            StackedBarSeries<Map<String, dynamic>, String>(
+            StackedBarSeries<ChartData, String>(
               dataSource: [
-                {'month': 'Jan', 'value': 10},
-                {'month': 'Feb', 'value': 20},
-                {'month': 'Mar', 'value': 15},
-                {'month': 'Apr', 'value': 25},
+                ChartData('Jan', 20),
+                ChartData('Feb', 25),
+                ChartData('Mar', 30),
+                ChartData('Apr', 10),
               ],
-              xValueMapper: (Map<String, dynamic> data, _) => data['month'],
-              yValueMapper: (Map<String, dynamic> data, _) => data['value'],
+              xValueMapper: (ChartData data, _) => data.month,
+              yValueMapper: (ChartData data, _) => data.value,
               color: Colors.green,
               name: 'Segment 3',
             ),
-            StackedBarSeries<Map<String, dynamic>, String>(
+            StackedBarSeries<ChartData, String>(
               dataSource: [
-                {'month': 'Jan', 'value': 5},
-                {'month': 'Feb', 'value': 15},
-                {'month': 'Mar', 'value': 10},
-                {'month': 'Apr', 'value': 20},
+                ChartData('Jan', 20),
+                ChartData('Feb', 25),
+                ChartData('Mar', 30),
+                ChartData('Apr', 10),
               ],
-              xValueMapper: (Map<String, dynamic> data, _) => data['month'],
-              yValueMapper: (Map<String, dynamic> data, _) => data['value'],
+              xValueMapper: (ChartData data, _) => data.month,
+              yValueMapper: (ChartData data, _) => data.value,
               color: Colors.blue,
               name: 'Segment 4',
             ),
