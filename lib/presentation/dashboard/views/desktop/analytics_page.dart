@@ -75,7 +75,7 @@ class AnalyticsPage extends StatelessWidget {
                   height: 350,
                   child: ContributionFrequencyWidget()),
               SizedBox(
-                  width: 750,
+                  width: 580,
                   height: 350,
                   child: CommonListWidget(
                     title: "Recent Contributions",

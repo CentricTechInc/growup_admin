@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/dashboard_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_chart_widget.dart';
@@ -25,6 +26,7 @@ class TopGiftingChartWidget extends StatelessWidget {
             child: controller.isGiftLoading
                 ? const Center(child: CircularProgressIndicator())
                 : SfCircularChart(
+                    tooltipBehavior: TooltipBehavior(enable: true),
                     legend: const Legend(isVisible: true),
                     series: <PieSeries<ChartData, String>>[
                       PieSeries<ChartData, String>(
