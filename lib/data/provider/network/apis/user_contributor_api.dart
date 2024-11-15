@@ -1,24 +1,35 @@
+import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_endpoints.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_provider.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_request_representable.dart';
 
 enum UserContrbutorApiType {
   getContributorTable,
+  searchContributorTable,
 }
 
 class UserContributorApi implements APIRequestRepresentable {
   UserContrbutorApiType type;
   String? search;
+  int? pageNo;
 
   UserContributorApi._({
     required this.type,
     this.search,
+    this.pageNo,
   });
 
-  UserContributorApi.getContributorTable()
+  UserContributorApi.getContributorTable(int pageNo)
       : this._(
-    type: UserContrbutorApiType.getContributorTable,
-  );
+          type: UserContrbutorApiType.getContributorTable,
+          pageNo: pageNo,
+        );
+
+  UserContributorApi.searchContributorTable(int pageNo, String search)
+      : this._(
+            type: UserContrbutorApiType.searchContributorTable,
+            pageNo: pageNo,
+            search: search);
 
   @override
   get body {
@@ -32,7 +43,8 @@ class UserContributorApi implements APIRequestRepresentable {
   String get path {
     switch (type) {
       case UserContrbutorApiType.getContributorTable:
-        return '${APIEndpoint.userContributorTableUrl}/1';
+      case UserContrbutorApiType.searchContributorTable:
+        return '${APIEndpoint.userContributorTableUrl}/$pageNo';
     }
   }
 
@@ -43,8 +55,7 @@ class UserContributorApi implements APIRequestRepresentable {
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
-          // 'authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
-          'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWduYXR1cmUiOjE3MzEwODA5Njk2NDAsImVtYWlsIjoic2FhZC5uYWVlbUBjZW50cmljdGVjaC5jbyIsImlhdCI6MTczMTA4MDk2OX0.8YHvoOlwd-aA519uG7kdKA0dXPnrO2nOwfWDQCiL3vA',
+          'authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
         };
       default:
         return {};
@@ -55,6 +66,7 @@ class UserContributorApi implements APIRequestRepresentable {
   HTTPMethod get method {
     switch (type) {
       case UserContrbutorApiType.getContributorTable:
+      case UserContrbutorApiType.searchContributorTable:
         return HTTPMethod.get;
     }
   }
@@ -73,6 +85,8 @@ class UserContributorApi implements APIRequestRepresentable {
   @override
   Map<String, String>? get urlParams {
     switch (type) {
+      case UserContrbutorApiType.searchContributorTable:
+        return {'search': search ?? ''};
       case UserContrbutorApiType.getContributorTable:
         return {};
     }

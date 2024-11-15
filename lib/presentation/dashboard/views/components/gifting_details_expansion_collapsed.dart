@@ -4,17 +4,22 @@ import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
+import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/icon_button.dart';
 
 class GiftingDeatilsExpansionCollapsed extends StatelessWidget {
-  const GiftingDeatilsExpansionCollapsed({super.key});
+  const GiftingDeatilsExpansionCollapsed(
+      {super.key, required this.giftingModel, required this.onDelete});
+
+  final GiftingModel giftingModel;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const CommonText(
-          text: 'Dream Weavers',
+        CommonText(
+          text: giftingModel.title ?? '',
           fontSize: 16,
           weight: FontWeight.w600,
         ),
@@ -37,8 +42,8 @@ class GiftingDeatilsExpansionCollapsed extends StatelessWidget {
                 color: AppColors.secondary,
               ),
               const HorizontalSpacing(10),
-              const CommonText(
-                text: 'Every Month',
+              CommonText(
+                text: giftingModel.frequency ?? '',
                 fontSize: 16,
                 weight: FontWeight.w700,
               ),
@@ -65,8 +70,8 @@ class GiftingDeatilsExpansionCollapsed extends StatelessWidget {
                 color: AppColors.primary,
               ),
               const HorizontalSpacing(10),
-              const CommonText(
-                text: '\$ 15000.00',
+              CommonText(
+                text: '\$ ${giftingModel.contributionTotal}.00',
                 fontSize: 16,
                 weight: FontWeight.w700,
               ),
@@ -93,7 +98,7 @@ class GiftingDeatilsExpansionCollapsed extends StatelessWidget {
         const HorizontalSpacing(40),
         CommonIconButton(
           icon: Assets.deleteIcon,
-          onTap: () {},
+          onTap: onDelete,
           color: AppColors.red,
         ),
       ],

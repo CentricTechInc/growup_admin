@@ -9,8 +9,6 @@ import 'package:grow_up_admin_panel/app/util/common_text_field.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
-import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
-import 'package:grow_up_admin_panel/data/dto/user_bene_dto.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/adjust_tax_dialog_box.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
@@ -29,7 +27,13 @@ class UserParentPage extends StatelessWidget {
           children: [
             PageHeader(
               label: 'Parents',
-              showTaxBtn: true,
+              // showTaxBtn: true,
+              searchOnChanged: (val) {
+                controller.debouncer.run(() async {
+                  await controller.searchParentTable(val);
+                  controller.update();
+                });
+              },
               taxBtnOnTap: () {
                 showDialog(
                   context: context,
@@ -51,25 +55,13 @@ class UserParentPage extends StatelessWidget {
                 itemCount: controller.userParentModelList.length,
                 itemBuilder: (context, index) => ParentTableBody(
                   onTap: () async {
-                    try {
-                      GiftDetailDto giftDetailDto =
-                          await controller.getGiftDetail(controller
-                              .userParentModelList[index].id
-                              .toString());
-                      UserBeneficiaryDto giftBenesDto =
-                          await controller.getUserBenes(
-                              controller.userParentModelList[index].id
-                                  .toString(),
-                              '1');
-                      globalContext?.push(
-                          PagePath.userParents + PagePath.parentDetails.toRoute,
-                          extra: {
-                            'giftDetailDto': giftDetailDto,
-                            'giftBenesDto': giftBenesDto
-                          });
-                    } catch (e) {
-                      print(e);
-                    }
+                    await controller.getGiftDetail(
+                        controller.userParentModelList[index].id.toString(),
+                        'Active');
+                    await controller.getUserBenes(
+                        controller.userParentModelList[index].id.toString());
+                    globalContext?.push(
+                        PagePath.userParents + PagePath.parentDetails.toRoute);
                   },
                   model: controller.userParentModelList[index],
                 ),
@@ -77,9 +69,13 @@ class UserParentPage extends StatelessWidget {
               ),
             ),
             CommonPagerWidget(
-              currentPage: 1,
-              totalPage: 1,
-              onPageChanged: (page) {},
+              currentPage: controller.parentPageNo,
+              totalPage: (controller.elementCount / 10).ceil(),
+              onPageChanged: (page) async {
+                controller.parentPageNo = page;
+                await controller.getParentTable();
+                controller.update();
+              },
             ),
           ],
         );
@@ -94,9 +90,9 @@ class PageHeader extends StatelessWidget {
       {super.key,
       required this.label,
       this.showTaxBtn = false,
-      this.showSearch = false,
+      this.showSearch = true,
+      this.searchOnChanged,
       this.searchController,
-      this.onChanged,
       this.taxBtnOnTap});
 
   final String label;
@@ -104,7 +100,7 @@ class PageHeader extends StatelessWidget {
   final bool showSearch;
   final VoidCallback? taxBtnOnTap;
   final TextEditingController? searchController;
-  dynamic Function(String)? onChanged;
+  dynamic Function(String)? searchOnChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +171,7 @@ class PageHeader extends StatelessWidget {
               borderColor: AppColors.primary,
               enableBorder: AppColors.primary,
               controller: searchController ?? TextEditingController(),
-              onChanged: onChanged,
+              onChanged: searchOnChanged,
             ),
           ),
       ],

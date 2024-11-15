@@ -9,13 +9,13 @@ import 'package:pager/pager.dart';
 class CommonPagerWidget extends StatelessWidget {
   const CommonPagerWidget(
       {super.key,
-        required this.currentPage,
-        required this.totalPage,
-        required this.onPageChanged,
-        this.showItemsPerPageBool = false,
-        this.currentItemsPerPage,
-        this.onItemsPerPageChanged,
-        this.itemsPerPageList});
+      required this.currentPage,
+      required this.totalPage,
+      required this.onPageChanged,
+      this.showItemsPerPageBool = false,
+      this.currentItemsPerPage,
+      this.onItemsPerPageChanged,
+      this.itemsPerPageList});
 
   final int currentPage;
   final int? currentItemsPerPage;
@@ -49,7 +49,7 @@ class CommonPagerWidget extends StatelessWidget {
         ),
         const HorizontalSpacing(30),
         CommonText(
-          text: '$currentPage-$currentItemsPerPage of  $totalPage',
+          text: '$currentPage of  $totalPage',
           fontSize: 12,
           weight: FontWeight.w600,
         ),
@@ -63,7 +63,7 @@ class CommonPagerWidget extends StatelessWidget {
           onPageChanged: onPageChanged,
           totalPages: totalPage,
           dropDownMenuItemTextStyle:
-          const TextStyle(fontFamily: Strings.fontFamily, fontSize: 14),
+              const TextStyle(fontFamily: Strings.fontFamily, fontSize: 14),
           itemsPerPageTextStyle: const TextStyle(
               fontSize: 14,
               fontFamily: Strings.fontFamily,
@@ -78,4 +78,3 @@ class CommonPagerWidget extends StatelessWidget {
     );
   }
 }
-

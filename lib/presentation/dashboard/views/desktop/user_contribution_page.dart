@@ -22,6 +22,12 @@ class UserContributionPage extends StatelessWidget {
           children: [
             PageHeader(
               label: 'Contributors',
+              searchOnChanged: (val) {
+                controller.debouncer.run(() async {
+                  await controller.searchContributorsTable(val);
+                  controller.update();
+                });
+              },
             ),
             const VerticalSpacing(30),
             const ParentTableHeader(
@@ -43,9 +49,13 @@ class UserContributionPage extends StatelessWidget {
               ),
             ),
             CommonPagerWidget(
-              currentPage: 1,
-              totalPage: 1,
-              onPageChanged: (page) {},
+              currentPage: controller.contributorPageNo,
+              totalPage: (controller.elementCount / 10).ceil(),
+              onPageChanged: (page) async {
+                controller.contributorPageNo = page;
+                await controller.getContributorsTable();
+                controller.update();
+              },
             ),
           ],
         );

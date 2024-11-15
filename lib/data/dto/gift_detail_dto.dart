@@ -1,3 +1,6 @@
+import 'package:grow_up_admin_panel/data/dto/user_dto.dart';
+import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
+
 class GiftDetailDto {
   bool? status;
   String? message;
@@ -23,14 +26,21 @@ class GiftDetailDto {
 }
 
 class Data {
-  User? user;
+  UserModelDto? user;
+  List<GiftingModel>? giftingModel;
   int? contributed;
+  int? recieved;
+  int? totalGifts;
 
-  Data({this.user, this.contributed});
+  Data({this.user, this.contributed, this.recieved, this.totalGifts});
 
   Data.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    user = json['user'] != null ? UserModelDto.fromJson(json['user']) : null;
+    giftingModel = List<GiftingModel>.from(json['gifts'].map((e) => GiftingModel.fromJson(e)));
+        // json['gifts'] != null ? GiftingModel.fromJson(json['gifts']) : null;
     contributed = json['contributed'];
+    recieved = json['received'];
+    totalGifts = json['totalGiftings'];
   }
 
   Map<String, dynamic> toJson() {
@@ -38,123 +48,12 @@ class Data {
     if (user != null) {
       data['user'] = user!.toJson();
     }
+    // if (giftingModel != null) {
+    //   data['gifts'] = giftingModel!.toJson();
+    // }
     data['contributed'] = contributed;
-    return data;
-  }
-}
-
-class User {
-  String? name;
-  String? email;
-  String? phone;
-  List<Gifts>? gifts;
-  int? totalGifts;
-
-  User({this.name, this.email, this.phone, this.gifts, this.totalGifts});
-
-  User.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    email = json['email'];
-    phone = json['phone'];
-    if (json['Gifts'] != null) {
-      gifts = <Gifts>[];
-      json['Gifts'].forEach((v) {
-        gifts!.add(Gifts.fromJson(v));
-      });
-    }
-    totalGifts = json['TotalGifts'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['name'] = name;
-    data['email'] = email;
-    data['phone'] = phone;
-    if (gifts != null) {
-      data['Gifts'] = gifts!.map((v) => v.toJson()).toList();
-    }
-    data['TotalGifts'] = totalGifts;
-    return data;
-  }
-}
-
-class Gifts {
-  String? picture;
-  String? createdAt;
-  int? id;
-  String? title;
-  String? purpose;
-  String? frequency;
-  String? publishDate;
-  String? description;
-  int? contributionCount;
-  String? contributionTotal;
-  String? status;
-  String? recentContributionAmount;
-  String? updatedAt;
-  int? userId;
-  int? beneficiaryId;
-  Beneficiary? beneficiary;
-
-  Gifts(
-      {this.picture,
-      this.createdAt,
-      this.id,
-      this.title,
-      this.purpose,
-      this.frequency,
-      this.publishDate,
-      this.description,
-      this.contributionCount,
-      this.contributionTotal,
-      this.status,
-      this.recentContributionAmount,
-      this.updatedAt,
-      this.userId,
-      this.beneficiaryId,
-      this.beneficiary});
-
-  Gifts.fromJson(Map<String, dynamic> json) {
-    picture = json['picture'];
-    createdAt = json['createdAt'];
-    id = json['id'];
-    title = json['title'];
-    purpose = json['purpose'];
-    frequency = json['frequency'];
-    publishDate = json['publish_date'];
-    description = json['description'];
-    contributionCount = json['contribution_count'];
-    contributionTotal = json['contribution_total'];
-    status = json['status'];
-    recentContributionAmount = json['recent_contribution_amount'];
-    updatedAt = json['updatedAt'];
-    userId = json['UserId'];
-    beneficiaryId = json['BeneficiaryId'];
-    beneficiary = json['Beneficiary'] != null
-        ? Beneficiary.fromJson(json['Beneficiary'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['picture'] = picture;
-    data['createdAt'] = createdAt;
-    data['id'] = id;
-    data['title'] = title;
-    data['purpose'] = purpose;
-    data['frequency'] = frequency;
-    data['publish_date'] = publishDate;
-    data['description'] = description;
-    data['contribution_count'] = contributionCount;
-    data['contribution_total'] = contributionTotal;
-    data['status'] = status;
-    data['recent_contribution_amount'] = recentContributionAmount;
-    data['updatedAt'] = updatedAt;
-    data['UserId'] = userId;
-    data['BeneficiaryId'] = beneficiaryId;
-    if (beneficiary != null) {
-      data['Beneficiary'] = beneficiary!.toJson();
-    }
+    data['recieved'] = recieved;
+    data['totalGifts'] = totalGifts;
     return data;
   }
 }

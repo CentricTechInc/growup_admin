@@ -2,24 +2,41 @@ import 'dart:convert';
 
 import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/user_bene_dto.dart';
+import 'package:grow_up_admin_panel/data/provider/network/apis/pagination_model.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/user_parent_api.dart';
+import 'package:grow_up_admin_panel/data/repositories/activity_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
 import 'package:grow_up_admin_panel/domain/repository/user_parent_repository.dart';
 
 class UserParentRepositoryImpl extends UserParentRepository {
   @override
-  Future<List<ParentModel>> getParentTable() async {
-    final response = await UserParentApi.getParentTable().request();
-    final List<dynamic> json = jsonDecode(response)['data'];
+  Future<PaginationModel> getParentTable(int pageNo) async {
+    final response = await UserParentApi.getParentTable(pageNo).request();
+    final List<dynamic> json = jsonDecode(response)['data']['data'];
+
     final List<ParentModel> data =
         json.map((e) => ParentModel.fromJson(e)).toList();
-    return data;
+    final model = PaginationModel(
+        data: data, count: jsonDecode(response)['data']['parentCount']);
+    return model;
   }
 
   @override
-  Future<GiftDetailDto> getGiftDetail(String id) async {
+  Future<PaginationModel> searchParentTable(String search, int pageNo) async {
+    final response = await UserParentApi.searchParentTable(search,pageNo).request();
+    final List<dynamic> json = jsonDecode(response)['data']['data'];
+
+    final List<ParentModel> data =
+        json.map((e) => ParentModel.fromJson(e)).toList();
+    final model = PaginationModel(
+        data: data, count: jsonDecode(response)['data']['parentCount']);
+    return model;
+  }
+
+  @override
+  Future<GiftDetailDto> getGiftDetail(String id, status) async {
     try {
-      final response = await UserParentApi.getDetail(id).request();
+      final response = await UserParentApi.getDetail(id, status).request();
       return GiftDetailDto.fromJson(jsonDecode(response));
     } catch (e) {
       rethrow;
@@ -32,6 +49,19 @@ class UserParentRepositoryImpl extends UserParentRepository {
       final response =
           await UserParentApi.getUserBeneficiary(id, page).request();
       return UserBeneficiaryDto.fromJson(jsonDecode(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ActivityModel>> getActivity(String id, String page) async {
+    try {
+      final response = await UserParentApi.getActivity(id, page).request();
+      final List<dynamic> json = jsonDecode(response)['data'];
+      final List<ActivityModel> data =
+          json.map((e) => ActivityModel.fromJson(e)).toList();
+      return data;
     } catch (e) {
       rethrow;
     }

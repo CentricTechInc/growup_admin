@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
-import 'package:grow_up_admin_panel/common/resources/drawables.dart';
+import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 
 class ParentLiveGiftingsWidget extends StatelessWidget {
-  const ParentLiveGiftingsWidget({super.key});
+  const ParentLiveGiftingsWidget({super.key, required this.giftingModel});
+
+  final GiftingModel giftingModel;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +27,18 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        image: const DecorationImage(
-                            image: AssetImage(
-                              Assets.schoolImg,
-                            ),
+                        image: DecorationImage(
+                            image: NetworkImage(giftingModel.picture ?? ''),
+                            onError: (object, _) {
+                              const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: Icon(
+                                  Icons.error_outline,
+                                  color: AppColors.red,
+                                ),
+                              );
+                            },
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -43,15 +53,15 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CommonText(
-                            text: 'help Us Succeed',
+                            text: giftingModel.title ?? '',
                             fontSize: 16,
                             weight: FontWeight.w600,
                             color: AppColors.white,
@@ -67,25 +77,25 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     const VerticalSpacing(20),
-                    Row(
+                    const Row(
                       children: [
-                        const Expanded(
+                        Expanded(
                           child: CommonText(
-                            text: 'Total Gifting',
+                            text: 'Gifting Purpose',
                             fontSize: 16,
                             weight: FontWeight.w700,
                           ),
                         ),
-                        const Expanded(
+                        Expanded(
                           child: CommonText(
-                            text: 'Total Gifting 2',
+                            text: 'Date & Time',
                             fontSize: 16,
                             weight: FontWeight.w700,
                           ),
                         ),
-                        const Expanded(
+                        Expanded(
                           child: CommonText(
-                            text: 'Total Gifting 3',
+                            text: 'Gifting Status',
                             fontSize: 16,
                             weight: FontWeight.w700,
                           ),
@@ -96,9 +106,13 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
                     Row(
                       children: List.generate(
                         3,
-                        (index) => const Expanded(
+                        (index) => Expanded(
                           child: CommonText(
-                            text: 'Total Gifting',
+                            text: [
+                              giftingModel.purpose ?? '',
+                              giftingModel.createdAt ?? '',
+                              giftingModel.status?.name ?? ''
+                            ][index],
                             fontSize: 16,
                             weight: FontWeight.w400,
                             color: AppColors.secondaryText,
@@ -110,9 +124,13 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
                     Row(
                       children: List.generate(
                         3,
-                        (index) => const Expanded(
+                        (index) => Expanded(
                           child: CommonText(
-                            text: 'Total Gifting',
+                            text: [
+                              'Gifting Frequency',
+                              'Gifting Total',
+                              'Benefeciary Name',
+                            ][index],
                             fontSize: 16,
                             weight: FontWeight.w700,
                           ),
@@ -123,9 +141,13 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
                     Row(
                       children: List.generate(
                         3,
-                        (index) => const Expanded(
+                        (index) => Expanded(
                           child: CommonText(
-                            text: 'Total Gifting',
+                            text: [
+                              giftingModel.frequency ?? '',
+                              giftingModel.contributionTotal ?? '',
+                              giftingModel.beneficiary?.name ?? '',
+                            ][index],
                             fontSize: 16,
                             weight: FontWeight.w400,
                             color: AppColors.secondaryText,
@@ -145,9 +167,8 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
             weight: FontWeight.w700,
           ),
           const VerticalSpacing(10),
-          const CommonText(
-            text:
-                'Help John achieve his dream of attending college! Your contributions will cover tuition, books, and living expenses, enabling him to focus on his studies. Every donation brings him one step closer to a bright future. Thank you for your support!',
+          CommonText(
+            text: giftingModel.description ?? '',
             fontSize: 16,
             weight: FontWeight.w400,
             color: AppColors.secondaryText,
@@ -166,9 +187,14 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
           Row(
             children: List.generate(
               4,
-              (index) => const Expanded(
+              (index) => Expanded(
                 child: CommonText(
-                  text: 'Bank',
+                  text: [
+                    'Bank',
+                    'Account',
+                    'Account Owner Name',
+                    'Account Number',
+                  ][index],
                   fontSize: 16,
                   weight: FontWeight.w700,
                 ),
@@ -179,9 +205,14 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
           Row(
             children: List.generate(
               4,
-              (index) => const Expanded(
+              (index) => Expanded(
                 child: CommonText(
-                  text: 'City Bank',
+                  text: [
+                    giftingModel.beneficiary?.bank ?? '',
+                    giftingModel.beneficiary?.accountType ?? '',
+                    giftingModel.beneficiary?.accountOwnerName ?? '',
+                    giftingModel.beneficiary?.accountNumber ?? '',
+                  ][index],
                   fontSize: 16,
                   weight: FontWeight.w400,
                   color: AppColors.secondaryText,
@@ -195,9 +226,13 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
               4,
               (index) => index == 3
                   ? const Spacer()
-                  : const Expanded(
+                  : Expanded(
                       child: CommonText(
-                        text: 'Bank',
+                        text: [
+                          'City',
+                          'State',
+                          'Zip',
+                        ][index],
                         fontSize: 16,
                         weight: FontWeight.w700,
                       ),
@@ -210,9 +245,13 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
               4,
               (index) => index == 3
                   ? const Spacer()
-                  : const Expanded(
+                  : Expanded(
                       child: CommonText(
-                        text: 'City Bank',
+                        text: [
+                          giftingModel.beneficiary?.city ?? '',
+                          giftingModel.beneficiary?.state ?? '',
+                          giftingModel.beneficiary?.zip ?? '',
+                        ][index],
                         fontSize: 16,
                         weight: FontWeight.w400,
                         color: AppColors.secondaryText,

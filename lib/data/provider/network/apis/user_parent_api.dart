@@ -3,27 +3,61 @@ import 'package:grow_up_admin_panel/data/provider/network/api_endpoints.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_provider.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_request_representable.dart';
 
-enum UserParentApiType { getParentTable, getDetail, getUserBeneficiary }
+enum UserParentApiType {
+  getParentTable,
+  searchParentTable,
+  getDetail,
+  getUserBeneficiary,
+  getActivity,
+}
 
 class UserParentApi implements APIRequestRepresentable {
   UserParentApiType type;
   String? search;
-  String? userId, pageId;
-  UserParentApi._({required this.type, this.search, this.userId, this.pageId});
+  String? userId, pageId, status;
+  int? pageNo;
 
-  UserParentApi.getParentTable()
+  UserParentApi._({
+    required this.type,
+    this.search,
+    this.userId,
+    this.pageId,
+    this.status,
+    this.pageNo,
+  });
+
+  UserParentApi.getParentTable(int pageNo)
       : this._(
           type: UserParentApiType.getParentTable,
+          pageNo: pageNo,
         );
+
+  UserParentApi.searchParentTable(String search, int pageNo)
+      : this._(
+          type: UserParentApiType.searchParentTable,
+          search: search,
+          pageNo: pageNo,
+        );
+
   UserParentApi.getDetail(
     String userId,
+    String status,
   ) : this._(
           type: UserParentApiType.getDetail,
           userId: userId,
+          status: status,
         );
+
   UserParentApi.getUserBeneficiary(String userId, String pageId)
       : this._(
           type: UserParentApiType.getUserBeneficiary,
+          userId: userId,
+          pageId: pageId,
+        );
+
+  UserParentApi.getActivity(String userId, String pageId)
+      : this._(
+          type: UserParentApiType.getActivity,
           userId: userId,
           pageId: pageId,
         );
@@ -32,8 +66,10 @@ class UserParentApi implements APIRequestRepresentable {
   get body {
     switch (type) {
       case UserParentApiType.getParentTable:
+      case UserParentApiType.searchParentTable:
       case UserParentApiType.getDetail:
       case UserParentApiType.getUserBeneficiary:
+      case UserParentApiType.getActivity:
         return {};
     }
   }
@@ -42,11 +78,14 @@ class UserParentApi implements APIRequestRepresentable {
   String get path {
     switch (type) {
       case UserParentApiType.getParentTable:
-        return '${APIEndpoint.userParentTableUrl}/1';
+      case UserParentApiType.searchParentTable:
+        return '${APIEndpoint.userParentTableUrl}/$pageNo';
       case UserParentApiType.getDetail:
         return APIEndpoint.userParentDetailsUrl;
       case UserParentApiType.getUserBeneficiary:
         return APIEndpoint.userBeneficiariesUrl;
+      case UserParentApiType.getActivity:
+        return '${APIEndpoint.getActivityUrl}/$userId/$pageId';
     }
   }
 
@@ -54,8 +93,10 @@ class UserParentApi implements APIRequestRepresentable {
   Map<String, String>? get headers {
     switch (type) {
       case UserParentApiType.getParentTable:
+      case UserParentApiType.searchParentTable:
       case UserParentApiType.getDetail:
       case UserParentApiType.getUserBeneficiary:
+      case UserParentApiType.getActivity:
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
@@ -70,6 +111,8 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getParentTable:
       case UserParentApiType.getDetail:
       case UserParentApiType.getUserBeneficiary:
+      case UserParentApiType.getActivity:
+      case UserParentApiType.searchParentTable:
         return HTTPMethod.get;
     }
   }
@@ -89,10 +132,16 @@ class UserParentApi implements APIRequestRepresentable {
   Map<String, String>? get urlParams {
     switch (type) {
       case UserParentApiType.getParentTable:
+      case UserParentApiType.searchParentTable:
+        return {
+          'search': search ?? '',
+        };
       case UserParentApiType.getDetail:
-        return {'userId': userId ?? ''};
+        return {'userId': userId ?? '', 'Status': status ?? ''};
       case UserParentApiType.getUserBeneficiary:
         return {'userId': userId ?? '', 'pageNumber': pageId ?? ''};
+      default:
+        return {};
     }
   }
 }

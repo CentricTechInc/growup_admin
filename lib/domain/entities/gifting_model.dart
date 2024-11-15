@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/user_dto.dart';
 
 enum GiftStatus { Active, Expired }
@@ -104,23 +105,51 @@ class GiftingModel {
       };
 }
 
-class Beneficiary {
+class Benefeciary {
   final String? name;
+  final String? bank;
+  final String? accountType;
+  final String? accountOwnerName;
+  final String? accountNumber;
+  final String? city;
+  final String? state;
+  final String? zip;
 
-  Beneficiary({
+  Benefeciary({
     this.name,
+    this.bank,
+    this.accountType,
+    this.accountOwnerName,
+    this.accountNumber,
+    this.city,
+    this.state,
+    this.zip,
   });
 
-  factory Beneficiary.fromRawJson(String str) =>
-      Beneficiary.fromJson(json.decode(str));
+  factory Benefeciary.fromRawJson(String str) =>
+      Benefeciary.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Beneficiary.fromJson(Map<String, dynamic> json) => Beneficiary(
+  factory Benefeciary.fromJson(Map<String, dynamic> json) => Benefeciary(
         name: json["name"],
+        bank: json["bank"],
+        accountType: json["account_type"],
+        accountOwnerName: json["account_owner_name"],
+        accountNumber: json["account_number"],
+        city: json["city"],
+        state: json["state"],
+        zip: json["zip"],
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
+        "bank": bank,
+        "account_type": accountType,
+        "account_owner_name": accountOwnerName,
+        "account_number": accountNumber,
+        "city": city,
+        "state": state,
+        "zip": zip,
       };
 }
