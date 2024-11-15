@@ -44,12 +44,12 @@ class AnalyticsPage extends StatelessWidget {
                   width: 450, height: 350, child: TopGiftingChartWidget()),
               const SizedBox(
                   width: 450, height: 350, child: ContributionsChartWidget()),
-              const SizedBox(
-                  width: 650,
-                  height: 350,
-                  child: ContributionAndPayoutRatioChartWidget()),
+              // const SizedBox(
+              //     width: 650,
+              //     height: 350,
+              //     child: ContributionAndPayoutRatioChartWidget()),
               SizedBox(
-                  width: 850,
+                  width: 750,
                   height: 350,
                   child: CommonListWidget(
                     title: "Payout",

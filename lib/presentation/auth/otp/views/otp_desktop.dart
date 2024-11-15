@@ -1,14 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:grow_up_admin_panel/app/mixins/validations.dart';
 import 'package:flutter/material.dart';
 import 'package:grow_up_admin_panel/app/util/common_auth_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/common_text_button.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
-import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/presentation/auth/controllers/otp_controller.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
