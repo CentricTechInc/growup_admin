@@ -63,7 +63,7 @@ class APIProvider {
           print(response.body);
           break;
       }
-      return _returnResponse(response);
+return _returnResponse(response);
     } on TimeoutException catch (_) {
       throw TimeoutException(null);
     } on SocketException {

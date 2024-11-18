@@ -11,7 +11,6 @@ class ModuleRepositoryImpl extends ModuleRepository {
   @override
   Future<PaginationModel> getGiftingTable(int pageNo, String? search) async {
     final response = await ModuleApi.getGiftingTable(pageNo, search).request();
-    print(response);
     final List<dynamic> json = jsonDecode(response)['data']['records'];
     final List<GiftingModel> data =
         json.map((e) => GiftingModel.fromJson(e)).toList();

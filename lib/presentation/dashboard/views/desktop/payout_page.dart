@@ -22,6 +22,19 @@ class PayoutPage extends StatelessWidget {
           children: [
             PageHeader(
               label: 'Payout',
+              searchController: controller.payoutSearchController,
+              searchCancelOnTap: () async {
+                controller.payoutSearchController.clear();
+                //
+                await controller.getPayoutTable();
+                controller.update();
+              },
+              searchOnChanged: (val) {
+                controller.debouncer.run(() async {
+                  await controller.getPayoutTable();
+                  controller.update();
+                });
+              },
             ),
             const VerticalSpacing(30),
             const PayoutTableHeader(

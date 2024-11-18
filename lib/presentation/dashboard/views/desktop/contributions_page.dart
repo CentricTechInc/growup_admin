@@ -21,8 +21,19 @@ class ContributionPage extends StatelessWidget {
             PageHeader(
               label: 'Contributions',
               showSearch: true,
-              searchController: TextEditingController(),
-              searchOnChanged: (p0) {},
+              searchController: controller.contributionsSearchController,
+              searchCancelOnTap: () async {
+                controller.contributionsSearchController.clear();
+
+                await controller.getContributionTable();
+                controller.update();
+              },
+              searchOnChanged: (val) {
+                controller.debouncer.run(() async {
+                  await controller.getContributionTable();
+                  controller.update();
+                });
+              },
             ),
             const VerticalSpacing(30),
             const ContributionTableHeader(
