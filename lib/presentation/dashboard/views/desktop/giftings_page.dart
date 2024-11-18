@@ -46,25 +46,16 @@ class GiftingsPage extends StatelessWidget {
                 itemBuilder: (context, index) => GiftingsTableBody(
                   model: controller.giftingModelList[index],
                   onTap: () async {
-                    try {
-                      GiftDetailDto giftDetailDto =
+
                           await controller.getGiftDetail(controller
                               .giftingModelList[index].userId
-                              .toString());
-                      UserBeneficiaryDto giftBenesDto =
+                              .toString(), 'Active');
                           await controller.getUserBenes(
                               controller.giftingModelList[index].userId
-                                  .toString(),
-                              '1');
+                                  .toString(),);
                       globalContext?.push(
-                          PagePath.giftings + PagePath.parentDetails.toRoute,
-                          extra: {
-                            'giftDetailDto': giftDetailDto,
-                            'giftBenesDto': giftBenesDto
-                          });
-                    } catch (e) {
-                      print(e);
-                    }
+                          PagePath.giftings + PagePath.parentDetails.toRoute);
+
                     controller.update();
                   },
                 ),

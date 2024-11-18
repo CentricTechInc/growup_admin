@@ -12,25 +12,30 @@ enum ModuleApiType {
 class ModuleApi implements APIRequestRepresentable {
   ModuleApiType type;
   String? search;
+  int? pageNo;
 
   ModuleApi._({
     required this.type,
     this.search,
+    this.pageNo,
   });
 
-  ModuleApi.getGiftingTable()
+  ModuleApi.getGiftingTable(int pageNo)
       : this._(
           type: ModuleApiType.getGiftingTable,
+          pageNo: pageNo,
         );
 
-  ModuleApi.getPayoutTable()
+  ModuleApi.getPayoutTable(int pageNo)
       : this._(
           type: ModuleApiType.getPayoutTable,
+          pageNo: pageNo,
         );
 
-  ModuleApi.getContributionTable()
+  ModuleApi.getContributionTable(int pageNo)
       : this._(
           type: ModuleApiType.getContributionTable,
+          pageNo: pageNo,
         );
 
   @override
@@ -45,11 +50,11 @@ class ModuleApi implements APIRequestRepresentable {
   String get path {
     switch (type) {
       case ModuleApiType.getGiftingTable:
-        return '${APIEndpoint.giftingTableUrl}/1';
+        return '${APIEndpoint.giftingTableUrl}/$pageNo';
       case ModuleApiType.getPayoutTable:
-        return '${APIEndpoint.payoutTableUrl}/1';
+        return '${APIEndpoint.payoutTableUrl}/$pageNo';
       case ModuleApiType.getContributionTable:
-        return '${APIEndpoint.contributionTableUrl}/1';
+        return APIEndpoint.contributionTableUrl;
     }
   }
 
@@ -61,7 +66,6 @@ class ModuleApi implements APIRequestRepresentable {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
           'authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
-          // 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWduYXR1cmUiOjE3MzEwODA5Njk2NDAsImVtYWlsIjoic2FhZC5uYWVlbUBjZW50cmljdGVjaC5jbyIsImlhdCI6MTczMTA4MDk2OX0.8YHvoOlwd-aA519uG7kdKA0dXPnrO2nOwfWDQCiL3vA',
         };
     }
   }
@@ -90,7 +94,10 @@ class ModuleApi implements APIRequestRepresentable {
   @override
   Map<String, String>? get urlParams {
     switch (type) {
-      default:
+      case ModuleApiType.getContributionTable:
+        return {'pageNumber': pageNo?.toString() ?? '0'};
+      case ModuleApiType.getGiftingTable:
+      case ModuleApiType.getPayoutTable:
         return {};
     }
   }

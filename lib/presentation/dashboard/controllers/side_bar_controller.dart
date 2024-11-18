@@ -50,6 +50,12 @@ class SideBarController extends GetxController {
   ///Contributor Table------
   int contributorPageNo = 1;
 
+  ///Contributor Table------
+  int giftingsPageNo = 1;
+
+  ///Contributor Table------
+  int payoutPageNo = 1;
+
   ///++++++++++++++++++++++++++++++++++++++++++++++
 
   int liveGiftingSelectedIndex = 0;
@@ -139,7 +145,7 @@ class SideBarController extends GetxController {
   getGiftingTable() async {
     try {
       Loader.showLoader();
-      final res = await moduleRepository.getGiftingTable();
+      final res = await moduleRepository.getGiftingTable(giftingsPageNo);
       giftingModelList.clear();
       giftingModelList.addAll(res);
       Loader.hideLoading();
@@ -152,7 +158,7 @@ class SideBarController extends GetxController {
   getPayoutTable() async {
     try {
       Loader.showLoader();
-      final res = await moduleRepository.getPayoutTable();
+      final res = await moduleRepository.getPayoutTable(payoutPageNo);
       payoutModelList.clear();
       payoutModelList.addAll(res);
       Loader.hideLoading();
@@ -165,7 +171,8 @@ class SideBarController extends GetxController {
   getContributionTable() async {
     try {
       Loader.showLoader();
-      final res = await moduleRepository.getContributionTable();
+      final res =
+          await moduleRepository.getContributionTable(contributorPageNo);
       contributionModelList.clear();
       contributionModelList.addAll(res);
       Loader.hideLoading();
