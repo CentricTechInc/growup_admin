@@ -70,7 +70,11 @@ class UserParentPage extends StatelessWidget {
             ),
             CommonPagerWidget(
               currentPage: controller.parentPageNo,
-              totalPage: (controller.elementCount / 10).ceil(),
+              totalPage: ((controller.elementCount == 0
+                          ? 1
+                          : controller.elementCount) /
+                      10)
+                  .ceil(),
               onPageChanged: (page) async {
                 controller.parentPageNo = page;
                 await controller.getParentTable();

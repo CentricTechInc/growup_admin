@@ -14,7 +14,7 @@ class UserContributorRepositoryImpl extends UserContributorRepository {
     final List<ParentModel> data =
         json.map((e) => ParentModel.fromJson(e)).toList();
     final model = PaginationModel(
-        data: data, count: jsonDecode(response)['data']['parentCount']);
+        data: data, count: jsonDecode(response)['data']['count']);
     return model;
   }
 
@@ -28,7 +28,7 @@ class UserContributorRepositoryImpl extends UserContributorRepository {
     final List<ParentModel> data =
         json.map((e) => ParentModel.fromJson(e)).toList();
     final model = PaginationModel(
-        data: data, count: jsonDecode(response)['data']['parentCount']);
+        data: data, count: jsonDecode(response)['data']['count']);
     return model;
   }
 }

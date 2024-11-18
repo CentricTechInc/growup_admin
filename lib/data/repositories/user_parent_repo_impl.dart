@@ -17,19 +17,20 @@ class UserParentRepositoryImpl extends UserParentRepository {
     final List<ParentModel> data =
         json.map((e) => ParentModel.fromJson(e)).toList();
     final model = PaginationModel(
-        data: data, count: jsonDecode(response)['data']['parentCount']);
+        data: data, count: jsonDecode(response)['data']['count']);
     return model;
   }
 
   @override
   Future<PaginationModel> searchParentTable(String search, int pageNo) async {
-    final response = await UserParentApi.searchParentTable(search,pageNo).request();
+    final response =
+        await UserParentApi.searchParentTable(search, pageNo).request();
     final List<dynamic> json = jsonDecode(response)['data']['data'];
 
     final List<ParentModel> data =
         json.map((e) => ParentModel.fromJson(e)).toList();
     final model = PaginationModel(
-        data: data, count: jsonDecode(response)['data']['parentCount']);
+        data: data, count: jsonDecode(response)['data']['count']);
     return model;
   }
 

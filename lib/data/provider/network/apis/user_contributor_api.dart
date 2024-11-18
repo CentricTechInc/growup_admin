@@ -52,13 +52,12 @@ class UserContributorApi implements APIRequestRepresentable {
   Map<String, String>? get headers {
     switch (type) {
       case UserContrbutorApiType.getContributorTable:
+      case UserContrbutorApiType.searchContributorTable:
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
-          'authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
+          'Authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
         };
-      default:
-        return {};
     }
   }
 

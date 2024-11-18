@@ -50,7 +50,11 @@ class UserContributionPage extends StatelessWidget {
             ),
             CommonPagerWidget(
               currentPage: controller.contributorPageNo,
-              totalPage: (controller.elementCount / 10).ceil(),
+              totalPage: ((controller.elementCount == 0
+                          ? 1
+                          : controller.elementCount) /
+                      10)
+                  .ceil(),
               onPageChanged: (page) async {
                 controller.contributorPageNo = page;
                 await controller.getContributorsTable();
