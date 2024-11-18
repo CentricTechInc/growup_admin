@@ -6,7 +6,6 @@ import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/dashboard_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/active_user__chart_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_list_widget.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/components/contribution_and_payout_ratio_chart_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/contributions_chart_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/dashboard_stats_bar_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/payout_body_widget.dart';
