@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:grow_up_admin_panel/data/dto/register_dto.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_endpoints.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_provider.dart';
@@ -63,10 +62,10 @@ class AuthAPI implements APIRequestRepresentable {
         };
 
       case AuthApiType.resetPassword:
-        return jsonEncode({'email': email, 'password': password});
+        return {'email': email, 'password': password};
 
       case AuthApiType.otpVerification:
-        return jsonEncode({'email': email, 'otp': otp});
+        return {'email': email, 'otp': otp};
       case AuthApiType.forgot:
       case AuthApiType.generateOtp:
         return {};
