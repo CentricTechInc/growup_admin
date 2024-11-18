@@ -1,3 +1,4 @@
+import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_endpoints.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_provider.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_request_representable.dart';
@@ -17,8 +18,8 @@ class UserContributorApi implements APIRequestRepresentable {
 
   UserContributorApi.getContributorTable()
       : this._(
-    type: UserContrbutorApiType.getContributorTable,
-  );
+          type: UserContrbutorApiType.getContributorTable,
+        );
 
   @override
   get body {
@@ -43,8 +44,8 @@ class UserContributorApi implements APIRequestRepresentable {
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
-          // 'authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
-          'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWduYXR1cmUiOjE3MzEwODA5Njk2NDAsImVtYWlsIjoic2FhZC5uYWVlbUBjZW50cmljdGVjaC5jbyIsImlhdCI6MTczMTA4MDk2OX0.8YHvoOlwd-aA519uG7kdKA0dXPnrO2nOwfWDQCiL3vA',
+          'authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
+          // 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWduYXR1cmUiOjE3MzEwODA5Njk2NDAsImVtYWlsIjoic2FhZC5uYWVlbUBjZW50cmljdGVjaC5jbyIsImlhdCI6MTczMTA4MDk2OX0.8YHvoOlwd-aA519uG7kdKA0dXPnrO2nOwfWDQCiL3vA',
         };
       default:
         return {};
