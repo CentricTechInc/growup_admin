@@ -28,7 +28,7 @@ class ProfileTile extends StatelessWidget {
             width: 60,
             fit: BoxFit.cover,
             errorBuilder: (context, widget, _) {
-              return SizedBox(
+              return const SizedBox(
                 height: 60,
                 width: 60,
                 child: Icon(
@@ -72,12 +72,6 @@ class ProfileTile extends StatelessWidget {
           onTap: deleteOnTap,
           color: AppColors.red,
         ),
-        // const HorizontalSpacing(20),
-        // CommonIconButton(
-        //   icon: Assets.upChevronIcon,
-        //   onTap: () {},
-        //   color: AppColors.darkGrey,
-        // ),
       ],
     );
   }

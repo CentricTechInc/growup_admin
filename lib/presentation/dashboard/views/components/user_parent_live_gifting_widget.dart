@@ -39,11 +39,10 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                     controller.update();
                     print('isCollapsed : ' + isCollapsed.toString());
                   },
-                  title: !isCollapsed
+                  title: isCollapsed
                       ? GiftingDeatilsExpansionCollapsed(
                           giftingModel: giftingModel[listIndex],
                           onDelete: () async {
-                            print('here delete');
                             await controller
                                 .deleteGift(giftingModel[listIndex].id ?? 0);
                           },

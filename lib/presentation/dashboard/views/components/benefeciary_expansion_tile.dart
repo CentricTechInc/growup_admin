@@ -47,7 +47,7 @@ class BenefeciaryExpansionTile extends StatelessWidget {
               CommonTile(
                   title: 'Phone',
                   subTitle: '${data.phone?.replaceAll('--', '-')}'),
-              Spacer(),
+              const Spacer(),
               InkWell(
                   onTap: () async {
                     await Clipboard.setData(ClipboardData(
@@ -56,7 +56,7 @@ class BenefeciaryExpansionTile extends StatelessWidget {
                         message: 'Phone number copied',
                         type: SnackBarType.success);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.copy,
                     color: AppColors.secondaryText,
                   )),
@@ -86,7 +86,7 @@ class BenefeciaryExpansionTile extends StatelessWidget {
             children: [
               CommonTile(
                   title: 'Account Number', subTitle: '${data.accountNumber}'),
-              Spacer(),
+              const Spacer(),
               InkWell(
                   onTap: () async {
                     await Clipboard.setData(
@@ -95,7 +95,7 @@ class BenefeciaryExpansionTile extends StatelessWidget {
                         message: 'Account number copied',
                         type: SnackBarType.success);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.copy,
                     color: AppColors.secondaryText,
                   )),
