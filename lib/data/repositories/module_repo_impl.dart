@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/module_api.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/pagination_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
@@ -10,8 +9,9 @@ import 'package:grow_up_admin_panel/domain/repository/module_repository.dart';
 
 class ModuleRepositoryImpl extends ModuleRepository {
   @override
-  Future<PaginationModel> getGiftingTable(int pageNo) async {
-    final response = await ModuleApi.getGiftingTable(pageNo).request();
+  Future<PaginationModel> getGiftingTable(int pageNo, String? search) async {
+    final response = await ModuleApi.getGiftingTable(pageNo, search).request();
+    print(response);
     final List<dynamic> json = jsonDecode(response)['data']['records'];
     final List<GiftingModel> data =
         json.map((e) => GiftingModel.fromJson(e)).toList();
@@ -20,8 +20,8 @@ class ModuleRepositoryImpl extends ModuleRepository {
   }
 
   @override
-  Future<PaginationModel> getPayoutTable(int pageNo) async {
-    final response = await ModuleApi.getPayoutTable(pageNo).request();
+  Future<PaginationModel> getPayoutTable(int pageNo, String? search) async {
+    final response = await ModuleApi.getPayoutTable(pageNo, search).request();
     final List<dynamic> json = jsonDecode(response)['data']['data'];
     final List<PayoutModel> data =
         json.map((e) => PayoutModel.fromJson(e)).toList();
@@ -32,8 +32,10 @@ class ModuleRepositoryImpl extends ModuleRepository {
   }
 
   @override
-  Future<PaginationModel> getContributionTable(int pageNo) async {
-    final response = await ModuleApi.getContributionTable(pageNo).request();
+  Future<PaginationModel> getContributionTable(
+      int pageNo, String? search) async {
+    final response =
+        await ModuleApi.getContributionTable(pageNo, search).request();
     final List<dynamic> json = jsonDecode(response)['data']['data'];
     final List<ContributionModel> data =
         json.map((e) => ContributionModel.fromJson(e)).toList();

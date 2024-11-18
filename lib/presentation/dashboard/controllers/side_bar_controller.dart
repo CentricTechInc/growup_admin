@@ -85,6 +85,10 @@ class SideBarController extends GetxController {
   bool isLoading = false;
   final parentTableSearchController = TextEditingController();
   final contributorTableSearchController = TextEditingController();
+  //
+  final giftingSearchController = TextEditingController();
+  final contributionsSearchController = TextEditingController();
+  final payoutSearchController = TextEditingController();
 
   getParentTable() async {
     try {
@@ -148,9 +152,12 @@ class SideBarController extends GetxController {
   getGiftingTable() async {
     try {
       Loader.showLoader();
-      final res = await moduleRepository.getGiftingTable(giftingsPageNo);
+      final res = await moduleRepository.getGiftingTable(
+          giftingsPageNo, giftingSearchController.text);
+
       giftingModelList.clear();
       giftingModelList.addAll(res.data);
+
       elementCount = res.count ?? 1;
       update();
       Loader.hideLoading();
@@ -163,7 +170,8 @@ class SideBarController extends GetxController {
   getPayoutTable() async {
     try {
       Loader.showLoader();
-      final res = await moduleRepository.getPayoutTable(payoutPageNo);
+      final res = await moduleRepository.getPayoutTable(
+          payoutPageNo, payoutSearchController.text);
       payoutModelList.clear();
       payoutModelList.addAll(res.data);
       elementCount = res.count ?? 1;
@@ -178,8 +186,8 @@ class SideBarController extends GetxController {
   getContributionTable() async {
     try {
       Loader.showLoader();
-      final res =
-          await moduleRepository.getContributionTable(contributonModulePageNo);
+      final res = await moduleRepository.getContributionTable(
+          contributonModulePageNo, contributionsSearchController.text);
       contributionModelList.clear();
       contributionModelList.addAll(res.data);
       elementCount = res.count ?? 1;
