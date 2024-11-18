@@ -535,7 +535,9 @@ class PayoutTableBody extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30.0, right: 30),
+              padding: const EdgeInsets.only(
+                left: 30.0,
+              ),
               child: Row(
                 children: [
                   CommonText(
@@ -544,14 +546,12 @@ class PayoutTableBody extends StatelessWidget {
                     fontSize: 12,
                     weight: FontWeight.w500,
                   ),
+                  const Spacer(),
                   InkWell(
                     onTap: onTap,
                     child: SizedBox(
                       width: 50,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 20.0),
-                        child: Image.asset(Assets.shareIcon, scale: 2),
-                      ),
+                      child: Image.asset(Assets.shareIcon, scale: 2),
                     ),
                   ),
                 ],
@@ -573,73 +573,75 @@ class UserParentLiveGfitingPayoutTableBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-      ListView.separated(itemBuilder: (context,index)=>InkWell(
-        onTap: onTap,
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: CommonText(
-                  text: model[index].transactionId ?? '',
-                  fontSize: 12,
-                  weight: FontWeight.w500,
+    return ListView.separated(
+        itemBuilder: (context, index) => InkWell(
+              onTap: onTap,
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: CommonText(
+                        text: model[index].transactionId ?? '',
+                        fontSize: 12,
+                        weight: FontWeight.w500,
+                      ),
+                    ),
+                    const CommonVerticalDivider(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      color: AppColors.grey,
+                      thickness: 2,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 30.0),
+                        child: CommonText(
+                          text: model[index].createdAt ?? '',
+                          fontSize: 12,
+                          weight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    const CommonVerticalDivider(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      color: AppColors.grey,
+                      thickness: 2,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 30.0),
+                        child: CommonText(
+                          text: model[index].amount ?? '',
+                          fontSize: 12,
+                          weight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    const CommonVerticalDivider(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      color: AppColors.grey,
+                      thickness: 2,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 30.0),
+                        child: CommonText(
+                          text: model[index].status?.name ?? '',
+                          fontSize: 12,
+                          weight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const CommonVerticalDivider(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                color: AppColors.grey,
-                thickness: 2,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 30.0),
-                  child: CommonText(
-                    text: model[index].createdAt ?? '',
-                    fontSize: 12,
-                    weight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              const CommonVerticalDivider(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                color: AppColors.grey,
-                thickness: 2,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 30.0),
-                  child: CommonText(
-                    text: model[index].amount ?? '',
-                    fontSize: 12,
-                    weight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              const CommonVerticalDivider(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                color: AppColors.grey,
-                thickness: 2,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 30.0),
-                  child: CommonText(
-                    text: model[index].status?.name ?? '',
-                    fontSize: 12,
-                    weight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ), separatorBuilder: (context, index)=>const VerticalSpacing(10), itemCount: model.length);
+            ),
+        separatorBuilder: (context, index) => const VerticalSpacing(10),
+        itemCount: model.length);
   }
 }

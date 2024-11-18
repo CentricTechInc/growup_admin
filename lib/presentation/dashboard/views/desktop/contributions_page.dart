@@ -12,35 +12,35 @@ class ContributionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          PageHeader(
-            label: 'Contributions',
-            showSearch: true,
-            searchController: TextEditingController(),
-            searchOnChanged: (p0) {},
-          ),
-          const VerticalSpacing(30),
-          const ContributionTableHeader(
-            // value: false,
-            titleList: [
-              'Payment ID',
-              'Gifting Title',
-              'Contributor',
-              'Benefeciary Name',
-              'Payment Gateway',
-              'Date & Time',
-              'Frequency',
-              'Amount',
-              'Status',
-            ],
-          ),
-          const VerticalSpacing(10),
-          GetBuilder<SideBarController>(builder: (controller) {
-            return Expanded(
+    return GetBuilder<SideBarController>(builder: (controller) {
+      return Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PageHeader(
+              label: 'Contributions',
+              showSearch: true,
+              searchController: TextEditingController(),
+              searchOnChanged: (p0) {},
+            ),
+            const VerticalSpacing(30),
+            const ContributionTableHeader(
+              // value: false,
+              titleList: [
+                'Payment ID',
+                'Gifting Title',
+                'Contributor',
+                'Benefeciary Name',
+                'Payment Gateway',
+                'Date & Time',
+                'Frequency',
+                'Amount',
+                'Status',
+              ],
+            ),
+            const VerticalSpacing(10),
+            Expanded(
               child: ListView.separated(
                 itemCount: controller.contributionModelList.length,
                 itemBuilder: (context, index) => ContributionsTableBody(
@@ -49,15 +49,23 @@ class ContributionPage extends StatelessWidget {
                 ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
-            );
-          }),
-          CommonPagerWidget(
-            currentPage: 1,
-            totalPage: 1,
-            onPageChanged: (page) {},
-          ),
-        ],
-      ),
-    );
+            ),
+            CommonPagerWidget(
+              currentPage: controller.contributonModulePageNo,
+              totalPage: ((controller.elementCount == 0
+                          ? 1
+                          : controller.elementCount) /
+                      10)
+                  .ceil(),
+              onPageChanged: (page) async {
+                controller.contributonModulePageNo = page;
+                await controller.getContributionTable();
+                controller.update();
+              },
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

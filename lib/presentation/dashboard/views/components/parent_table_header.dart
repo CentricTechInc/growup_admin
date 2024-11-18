@@ -299,17 +299,13 @@ class PayoutTableHeader extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
+              padding: const EdgeInsets.only(left: 30),
               child: CommonText(
-                textAlign: TextAlign.right,
                 text: titleList[5],
                 weight: FontWeight.w700,
                 fontSize: 12,
               ),
             ),
-          ),
-          const SizedBox(
-            width: 50,
           ),
         ],
       ),
