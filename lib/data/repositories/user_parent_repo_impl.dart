@@ -98,4 +98,25 @@ class UserParentRepositoryImpl extends UserParentRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<String> deleteGift(int id) async {
+    try {
+      final response = await UserParentApi.deleteGift(id).request();
+      final msg = jsonDecode(response)['message'];
+      return msg;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  @override
+  Future<String> deleteBenefeciary(int id) async {
+    try {
+      final response = await UserParentApi.deletebenefeciary(id).request();
+      final msg = jsonDecode(response)['message'];
+      return msg;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

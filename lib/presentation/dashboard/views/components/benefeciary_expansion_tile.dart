@@ -10,9 +10,11 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/prof
 import '../../../../common/resources/colors.dart';
 
 class BenefeciaryExpansionTile extends StatelessWidget {
-  BenefeciaryExpansionTile({super.key, required this.data});
+  BenefeciaryExpansionTile(
+      {super.key, required this.data, required this.deleteOnTap});
 
   Data data;
+  final VoidCallback deleteOnTap;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +26,10 @@ class BenefeciaryExpansionTile extends StatelessWidget {
       ),
       child: ExpansionTile(
         title: ProfileTile(
+          profileImg: data.picture ?? '',
           name: data.name ?? '',
           relation: data.relation ?? '',
+          deleteOnTap: deleteOnTap,
         ),
         shape: const Border(),
         tilePadding: EdgeInsets.zero,
@@ -43,14 +47,16 @@ class BenefeciaryExpansionTile extends StatelessWidget {
               CommonTile(
                   title: 'Phone',
                   subTitle: '${data.phone?.replaceAll('--', '-')}'),
-              Spacer(),
+              const Spacer(),
               InkWell(
                   onTap: () async {
                     await Clipboard.setData(ClipboardData(
                         text: '${data.phone?.replaceAll('--', '-')}'));
-                    CommonSnackBar.message(message: 'Phone number copied', type: SnackBarType.success);
+                    CommonSnackBar.message(
+                        message: 'Phone number copied',
+                        type: SnackBarType.success);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.copy,
                     color: AppColors.secondaryText,
                   )),
@@ -74,20 +80,22 @@ class BenefeciaryExpansionTile extends StatelessWidget {
           const VerticalSpacing(10),
           CommonTile(
               title: 'Account Owner Name',
-              subTitle: '${data.accountOwnerName}'), const VerticalSpacing(10),
+              subTitle: '${data.accountOwnerName}'),
+          const VerticalSpacing(10),
           Row(
             children: [
               CommonTile(
-                  title: 'Account Number',
-                  subTitle: '${data.accountNumber}'),
-              Spacer(),
+                  title: 'Account Number', subTitle: '${data.accountNumber}'),
+              const Spacer(),
               InkWell(
                   onTap: () async {
-                    await Clipboard.setData(ClipboardData(
-                        text: '${data.accountNumber}'));
-                    CommonSnackBar.message(message: 'Account number copied', type: SnackBarType.success);
+                    await Clipboard.setData(
+                        ClipboardData(text: '${data.accountNumber}'));
+                    CommonSnackBar.message(
+                        message: 'Account number copied',
+                        type: SnackBarType.success);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.copy,
                     color: AppColors.secondaryText,
                   )),

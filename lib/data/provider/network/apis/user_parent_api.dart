@@ -11,13 +11,15 @@ enum UserParentApiType {
   getActivity,
   getGiftsPayout,
   getGiftsContributions,
+  deleteGift,
+  deleteBenefeciary,
 }
 
 class UserParentApi implements APIRequestRepresentable {
   UserParentApiType type;
   String? search;
   String? userId, pageId, status;
-  int? pageNo;
+  int? pageNo, id;
 
   UserParentApi._({
     required this.type,
@@ -26,6 +28,7 @@ class UserParentApi implements APIRequestRepresentable {
     this.pageId,
     this.status,
     this.pageNo,
+    this.id,
   });
 
   UserParentApi.getParentTable(int pageNo)
@@ -70,11 +73,24 @@ class UserParentApi implements APIRequestRepresentable {
           userId: userId,
           pageId: pageId,
         );
+
   UserParentApi.getGiftsContributions(String userId, int pageId)
       : this._(
           type: UserParentApiType.getGiftsContributions,
           userId: userId,
           pageNo: pageId,
+        );
+
+  UserParentApi.deleteGift(int id)
+      : this._(
+          type: UserParentApiType.deleteGift,
+          id: id,
+        );
+
+  UserParentApi.deletebenefeciary(int id)
+      : this._(
+          type: UserParentApiType.deleteBenefeciary,
+          id: id,
         );
 
   @override
@@ -87,6 +103,8 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getActivity:
       case UserParentApiType.getGiftsPayout:
       case UserParentApiType.getGiftsContributions:
+      case UserParentApiType.deleteGift:
+      case UserParentApiType.deleteBenefeciary:
         return {};
     }
   }
@@ -104,9 +122,13 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getActivity:
         return '${APIEndpoint.getActivityUrl}/$userId/$pageId';
       case UserParentApiType.getGiftsPayout:
-        return '${APIEndpoint.giftDetailsPayoutUrl}/$userId/$pageId';
+        return '${APIEndpoint.giftDetailsPayoutUrl}/$userId/$pageNo';
       case UserParentApiType.getGiftsContributions:
-        return '${APIEndpoint.getGiftContributorUrl}/$userId/$pageId';
+        return '${APIEndpoint.getGiftContributorUrl}/$userId/$pageNo';
+      case UserParentApiType.deleteGift:
+        return '${APIEndpoint.giftsUrl}/$id';
+      case UserParentApiType.deleteBenefeciary:
+        return '${APIEndpoint.userBenefeciaryUrl}/$id';
     }
   }
 
@@ -120,6 +142,8 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getActivity:
       case UserParentApiType.getGiftsPayout:
       case UserParentApiType.getGiftsContributions:
+      case UserParentApiType.deleteGift:
+      case UserParentApiType.deleteBenefeciary:
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
@@ -139,6 +163,9 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getGiftsPayout:
       case UserParentApiType.getGiftsContributions:
         return HTTPMethod.get;
+      case UserParentApiType.deleteGift:
+      case UserParentApiType.deleteBenefeciary:
+        return HTTPMethod.delete;
     }
   }
 

@@ -42,11 +42,11 @@ class UserParentsPayout extends StatelessWidget {
               text: 'Gross Contribution',
               fontSize: 16,
               weight: FontWeight.w500,
-              color: AppColors.grey,
+              color: AppColors.secondaryText,
             ),
             const Spacer(),
             CommonText(
-              text: '\$ ${model.accountSummary?.balance ?? ''}',
+              text: '\$ ${model.accountSummary?.balance ?? '0'}',
               fontSize: 16,
               weight: FontWeight.w500,
             ),
@@ -59,11 +59,11 @@ class UserParentsPayout extends StatelessWidget {
               text: 'Platform Fees 5%',
               fontSize: 16,
               weight: FontWeight.w500,
-              color: AppColors.grey,
+              color: AppColors.secondaryText,
             ),
             const Spacer(),
             CommonText(
-              text: '\$ ${model.accountSummary?.platformFee ?? ''}',
+              text: '\$ ${model.accountSummary?.platformFee ?? '0'}',
               fontSize: 16,
               weight: FontWeight.w500,
             ),
@@ -76,11 +76,11 @@ class UserParentsPayout extends StatelessWidget {
               text: 'Tax Deduction 13%',
               fontSize: 16,
               weight: FontWeight.w500,
-              color: AppColors.grey,
+              color: AppColors.secondaryText,
             ),
             const Spacer(),
             CommonText(
-              text: '\$ ${model.accountSummary?.taxDeduction ?? ''}',
+              text: '\$ ${model.accountSummary?.taxDeduction ?? '0'}',
               fontSize: 16,
               weight: FontWeight.w500,
             ),
@@ -166,9 +166,11 @@ class UserParentsPayout extends StatelessWidget {
         const UserParentLiveGfitingPayoutTableHeader(
             titleList: ['Payment ID', 'Date & Time', 'Amount', 'Status']),
         const VerticalSpacing(10),
-        UserParentLiveGfitingPayoutTableBody(
-          onTap: () {},
-          model: model.payouts ?? [],
+        Expanded(
+          child: UserParentLiveGfitingPayoutTableBody(
+            onTap: () {},
+            model: model.payouts ?? [],
+          ),
         ),
       ],
     );

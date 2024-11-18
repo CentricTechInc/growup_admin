@@ -420,7 +420,7 @@ class StatusCardWidget extends StatelessWidget {
       child: CommonText(
         textAlign: TextAlign.center,
         text: title,
-        color: AppColors.primary,
+        color: title != 'Expired'?  AppColors.primary : AppColors.primaryText,
         fontSize: 12,
         weight: FontWeight.w400,
       ),

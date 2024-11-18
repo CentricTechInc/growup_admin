@@ -6,19 +6,37 @@ import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/icon_button.dart';
 
 class ProfileTile extends StatelessWidget {
-  const ProfileTile({super.key, required this.name, required this.relation});
-  final String name, relation;
+  const ProfileTile(
+      {super.key,
+      required this.name,
+      required this.relation,
+      required this.deleteOnTap,
+      required this.profileImg});
+
+  final String name, relation, profileImg;
+  final VoidCallback deleteOnTap;
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: Image.asset(
-            Assets.schoolImg,
+          child: Image.network(
+            profileImg,
             height: 60,
             width: 60,
             fit: BoxFit.cover,
+            errorBuilder: (context, widget, _) {
+              return const SizedBox(
+                height: 60,
+                width: 60,
+                child: Icon(
+                  Icons.error_outline,
+                  color: AppColors.red,
+                ),
+              );
+            },
           ),
         ),
         const HorizontalSpacing(10),
@@ -51,15 +69,9 @@ class ProfileTile extends StatelessWidget {
         const Spacer(),
         CommonIconButton(
           icon: Assets.deleteIcon,
-          onTap: () {},
+          onTap: deleteOnTap,
           color: AppColors.red,
         ),
-        // const HorizontalSpacing(20),
-        // CommonIconButton(
-        //   icon: Assets.upChevronIcon,
-        //   onTap: () {},
-        //   color: AppColors.darkGrey,
-        // ),
       ],
     );
   }

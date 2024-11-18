@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:go_router/go_router.dart';
@@ -144,34 +144,37 @@ class UserParentDetails extends StatelessWidget {
                             },
                           ),
                           const VerticalSpacing(20),
-                          controller.isLoading
-                              ? const CircularProgressIndicator()
-                              : SizedBox(
-                                  height: context.height / 1,
-                                  child: PageView(
-                                    controller:
-                                        controller.userParentPageController,
-                                    children: [
-                                      UserParentLiveGiftingWidget(
+                          SizedBox(
+                            height: context.height / 1.8,
+                            child: PageView(
+                              controller: controller.userParentPageController,
+                              children: [
+                                controller.isLoading
+                                    ? const CupertinoActivityIndicator()
+                                    : UserParentLiveGiftingWidget(
                                         giftingModel: controller
                                                 .giftingDetailData
                                                 .data
                                                 ?.giftingModel ??
                                             [],
                                       ),
-                                      UserParentLiveGiftingWidget(
+                                controller.isLoading
+                                    ? const CupertinoActivityIndicator()
+                                    : UserParentLiveGiftingWidget(
                                         giftingModel: controller
                                                 .giftingDetailData
                                                 .data
                                                 ?.giftingModel ??
                                             [],
                                       ),
-                                      UserParentsActivity(
+                                controller.isLoading
+                                    ? const CupertinoActivityIndicator()
+                                    : UserParentsActivity(
                                         activityModel: controller.activityModel,
                                       ),
-                                    ],
-                                  ),
-                                ),
+                              ],
+                            ),
+                          ),
                           const VerticalSpacing(10),
                         ],
                       ),
@@ -205,9 +208,18 @@ class UserParentDetails extends StatelessWidget {
                                     : BenefeciaryExpansionTile(
                                         data: controller
                                             .benefeciaryData.data![index],
-                                      );
+                                        deleteOnTap: () async {
+                                          await controller.deleteBenefeciary(
+                                              controller.benefeciaryData
+                                                      .data![index].id ??
+                                                  0);
+                                          print(controller.giftingDetailData.data?.user?.id.toString());
+                                          await controller.getUserBenes(controller.giftingDetailData.data?.user?.id.toString() ?? '0');
+                                          controller.update();
+                                        });
                               },
-                              itemCount: controller.benefeciaryData?.data == null
+                              itemCount: controller.benefeciaryData?.data ==
+                                      null
                                   ? 1
                                   : controller.benefeciaryData.data?.length ??
                                       0,
