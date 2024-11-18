@@ -27,4 +27,5 @@ class Assets {
   static const calendarIcon = "assets/icons/calendar_icon.png";
   static const percentIcon = "assets/icons/percent_icon.png";
   static const dollorIcon = "assets/icons/dollor_icon.png";
+  static const noGiftIconIcon = "assets/icons/no_gift_icon.png";
 }

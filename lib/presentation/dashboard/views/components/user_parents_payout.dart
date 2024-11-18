@@ -5,11 +5,14 @@ import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/common_text_button.dart';
 import 'package:grow_up_admin_panel/app/util/common_text_field.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
+import 'package:grow_up_admin_panel/data/dto/gift_payout_model.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
 
 class UserParentsPayout extends StatelessWidget {
-  const UserParentsPayout({super.key});
+  const UserParentsPayout({super.key, required this.model});
+
+  final GiftPayoutModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -33,51 +36,51 @@ class UserParentsPayout extends StatelessWidget {
           ],
         ),
         const VerticalSpacing(20),
-        const Row(
+        Row(
           children: [
-            CommonText(
+            const CommonText(
               text: 'Gross Contribution',
               fontSize: 16,
               weight: FontWeight.w500,
               color: AppColors.grey,
             ),
-            Spacer(),
+            const Spacer(),
             CommonText(
-              text: '\$ 1512.00',
+              text: '\$ ${model.accountSummary?.balance ?? ''}',
               fontSize: 16,
               weight: FontWeight.w500,
             ),
           ],
         ),
         const VerticalSpacing(10),
-        const Row(
+        Row(
           children: [
-            CommonText(
+            const CommonText(
               text: 'Platform Fees 5%',
               fontSize: 16,
               weight: FontWeight.w500,
               color: AppColors.grey,
             ),
-            Spacer(),
+            const Spacer(),
             CommonText(
-              text: '\$ 50.00',
+              text: '\$ ${model.accountSummary?.platformFee ?? ''}',
               fontSize: 16,
               weight: FontWeight.w500,
             ),
           ],
         ),
         const VerticalSpacing(10),
-        const Row(
+        Row(
           children: [
-            CommonText(
+            const CommonText(
               text: 'Tax Deduction 13%',
               fontSize: 16,
               weight: FontWeight.w500,
               color: AppColors.grey,
             ),
-            Spacer(),
+            const Spacer(),
             CommonText(
-              text: '\$ 152.00',
+              text: '\$ ${model.accountSummary?.taxDeduction ?? ''}',
               fontSize: 16,
               weight: FontWeight.w500,
             ),
@@ -88,16 +91,16 @@ class UserParentsPayout extends StatelessWidget {
           color: AppColors.grey,
         ),
         const VerticalSpacing(20),
-        const Row(
+        Row(
           children: [
-            CommonText(
+            const CommonText(
               text: 'Total amount to transfer',
               fontSize: 16,
               weight: FontWeight.w500,
             ),
-            Spacer(),
+            const Spacer(),
             CommonText(
-              text: '\$ 152.00',
+              text: '\$ ${model.accountSummary?.contributionTotal ?? ''}',
               fontSize: 16,
               weight: FontWeight.w500,
               color: AppColors.primary,
@@ -163,7 +166,10 @@ class UserParentsPayout extends StatelessWidget {
         const UserParentLiveGfitingPayoutTableHeader(
             titleList: ['Payment ID', 'Date & Time', 'Amount', 'Status']),
         const VerticalSpacing(10),
-        UserParentLiveGfitingPayoutTableBody(onTap: () {}),
+        UserParentLiveGfitingPayoutTableBody(
+          onTap: () {},
+          model: model.payouts ?? [],
+        ),
       ],
     );
   }

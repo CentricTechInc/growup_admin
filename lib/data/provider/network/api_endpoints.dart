@@ -26,6 +26,8 @@ class APIEndpoint {
 
   //--------------- Details ---------------------
   static String get userParentDetailsUrl => '/api/gifts/details';
+  static String get giftDetailsPayoutUrl => '/api/gift-payout';
   static String get userBeneficiariesUrl => '/api/users-benefeciaries';
   static String get getActivityUrl => '/api/activity';
+  static String get getGiftContributorUrl => '/api/gift-contributor';
 }

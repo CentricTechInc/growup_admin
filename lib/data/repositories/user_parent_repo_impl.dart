@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
+import 'package:grow_up_admin_panel/data/dto/gift_payout_model.dart';
 import 'package:grow_up_admin_panel/data/dto/user_bene_dto.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/pagination_model.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/user_parent_api.dart';
 import 'package:grow_up_admin_panel/data/repositories/activity_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
 import 'package:grow_up_admin_panel/domain/repository/user_parent_repository.dart';
 
@@ -62,6 +64,35 @@ class UserParentRepositoryImpl extends UserParentRepository {
       final List<dynamic> json = jsonDecode(response)['data'];
       final List<ActivityModel> data =
           json.map((e) => ActivityModel.fromJson(e)).toList();
+      return data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<GiftPayoutModel> parentDetailPayoutTable(
+      String userId, int page) async {
+    try {
+      final response =
+          await UserParentApi.parentDetailPayoutTable(userId, page).request();
+      final json = jsonDecode(response)['data'];
+      final GiftPayoutModel data = GiftPayoutModel.fromJson(json);
+      return data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ContributionModel>> getGiftContributions(
+      String userId, int page) async {
+    try {
+      final response =
+          await UserParentApi.getGiftsContributions(userId, page).request();
+      final List<dynamic> json = jsonDecode(response)['data'];
+      final List<ContributionModel> data =
+          json.map((e) => ContributionModel.fromJson(e)).toList();
       return data;
     } catch (e) {
       rethrow;

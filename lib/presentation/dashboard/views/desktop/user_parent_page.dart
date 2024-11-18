@@ -27,7 +27,12 @@ class UserParentPage extends StatelessWidget {
           children: [
             PageHeader(
               label: 'Parents',
-              // showTaxBtn: true,
+              searchController: controller.parentTableSearchController,
+              searchCancelOnTap: () async {
+                controller.parentTableSearchController.clear();
+                await controller.getParentTable();
+                controller.update();
+              },
               searchOnChanged: (val) {
                 controller.debouncer.run(() async {
                   await controller.searchParentTable(val);
@@ -68,19 +73,20 @@ class UserParentPage extends StatelessWidget {
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
-            CommonPagerWidget(
-              currentPage: controller.parentPageNo,
-              totalPage: ((controller.elementCount == 0
-                          ? 1
-                          : controller.elementCount) /
-                      10)
-                  .ceil(),
-              onPageChanged: (page) async {
-                controller.parentPageNo = page;
-                await controller.getParentTable();
-                controller.update();
-              },
-            ),
+            if (controller.parentTableSearchController.text.isEmpty)
+              CommonPagerWidget(
+                currentPage: controller.parentPageNo,
+                totalPage: ((controller.elementCount == 0
+                            ? 1
+                            : controller.elementCount) /
+                        10)
+                    .ceil(),
+                onPageChanged: (page) async {
+                  controller.parentPageNo = page;
+                  await controller.getParentTable();
+                  controller.update();
+                },
+              ),
           ],
         );
       }),
@@ -97,12 +103,14 @@ class PageHeader extends StatelessWidget {
       this.showSearch = true,
       this.searchOnChanged,
       this.searchController,
-      this.taxBtnOnTap});
+      this.taxBtnOnTap,
+      this.searchCancelOnTap});
 
   final String label;
   final bool showTaxBtn;
   final bool showSearch;
   final VoidCallback? taxBtnOnTap;
+  final VoidCallback? searchCancelOnTap;
   final TextEditingController? searchController;
   dynamic Function(String)? searchOnChanged;
 
@@ -170,6 +178,9 @@ class PageHeader extends StatelessWidget {
                 Assets.searchIcon,
                 scale: 2,
               ),
+              hintText: 'Search by name, email, phone',
+              suffixIcon: Icons.cancel_rounded,
+              suffixIconOnTap: searchCancelOnTap,
               isBorderEnabled: true,
               isFilledColor: false,
               borderColor: AppColors.primary,

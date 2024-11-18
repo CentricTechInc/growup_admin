@@ -6,8 +6,6 @@ import 'package:grow_up_admin_panel/app/util/common_drop_down_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
-import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
-import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/common_back_button.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/benefeciary_expansion_tile.dart';
@@ -65,8 +63,8 @@ class UserParentDetails extends StatelessWidget {
                                 const HorizontalSpacing(20),
                                 CommonText(
                                   text: controller
-                                      .giftingDetailData.data?.user?.id
-                                      .toString() ??
+                                          .giftingDetailData.data?.user?.id
+                                          .toString() ??
                                       '',
                                   fontSize: 16,
                                   color: AppColors.primary,
@@ -83,7 +81,7 @@ class UserParentDetails extends StatelessWidget {
                                   width: 160,
                                   child: CommonDropDownWidget(
                                     fillColor:
-                                    AppColors.primary.withOpacity(0.2),
+                                        AppColors.primary.withOpacity(0.2),
                                     selectedItem: 'Active',
                                     selectedItemColor: AppColors.primary,
                                     borderColor: AppColors.transparent,
@@ -97,86 +95,83 @@ class UserParentDetails extends StatelessWidget {
                           ),
                           const VerticalSpacing(20),
                           ParentDetailsCardWidget(
-                            giftModel:
-                            controller.giftingDetailData ?? GiftDetailDto(),
-
+                            giftModel: controller.giftingDetailData,
                           ),
                           const VerticalSpacing(20),
-                          GetBuilder<SideBarController>(builder: (controller) {
-                            return TabBarWidget(
-                              selectedIndex: controller.userParentSelectedIndex,
-                              controller: controller.userParentPageController,
-                              title: const [
-                                'Live Giftings',
-                                'Previous Giftings',
-                                'Activity'
-                              ],
-                              onTap: (index) async {
-                                controller.userParentSelectedIndex = index;
-                                controller.update();
-                                switch (index) {
-                                  case 0:
-                                    await controller.getGiftDetail(
-                                        controller.giftingDetailData.data?.user
-                                            ?.id
-                                            .toString() ??
-                                            '',
-                                        'Active');
-                                    break;
-                                  case 1:
-                                    await controller.getGiftDetail(
-                                        controller.giftingDetailData.data?.user
-                                            ?.id
-                                            .toString() ??
-                                            '',
-                                        'Expired');
-                                    break;
-                                  case 2:
-                                    await controller.getActivity(controller
-                                        .giftingDetailData.data?.user?.id
-                                        .toString() ??
-                                        '');
-                                  default:
-                                    await controller.getGiftDetail(
-                                        controller.giftingDetailData.data?.user
-                                            ?.id
-                                            .toString() ??
-                                            '',
-                                        'Active');
-                                }
-                                // if(_scrollController.hasClients){
-                                //   controller.userParentPageController.animateToPage(
-                                //       index,
-                                //       duration: const Duration(seconds: 1),
-                                //       curve: Curves.ease);
-                                // }
-                              },
-                            );
-                          }),
+                          TabBarWidget(
+                            selectedIndex: controller.userParentSelectedIndex,
+                            controller: controller.userParentPageController,
+                            title: const [
+                              'Live Giftings',
+                              'Previous Giftings',
+                              'Activity'
+                            ],
+                            onTap: (index) async {
+                              controller.userParentSelectedIndex = index;
+                              print(index);
+                              switch (index) {
+                                case 0:
+                                  await controller.getGiftDetail(
+                                      controller
+                                              .giftingDetailData.data?.user?.id
+                                              .toString() ??
+                                          '',
+                                      'Active');
+                                  break;
+                                case 1:
+                                  await controller.getGiftDetail(
+                                      controller
+                                              .giftingDetailData.data?.user?.id
+                                              .toString() ??
+                                          '',
+                                      'Expired');
+                                  break;
+                                case 2:
+                                  await controller.getActivity(controller
+                                          .giftingDetailData.data?.user?.id
+                                          .toString() ??
+                                      '');
+                                  break;
+                              }
+                              controller.update();
+                              print(index);
+                              // if(_scrollController.hasClients){
+                              //   controller.userParentPageController.animateToPage(
+                              //       index,
+                              //       duration: const Duration(seconds: 1),
+                              //       curve: Curves.ease);
+                              // }
+                            },
+                          ),
                           const VerticalSpacing(20),
-                          GetBuilder<SideBarController>(builder: (controller) {
-                            return SizedBox(
-                              height: context.height / 1,
-                              child: PageView(
-                                controller: controller.userParentPageController,
-                                children: [
-                                  UserParentLiveGiftingWidget(
-                                    giftingModel: controller.giftingDetailData
-                                        .data?.giftingModel ??
-                                        [GiftingModel()],
+                          controller.isLoading
+                              ? const CircularProgressIndicator()
+                              : SizedBox(
+                                  height: context.height / 1,
+                                  child: PageView(
+                                    controller:
+                                        controller.userParentPageController,
+                                    children: [
+                                      UserParentLiveGiftingWidget(
+                                        giftingModel: controller
+                                                .giftingDetailData
+                                                .data
+                                                ?.giftingModel ??
+                                            [],
+                                      ),
+                                      UserParentLiveGiftingWidget(
+                                        giftingModel: controller
+                                                .giftingDetailData
+                                                .data
+                                                ?.giftingModel ??
+                                            [],
+                                      ),
+                                      UserParentsActivity(
+                                        activityModel: controller.activityModel,
+                                      ),
+                                    ],
                                   ),
-                                  UserParentLiveGiftingWidget(
-                                    giftingModel: controller.giftingDetailData
-                                        .data?.giftingModel ??
-                                        [GiftingModel()],
-                                  ),
-                                  UserParentsActivity(
-                                    activityModel: controller.activityModel,
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
+                                ),
                           const VerticalSpacing(10),
                         ],
                       ),
@@ -204,12 +199,18 @@ class UserParentDetails extends StatelessWidget {
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                return BenefeciaryExpansionTile(
-                                  data: controller.benefeciaryData.data![index],
-                                );
+                                return controller.benefeciaryData.data == null
+                                    ? const NoDataFound(
+                                        title: 'No beneficiaries yet!')
+                                    : BenefeciaryExpansionTile(
+                                        data: controller
+                                            .benefeciaryData.data![index],
+                                      );
                               },
-                              itemCount:
-                              controller.benefeciaryData.data?.length ?? 0,
+                              itemCount: controller.benefeciaryData?.data == null
+                                  ? 1
+                                  : controller.benefeciaryData.data?.length ??
+                                      0,
                               separatorBuilder: (context, index) {
                                 return const VerticalSpacing(20);
                               },

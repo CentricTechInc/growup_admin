@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 
 class PayoutModel {
@@ -11,6 +12,7 @@ class PayoutModel {
   final GiftingModel? gift;
   final String? beneficiary;
   final String? postedBy;
+  final Status? status;
 
   PayoutModel({
     this.createdAt,
@@ -21,6 +23,7 @@ class PayoutModel {
     this.gift,
     this.beneficiary,
     this.postedBy,
+    this.status,
   });
 
   factory PayoutModel.fromRawJson(String str) =>
@@ -37,6 +40,7 @@ class PayoutModel {
         gift: json["Gift"] == null ? null : GiftingModel.fromJson(json["Gift"]),
         beneficiary: json["Beneficiary"],
         postedBy: json["PostedBy"],
+        status: statusValues.map[json["status"]],
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,5 +52,6 @@ class PayoutModel {
         "Gift": gift?.toJson(),
         "Beneficiary": beneficiary,
         "PostedBy": postedBy,
+        "status": statusValues.reverseMap[status],
       };
 }

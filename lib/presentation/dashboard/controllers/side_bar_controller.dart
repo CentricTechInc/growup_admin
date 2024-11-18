@@ -5,6 +5,7 @@ import 'package:grow_up_admin_panel/app/util/common_snack_bar.dart';
 import 'package:grow_up_admin_panel/common/loader_widget.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
+import 'package:grow_up_admin_panel/data/dto/gift_payout_model.dart';
 import 'package:grow_up_admin_panel/data/dto/user_bene_dto.dart';
 import 'package:grow_up_admin_panel/data/repositories/activity_model.dart';
 import 'package:grow_up_admin_panel/data/repositories/module_repo_impl.dart';
@@ -70,7 +71,11 @@ class SideBarController extends GetxController {
   final List<ContributionModel> contributionModelList = [];
   GiftDetailDto giftingDetailData = GiftDetailDto();
   UserBeneficiaryDto benefeciaryData = UserBeneficiaryDto();
+  GiftPayoutModel giftPayoutData = GiftPayoutModel();
   final debouncer = Debouncer(milliseconds: 1000);
+  bool isLoading = false;
+  final parentTableSearchController = TextEditingController();
+  final contributorTableSearchController = TextEditingController();
 
   getParentTable() async {
     try {
@@ -172,8 +177,12 @@ class SideBarController extends GetxController {
 
   Future<void> getGiftDetail(String id, String status) async {
     try {
+      isLoading = true;
       giftingDetailData = await userParentRepository.getGiftDetail(id, status);
+      await Future.delayed(Duration(seconds: 1));
+      isLoading = false;
     } catch (e) {
+      isLoading = false;
       CommonSnackBar.message(message: e.toString());
     }
   }
@@ -190,8 +199,34 @@ class SideBarController extends GetxController {
 
   Future<void> getActivity(String id) async {
     try {
+      isLoading = true;
       final res = await userParentRepository.getActivity(id, '1');
+      activityModel.clear();
       activityModel.addAll(res);
+      await Future.delayed(Duration(seconds: 1));
+      isLoading = false;
+    } catch (e) {
+      isLoading = false;
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
+  Future<void> getGiftPayoutDetail(String userId) async {
+    try {
+      final res = await userParentRepository.parentDetailPayoutTable(userId, 1);
+      giftPayoutData = res;
+    } catch (e) {
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
+  final List<ContributionModel> giftContributionList = [];
+
+  Future<void> getGiftContributions(String userId) async {
+    try {
+      final res = await userParentRepository.getGiftContributions(userId, 1);
+      giftContributionList.clear();
+      giftContributionList.addAll(res);
     } catch (e) {
       CommonSnackBar.message(message: e.toString());
     }

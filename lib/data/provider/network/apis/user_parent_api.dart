@@ -9,6 +9,8 @@ enum UserParentApiType {
   getDetail,
   getUserBeneficiary,
   getActivity,
+  getGiftsPayout,
+  getGiftsContributions,
 }
 
 class UserParentApi implements APIRequestRepresentable {
@@ -39,6 +41,13 @@ class UserParentApi implements APIRequestRepresentable {
           pageNo: pageNo,
         );
 
+  UserParentApi.parentDetailPayoutTable(String userId, int pageNo)
+      : this._(
+          type: UserParentApiType.getGiftsPayout,
+          pageNo: pageNo,
+          userId: userId,
+        );
+
   UserParentApi.getDetail(
     String userId,
     String status,
@@ -61,6 +70,12 @@ class UserParentApi implements APIRequestRepresentable {
           userId: userId,
           pageId: pageId,
         );
+  UserParentApi.getGiftsContributions(String userId, int pageId)
+      : this._(
+          type: UserParentApiType.getGiftsContributions,
+          userId: userId,
+          pageNo: pageId,
+        );
 
   @override
   get body {
@@ -70,6 +85,8 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getDetail:
       case UserParentApiType.getUserBeneficiary:
       case UserParentApiType.getActivity:
+      case UserParentApiType.getGiftsPayout:
+      case UserParentApiType.getGiftsContributions:
         return {};
     }
   }
@@ -86,6 +103,10 @@ class UserParentApi implements APIRequestRepresentable {
         return APIEndpoint.userBeneficiariesUrl;
       case UserParentApiType.getActivity:
         return '${APIEndpoint.getActivityUrl}/$userId/$pageId';
+      case UserParentApiType.getGiftsPayout:
+        return '${APIEndpoint.giftDetailsPayoutUrl}/$userId/$pageId';
+      case UserParentApiType.getGiftsContributions:
+        return '${APIEndpoint.getGiftContributorUrl}/$userId/$pageId';
     }
   }
 
@@ -97,6 +118,8 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getDetail:
       case UserParentApiType.getUserBeneficiary:
       case UserParentApiType.getActivity:
+      case UserParentApiType.getGiftsPayout:
+      case UserParentApiType.getGiftsContributions:
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
@@ -113,6 +136,8 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getUserBeneficiary:
       case UserParentApiType.getActivity:
       case UserParentApiType.searchParentTable:
+      case UserParentApiType.getGiftsPayout:
+      case UserParentApiType.getGiftsContributions:
         return HTTPMethod.get;
     }
   }
@@ -137,7 +162,7 @@ class UserParentApi implements APIRequestRepresentable {
           'search': search ?? '',
         };
       case UserParentApiType.getDetail:
-        return {'userId': userId ?? '', 'Status': status ?? ''};
+        return {'userId': userId ?? '', 'status': status ?? ''};
       case UserParentApiType.getUserBeneficiary:
         return {'userId': userId ?? '', 'pageNumber': pageId ?? ''};
       default:

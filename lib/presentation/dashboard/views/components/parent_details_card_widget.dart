@@ -102,7 +102,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
           Row(children: [
             Expanded(
               child: CommonText(
-                text: giftModel.data?.totalGifts.toString() ?? '0',
+                text: '\$ ${giftModel.data?.totalGifts}' ?? '0',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -110,7 +110,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
             ),
             Expanded(
               child: CommonText(
-                text: giftModel.data?.recieved.toString() ?? '0',
+                text: '\$ ${giftModel.data?.recieved}' ?? '0',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -118,7 +118,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
             ),
             Expanded(
               child: CommonText(
-                text: giftModel.data?.contributed.toString() ?? '0',
+                text: '\$ ${giftModel.data?.contributed}' ?? '0',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
