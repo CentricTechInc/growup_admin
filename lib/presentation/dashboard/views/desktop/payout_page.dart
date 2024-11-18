@@ -14,29 +14,31 @@ class PayoutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          PageHeader(
-            label: 'Payout',
-          ),
-          const VerticalSpacing(30),
-          const PayoutTableHeader(
-            // value: false,
-            titleList: [
-              'Payment ID',
-              'Gifting Title',
-              'Parents Name',
-              'Benefeciary Name',
-              'Date & Time',
-              'Payout Amount',
-            ],
-          ),
-          const VerticalSpacing(10),
-          GetBuilder<SideBarController>(builder: (controller) {
-            return Expanded(
+    return GetBuilder<SideBarController>(builder: (controller) {
+      return Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PageHeader(
+              label: 'Payout',
+            ),
+            const VerticalSpacing(30),
+            const PayoutTableHeader(
+              // value: false,
+              titleList: [
+                'Payment ID',
+                'Gifting Title',
+                'Parents Name',
+                'Benefeciary Name',
+                'Date & Time',
+                'Payout Amount',
+              ],
+            ),
+            const VerticalSpacing(10),
+            // GetBuilder<SideBarController>(builder: (controller) {
+            // return
+            Expanded(
               child: ListView.separated(
                 itemCount: controller.payoutModelList.length,
                 itemBuilder: (context, index) => PayoutTableBody(
@@ -53,15 +55,24 @@ class PayoutPage extends StatelessWidget {
                 ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
-            );
-          }),
-          CommonPagerWidget(
-            currentPage: 1,
-            totalPage: 1,
-            onPageChanged: (page) {},
-          ),
-        ],
-      ),
-    );
+            ),
+            // }),
+            CommonPagerWidget(
+              currentPage: controller.payoutPageNo,
+              totalPage: ((controller.elementCount == 0
+                          ? 1
+                          : controller.elementCount) /
+                      10)
+                  .ceil(),
+              onPageChanged: (page) async {
+                controller.payoutPageNo = page;
+                await controller.getPayoutTable();
+                controller.update();
+              },
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

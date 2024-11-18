@@ -50,6 +50,9 @@ class SideBarController extends GetxController {
   ///Contributor Table------
   int contributorPageNo = 1;
 
+  ///Contributon module------
+  int contributonModulePageNo = 1;
+
   ///Contributor Table------
   int giftingsPageNo = 1;
 
@@ -147,7 +150,9 @@ class SideBarController extends GetxController {
       Loader.showLoader();
       final res = await moduleRepository.getGiftingTable(giftingsPageNo);
       giftingModelList.clear();
-      giftingModelList.addAll(res);
+      giftingModelList.addAll(res.data);
+      elementCount = res.count ?? 1;
+      update();
       Loader.hideLoading();
     } catch (e) {
       Loader.hideLoading();
@@ -160,7 +165,9 @@ class SideBarController extends GetxController {
       Loader.showLoader();
       final res = await moduleRepository.getPayoutTable(payoutPageNo);
       payoutModelList.clear();
-      payoutModelList.addAll(res);
+      payoutModelList.addAll(res.data);
+      elementCount = res.count ?? 1;
+      update();
       Loader.hideLoading();
     } catch (e) {
       Loader.hideLoading();
@@ -172,9 +179,11 @@ class SideBarController extends GetxController {
     try {
       Loader.showLoader();
       final res =
-          await moduleRepository.getContributionTable(contributorPageNo);
+          await moduleRepository.getContributionTable(contributonModulePageNo);
       contributionModelList.clear();
-      contributionModelList.addAll(res);
+      contributionModelList.addAll(res.data);
+      elementCount = res.count ?? 1;
+      update();
       Loader.hideLoading();
     } catch (e) {
       Loader.hideLoading();
