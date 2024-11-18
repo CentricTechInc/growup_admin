@@ -39,6 +39,7 @@ class GiftingModel {
   final int? beneficiaryId;
   final UserModelDto? user;
   final Beneficiary? beneficiary;
+  bool isCollapsed;
 
   GiftingModel({
     this.picture,
@@ -57,6 +58,7 @@ class GiftingModel {
     this.beneficiaryId,
     this.user,
     this.beneficiary,
+    this.isCollapsed = true,
   });
 
   factory GiftingModel.fromRawJson(String str) =>

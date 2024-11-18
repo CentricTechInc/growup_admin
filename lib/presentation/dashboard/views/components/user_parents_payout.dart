@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:grow_up_admin_panel/app/util/common_drop_down_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/common_text_button.dart';
@@ -26,11 +25,17 @@ class UserParentsPayout extends StatelessWidget {
               weight: FontWeight.w700,
             ),
             const Spacer(),
-            SizedBox(
-              width: 150,
-              child: CommonDropDownWidget(
-                onChanged: (p0) {},
-                arryList: const [],
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: AppColors.secondary.withOpacity(0.2),
+              ),
+              child: const CommonText(
+                text: 'Pending',
+                fontSize: 12,
+                weight: FontWeight.w400,
+                color: AppColors.secondary,
               ),
             ),
           ],

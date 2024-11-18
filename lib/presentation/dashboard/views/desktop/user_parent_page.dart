@@ -30,8 +30,8 @@ class UserParentPage extends StatelessWidget {
               label: 'Parents',
               searchController: controller.parentTableSearchController,
               searchCancelOnTap: () async {
-                controller.parentTableSearchController.clear();
                 await controller.getParentTable();
+                controller.parentTableSearchController.clear();
                 controller.update();
               },
               searchOnChanged: (val) {

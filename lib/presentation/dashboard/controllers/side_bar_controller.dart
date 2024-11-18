@@ -71,6 +71,7 @@ class SideBarController extends GetxController {
     userParentPageController.jumpToPage(0); // Reset the page
     update(); // Notify listeners
   }
+
   //
   // @override
   // void onInit() {
@@ -111,7 +112,8 @@ class SideBarController extends GetxController {
       final res = await userParentRepository.getParentTable(parentPageNo);
       userParentModelList.clear();
       userParentModelList.addAll(res.data);
-      elementCount = res.count ?? 0;
+      elementCount = res.count ?? 1;
+
       Loader.hideLoading();
     } catch (e) {
       Loader.hideLoading();
@@ -126,7 +128,6 @@ class SideBarController extends GetxController {
           await userParentRepository.searchParentTable(search, parentPageNo);
       userParentModelList.clear();
       userParentModelList.addAll(res.data);
-      elementCount = res.count ?? 0;
       Loader.hideLoading();
     } catch (e) {
       Loader.hideLoading();
@@ -156,7 +157,6 @@ class SideBarController extends GetxController {
           search, contributorPageNo);
       userContributorModelList.clear();
       userContributorModelList.addAll(res.data);
-      elementCount = res.count ?? 1;
       Loader.hideLoading();
     } catch (e) {
       Loader.hideLoading();
@@ -216,12 +216,15 @@ class SideBarController extends GetxController {
 
   Future<void> getGiftDetail(String id, String status) async {
     try {
+      Loader.showLoader();
       isLoading = true;
       giftingDetailData = await userParentRepository.getGiftDetail(id, status);
       await Future.delayed(Duration(seconds: 1));
       isLoading = false;
+      Loader.hideLoading();
     } catch (e) {
       isLoading = false;
+      Loader.hideLoading();
       CommonSnackBar.message(message: e.toString());
     }
   }

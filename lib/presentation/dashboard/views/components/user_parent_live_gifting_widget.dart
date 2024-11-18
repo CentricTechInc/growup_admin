@@ -13,25 +13,18 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/tab_
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_payout.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parents_payout.dart';
 
-class UserParentLiveGiftingWidget extends StatefulWidget {
+class UserParentLiveGiftingWidget extends StatelessWidget {
   UserParentLiveGiftingWidget({super.key, required this.giftingModel});
 
   final List<GiftingModel> giftingModel;
 
   @override
-  State<UserParentLiveGiftingWidget> createState() => _UserParentLiveGiftingWidgetState();
-}
-
-class _UserParentLiveGiftingWidgetState extends State<UserParentLiveGiftingWidget> {
-  bool isCollapsed = true;
-
-  @override
   Widget build(BuildContext context) {
     return GetBuilder<SideBarController>(builder: (controller) {
       return ListView.separated(
-        itemCount: widget.giftingModel.isEmpty ? 1 : widget.giftingModel.length,
+        itemCount: giftingModel.isEmpty ? 1 : giftingModel.length,
         itemBuilder: (context, listIndex) {
-          return widget.giftingModel.isEmpty
+          return giftingModel.isEmpty
               ? const NoDataFound(title: 'No gifts found!')
               : Container(
                   padding: const EdgeInsets.all(20),
@@ -42,21 +35,19 @@ class _UserParentLiveGiftingWidgetState extends State<UserParentLiveGiftingWidge
                   child: ExpansionTile(
                     shape: const Border(),
                     onExpansionChanged: (collapse) {
-                      setState(() {
-                        isCollapsed = !collapse;
-                      });
-                      print('isCollapsed : ' + isCollapsed.toString());
+                        giftingModel[listIndex].isCollapsed = !collapse;
+                        controller.update();
                     },
                     title: Visibility(
-                      visible: isCollapsed,
+                      visible: giftingModel[listIndex].isCollapsed ?? false,
                       replacement: Row(
                         children: [
                           TabBarWidget(
                             selectedIndex: controller.liveGiftingSelectedIndex,
                             controller: controller.liveGiftingPageController,
                             selectedColor: AppColors.white,
-                            title: [
-                              'Gifting Details: $isCollapsed',
+                            title: const [
+                              'Gifting Details',
                               'Contributions',
                               'Payout'
                             ],
@@ -64,7 +55,7 @@ class _UserParentLiveGiftingWidgetState extends State<UserParentLiveGiftingWidge
                               controller.liveGiftingSelectedIndex = index;
 
                               final String userId =
-                                  widget.giftingModel[listIndex].userId?.toString() ??
+                                 giftingModel[listIndex].userId?.toString() ??
                                       '0';
                               switch (index) {
                                 case 0:
@@ -93,7 +84,7 @@ class _UserParentLiveGiftingWidgetState extends State<UserParentLiveGiftingWidge
                             onTap: () async {
                               print('here delete');
                               await controller
-                                  .deleteGift(widget.giftingModel[listIndex].id ?? 0);
+                                  .deleteGift(giftingModel[listIndex].id ?? 0);
                               await controller.getGiftDetail(
                                   controller.giftingDetailData.data?.user?.id
                                           .toString() ??
@@ -106,10 +97,10 @@ class _UserParentLiveGiftingWidgetState extends State<UserParentLiveGiftingWidge
                         ],
                       ),
                       child: GiftingDeatilsExpansionCollapsed(
-                        giftingModel: widget.giftingModel[listIndex],
+                        giftingModel:giftingModel[listIndex],
                         onDelete: () async {
                           await controller
-                              .deleteGift(widget.giftingModel[listIndex].id ?? 0);
+                              .deleteGift(giftingModel[listIndex].id ?? 0);
                         },
                       ),
                     ),

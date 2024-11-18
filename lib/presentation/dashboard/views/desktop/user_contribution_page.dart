@@ -24,8 +24,8 @@ class UserContributionPage extends StatelessWidget {
               label: 'Contributors',
               searchController: controller.contributorTableSearchController,
               searchCancelOnTap: () async {
+                await controller.getContributorsTable();
                 controller.contributorTableSearchController.clear();
-                await controller.getParentTable();
                 controller.update();
               },
               searchOnChanged: (val) {
