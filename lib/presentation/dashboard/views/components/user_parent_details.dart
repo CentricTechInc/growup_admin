@@ -213,8 +213,14 @@ class UserParentDetails extends StatelessWidget {
                                               controller.benefeciaryData
                                                       .data![index].id ??
                                                   0);
-                                          print(controller.giftingDetailData.data?.user?.id.toString());
-                                          await controller.getUserBenes(controller.giftingDetailData.data?.user?.id.toString() ?? '0');
+                                          print(controller
+                                              .giftingDetailData.data?.user?.id
+                                              .toString());
+                                          await controller.getUserBenes(
+                                              controller.giftingDetailData.data
+                                                      ?.user?.id
+                                                      .toString() ??
+                                                  '0');
                                           controller.update();
                                         });
                               },

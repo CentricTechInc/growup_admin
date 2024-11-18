@@ -63,17 +63,19 @@ class SideBarWidget extends StatelessWidget {
                       case 1:
                         context.go(PagePath.userParents);
                         await controller.getParentTable();
-                        // controller.liveGiftingSelectedIndex = 0;
-                        // controller.userParentSelectedIndex = 0;
-                        // controller.userParentPageController.animateToPage(0, duration: Duration(seconds: 1), curve: Curves.easeIn);
-
+                        controller.liveGiftingSelectedIndex = 0;
+                        controller.userParentSelectedIndex = 0;
+                        controller.update();
+                        // controller.resetPaging();
                         break;
                       case 2:
                         context.go(PagePath.userContributor);
                         await controller.getContributorsTable();
-                        // controller.liveGiftingSelectedIndex = 0;
-                        // controller.userParentSelectedIndex = 0;
-                        // controller.userParentPageController.animateToPage(0, duration: Duration(seconds: 1), curve: Curves.easeIn);
+                        // controller.resetPaging();
+                        controller.liveGiftingSelectedIndex = 0;
+                        controller.userParentSelectedIndex = 0;
+                        controller.update();
+                        // controller.userParentPageController.dispose();
 
                         break;
                       case 3:

@@ -65,6 +65,20 @@ class SideBarController extends GetxController {
   int userParentSelectedIndex = 0;
   int userContributerSelectedIndex = 0;
 
+  void resetPaging() {
+    print('userParentSelectedIndex before reset: $userParentSelectedIndex');
+    userParentSelectedIndex = 0; // Reset the index
+    userParentPageController.jumpToPage(0); // Reset the page
+    update(); // Notify listeners
+  }
+  //
+  // @override
+  // void onInit() {
+  //   userParentPageController.attach(scrollController.position);
+  //   super.onInit();
+  // }
+  //
+  // final ScrollController scrollController = ScrollController();
   bool isCollapsedIssue = true;
   final liveGiftingPageController = PageController();
   final userParentPageController = PageController();
@@ -85,6 +99,7 @@ class SideBarController extends GetxController {
   bool isLoading = false;
   final parentTableSearchController = TextEditingController();
   final contributorTableSearchController = TextEditingController();
+
   //
   final giftingSearchController = TextEditingController();
   final contributionsSearchController = TextEditingController();
