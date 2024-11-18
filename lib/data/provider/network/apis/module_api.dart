@@ -20,22 +20,25 @@ class ModuleApi implements APIRequestRepresentable {
     this.pageNo,
   });
 
-  ModuleApi.getGiftingTable(int pageNo)
+  ModuleApi.getGiftingTable(int pageNo, String? search)
       : this._(
           type: ModuleApiType.getGiftingTable,
           pageNo: pageNo,
+          search: search,
         );
 
-  ModuleApi.getPayoutTable(int pageNo)
+  ModuleApi.getPayoutTable(int pageNo, String? search)
       : this._(
           type: ModuleApiType.getPayoutTable,
           pageNo: pageNo,
+          search: search,
         );
 
-  ModuleApi.getContributionTable(int pageNo)
+  ModuleApi.getContributionTable(int pageNo, String? search)
       : this._(
           type: ModuleApiType.getContributionTable,
           pageNo: pageNo,
+          search: search,
         );
 
   @override
@@ -97,7 +100,10 @@ class ModuleApi implements APIRequestRepresentable {
       case ModuleApiType.getContributionTable:
       case ModuleApiType.getGiftingTable:
       case ModuleApiType.getPayoutTable:
-        return {'pageNumber': pageNo?.toString() ?? '0'};
+        return {
+          'pageNumber': pageNo?.toString() ?? '0',
+          'search': search ?? ''
+        };
     }
   }
 }
