@@ -50,9 +50,9 @@ class ModuleApi implements APIRequestRepresentable {
   String get path {
     switch (type) {
       case ModuleApiType.getGiftingTable:
-        return '${APIEndpoint.giftingTableUrl}/$pageNo';
+        return APIEndpoint.giftingTableUrl;
       case ModuleApiType.getPayoutTable:
-        return '${APIEndpoint.payoutTableUrl}/$pageNo';
+        return APIEndpoint.payoutTableUrl;
       case ModuleApiType.getContributionTable:
         return APIEndpoint.contributionTableUrl;
     }
@@ -95,10 +95,9 @@ class ModuleApi implements APIRequestRepresentable {
   Map<String, String>? get urlParams {
     switch (type) {
       case ModuleApiType.getContributionTable:
-        return {'pageNumber': pageNo?.toString() ?? '0'};
       case ModuleApiType.getGiftingTable:
       case ModuleApiType.getPayoutTable:
-        return {};
+        return {'pageNumber': pageNo?.toString() ?? '0'};
     }
   }
 }
