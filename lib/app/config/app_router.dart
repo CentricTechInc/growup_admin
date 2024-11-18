@@ -138,9 +138,7 @@ class AppRouter {
                 GoRoute(
                   path: PagePath.parentDetails,
                   pageBuilder: (context, state) {
-                    return MaterialPage(
-                        child: UserParentDetails(
-                    ));
+                    return MaterialPage(child: UserParentDetails());
                   },
                 ),
               ]),
@@ -169,9 +167,7 @@ class AppRouter {
                 GoRoute(
                   path: PagePath.parentDetails,
                   pageBuilder: (context, state) {
-                    return MaterialPage(
-                        child: UserParentDetails(
-                    ));
+                    return MaterialPage(child: UserParentDetails());
                   },
                 ),
               ]),
@@ -186,8 +182,16 @@ class AppRouter {
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.payouts,
               pageBuilder: (context, state) {
-                return MaterialPage(child: PayoutPage());
-              }),
+                return const MaterialPage(child: PayoutPage());
+              },
+              routes: [
+                GoRoute(
+                  path: PagePath.parentDetails,
+                  pageBuilder: (context, state) {
+                    return const MaterialPage(child: UserParentDetails());
+                  },
+                ),
+              ]),
           GoRoute(
             parentNavigatorKey: _shellNavigatorKey,
             path: PagePath.analytics,
