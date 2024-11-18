@@ -13,9 +13,9 @@ class DashboardController extends GetxController {
   DashboardRepository dashboardRepository = DashboardRepoImpl();
 
   @override
-  void onInit() {
+  void onReady() {
     init();
-    super.onInit();
+    super.onReady();
   }
 
   init() async {
