@@ -1,57 +1,62 @@
 import 'dart:convert';
 
-import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 
-class PayoutModel {
+class ActivityModel {
   final String? createdAt;
   final int? id;
-  final String? transactionId;
   final String? amount;
+  final String? frequency;
+  final DateTime? contributionDate;
+  final String? transactionId;
   final int? giftId;
+  final int? contributorId;
   final GiftingModel? gift;
   final String? beneficiary;
-  final String? postedBy;
-  final Status? status;
 
-  PayoutModel({
+  ActivityModel({
     this.createdAt,
     this.id,
-    this.transactionId,
     this.amount,
+    this.frequency,
+    this.contributionDate,
+    this.transactionId,
     this.giftId,
+    this.contributorId,
     this.gift,
     this.beneficiary,
-    this.postedBy,
-    this.status,
   });
 
-  factory PayoutModel.fromRawJson(String str) =>
-      PayoutModel.fromJson(json.decode(str));
+  factory ActivityModel.fromRawJson(String str) =>
+      ActivityModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory PayoutModel.fromJson(Map<String, dynamic> json) => PayoutModel(
+  factory ActivityModel.fromJson(Map<String, dynamic> json) => ActivityModel(
         createdAt: json["createdAt"],
         id: json["id"],
-        transactionId: json["TransactionId"],
         amount: json["amount"],
+        frequency: json["frequency"],
+        contributionDate: json["contribution_date"] == null
+            ? null
+            : DateTime.parse(json["contribution_date"]),
+        transactionId: json["TransactionId"],
         giftId: json["GiftId"],
+        contributorId: json["ContributorId"],
         gift: json["Gift"] == null ? null : GiftingModel.fromJson(json["Gift"]),
         beneficiary: json["Beneficiary"],
-        postedBy: json["PostedBy"],
-        status: statusValues.map[json["status"]],
       );
 
   Map<String, dynamic> toJson() => {
         "createdAt": createdAt,
         "id": id,
-        "TransactionId": transactionId,
         "amount": amount,
+        "frequency": frequency,
+        "contribution_date": contributionDate,
+        "TransactionId": transactionId,
         "GiftId": giftId,
+        "ContributorId": contributorId,
         "Gift": gift?.toJson(),
         "Beneficiary": beneficiary,
-        "PostedBy": postedBy,
-        "status": statusValues.reverseMap[status],
       };
 }

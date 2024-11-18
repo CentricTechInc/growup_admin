@@ -5,8 +5,8 @@ import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
 
 class ParentDetailsCardWidget extends StatelessWidget {
-  ParentDetailsCardWidget({super.key, required this.data});
-  GiftDetailDto data;
+  ParentDetailsCardWidget({super.key, required this.giftModel});
+  GiftDetailDto giftModel;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,7 +51,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
           Row(children: [
             Expanded(
               child: CommonText(
-                text: data.data?.user?.name ?? '',
+                text: giftModel.data?.user?.name ?? '',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -59,7 +59,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
             ),
             Expanded(
               child: CommonText(
-                text: data.data?.user?.email ?? '',
+                text: giftModel.data?.user?.email ?? '',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -67,7 +67,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
             ),
             Expanded(
               child: CommonText(
-                text: data.data?.user?.phone ?? '',
+                text: giftModel.data?.user?.phone ?? '',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -102,15 +102,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
           Row(children: [
             Expanded(
               child: CommonText(
-                text: '${data.data?.user?.totalGifts ?? 0}',
-                fontSize: 16,
-                weight: FontWeight.w400,
-                color: AppColors.secondaryText,
-              ),
-            ),
-            const Expanded(
-              child: CommonText(
-                text: 'Name',
+                text: '\$ ${giftModel.data?.totalGifts}' ?? '0',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -118,7 +110,15 @@ class ParentDetailsCardWidget extends StatelessWidget {
             ),
             Expanded(
               child: CommonText(
-                text: '${data.data?.contributed ?? 0}',
+                text: '\$ ${giftModel.data?.recieved}' ?? '0',
+                fontSize: 16,
+                weight: FontWeight.w400,
+                color: AppColors.secondaryText,
+              ),
+            ),
+            Expanded(
+              child: CommonText(
+                text: '\$ ${giftModel.data?.contributed}' ?? '0',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,

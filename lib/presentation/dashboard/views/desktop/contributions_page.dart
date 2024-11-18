@@ -21,7 +21,7 @@ class ContributionPage extends StatelessWidget {
             label: 'Contributions',
             showSearch: true,
             searchController: TextEditingController(),
-            onChanged: (p0) {},
+            searchOnChanged: (p0) {},
           ),
           const VerticalSpacing(30),
           const ContributionTableHeader(

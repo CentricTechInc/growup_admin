@@ -5,7 +5,7 @@ import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 
 class TabBarWidget extends StatelessWidget {
-  TabBarWidget({super.key,
+  const TabBarWidget({super.key,
     required this.title,
     this.selectedColor,
     this.unselectedColor,
@@ -31,16 +31,16 @@ class TabBarWidget extends StatelessWidget {
                     // onTap: onTap,
                     onTap: () {
                       // ctrl.userParentSelectedIndex = index;
-                      // controller
-                      //     .animateToPage(
-                      //     // ctlr.selectedIndex,
-                      //     selectedIndex,
-                      //     duration:
-                      //     const Duration(seconds: 1),
-                      //     curve: Curves.ease);
+                      controller
+                          .animateToPage(
+                          // ctlr.selectedIndex,
+                          index,
+                          duration:
+                          const Duration(seconds: 1),
+                          curve: Curves.ease);
                       onTap(index);
 
-                      // ctrl.update();
+                      ctrl.update();
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),

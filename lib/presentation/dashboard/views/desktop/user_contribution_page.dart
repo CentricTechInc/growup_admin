@@ -22,6 +22,18 @@ class UserContributionPage extends StatelessWidget {
           children: [
             PageHeader(
               label: 'Contributors',
+              searchController: controller.contributorTableSearchController,
+              searchCancelOnTap: () async {
+                controller.contributorTableSearchController.clear();
+                await controller.getParentTable();
+                controller.update();
+              },
+              searchOnChanged: (val) {
+                controller.debouncer.run(() async {
+                  await controller.searchContributorsTable(val);
+                  controller.update();
+                });
+              },
             ),
             const VerticalSpacing(30),
             const ParentTableHeader(
@@ -33,7 +45,12 @@ class UserContributionPage extends StatelessWidget {
               child: ListView.separated(
                 itemCount: controller.userContributorModelList.length,
                 itemBuilder: (context, index) => ParentTableBody(
-                  onTap: () {
+                  onTap: () async {
+                    await controller.getGiftDetail(
+                        controller.userContributorModelList[index].id
+                                .toString() ??
+                            '',
+                        'Active');
                     context.push(
                         PagePath.userParents + PagePath.parentDetails.toRoute);
                   },
@@ -42,10 +59,19 @@ class UserContributionPage extends StatelessWidget {
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
+            if(controller.contributorTableSearchController.text.isEmpty)
             CommonPagerWidget(
-              currentPage: 1,
-              totalPage: 1,
-              onPageChanged: (page) {},
+              currentPage: controller.contributorPageNo,
+              totalPage: ((controller.elementCount == 0
+                          ? 1
+                          : controller.elementCount) /
+                      10)
+                  .ceil(),
+              onPageChanged: (page) async {
+                controller.contributorPageNo = page;
+                await controller.getContributorsTable();
+                controller.update();
+              },
             ),
           ],
         );

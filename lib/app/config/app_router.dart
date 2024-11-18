@@ -138,17 +138,8 @@ class AppRouter {
                 GoRoute(
                   path: PagePath.parentDetails,
                   pageBuilder: (context, state) {
-                    Map<String, dynamic>? data =
-                        state.extra as Map<String, dynamic>?;
-
-                    GiftDetailDto giftDetailDto =
-                        data?['giftDetailDto'] ?? GiftDetailDto();
-                    UserBeneficiaryDto gifBeneDto =
-                        data?['giftBenesDto'] ?? UserBeneficiaryDto();
                     return MaterialPage(
                         child: UserParentDetails(
-                      giftBeneDto: gifBeneDto,
-                      giftDetailDto: giftDetailDto,
                     ));
                   },
                 ),
@@ -178,17 +169,8 @@ class AppRouter {
                 GoRoute(
                   path: PagePath.parentDetails,
                   pageBuilder: (context, state) {
-                    Map<String, dynamic>? data =
-                        state.extra as Map<String, dynamic>?;
-
-                    GiftDetailDto giftDetailDto =
-                        data?['giftDetailDto'] ?? GiftDetailDto();
-                    UserBeneficiaryDto gifBeneDto =
-                        data?['giftBenesDto'] ?? UserBeneficiaryDto();
                     return MaterialPage(
                         child: UserParentDetails(
-                      giftBeneDto: gifBeneDto,
-                      giftDetailDto: giftDetailDto,
                     ));
                   },
                 ),

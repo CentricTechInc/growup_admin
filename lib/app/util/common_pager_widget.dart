@@ -49,7 +49,7 @@ class CommonPagerWidget extends StatelessWidget {
         // ),
         // const HorizontalSpacing(30),
         CommonText(
-          text: '$currentPage-$currentItemsPerPage of  $totalPage',
+          text: '$currentPage of  $totalPage',
           fontSize: 12,
           weight: FontWeight.w600,
         ),
