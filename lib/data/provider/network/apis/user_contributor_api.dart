@@ -22,6 +22,7 @@ class UserContributorApi implements APIRequestRepresentable {
   UserContributorApi.getContributorTable(int pageNo)
       : this._(
           type: UserContrbutorApiType.getContributorTable,
+
           pageNo: pageNo,
         );
 
@@ -30,6 +31,7 @@ class UserContributorApi implements APIRequestRepresentable {
             type: UserContrbutorApiType.searchContributorTable,
             pageNo: pageNo,
             search: search);
+
 
   @override
   get body {
@@ -56,7 +58,8 @@ class UserContributorApi implements APIRequestRepresentable {
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
-          'Authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
+          'authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
+
         };
     }
   }

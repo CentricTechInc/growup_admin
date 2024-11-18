@@ -163,8 +163,27 @@ class AppRouter {
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.giftings,
               pageBuilder: (context, state) {
-                return MaterialPage(child: GiftingsPage());
-              }),
+                return const MaterialPage(child: GiftingsPage());
+              },
+              routes: [
+                GoRoute(
+                  path: PagePath.parentDetails,
+                  pageBuilder: (context, state) {
+                    Map<String, dynamic>? data =
+                        state.extra as Map<String, dynamic>?;
+
+                    GiftDetailDto giftDetailDto =
+                        data?['giftDetailDto'] ?? GiftDetailDto();
+                    UserBeneficiaryDto gifBeneDto =
+                        data?['giftBenesDto'] ?? UserBeneficiaryDto();
+                    return MaterialPage(
+                        child: UserParentDetails(
+                      giftBeneDto: gifBeneDto,
+                      giftDetailDto: giftDetailDto,
+                    ));
+                  },
+                ),
+              ]),
           GoRoute(
             parentNavigatorKey: _shellNavigatorKey,
             path: PagePath.contrbutions,

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:grow_up_admin_panel/app/util/common_snack_bar.dart';
+import 'package:grow_up_admin_panel/common/resources/strings.dart';
 import 'package:grow_up_admin_panel/data/dto/active_users_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/contribution_frequency_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/dashboard_listing_dto.dart';
@@ -13,9 +14,9 @@ class DashboardController extends GetxController {
   DashboardRepository dashboardRepository = DashboardRepoImpl();
 
   @override
-  void onInit() {
+  void onReady() {
     init();
-    super.onInit();
+    super.onReady();
   }
 
   init() async {
@@ -39,30 +40,30 @@ class DashboardController extends GetxController {
   TotalUsersChartDto? totalUsersChartDto;
   ContributionFrequencyChartDto? contributionFrequencyChartDto;
 
-  String selectedUserFilter = 'half-yearly';
-  String selectedGiftFilter = 'this-week';
-  String selectedContributorFilter = 'last90days';
-  String selectedTotalUsersFilter = 'this-week';
-  String selectedContributionFrequencyFilter = 'half-yearly';
+  String selectedUserFilter = '06 Months';
+  String selectedGiftFilter = 'This Week';
+  String selectedContributorFilter = '03 Months';
+  String selectedTotalUsersFilter = 'This Week';
+  String selectedContributionFrequencyFilter = '06 Months';
 
-  List<String> userFilters = ['last-week', 'half-yearly'];
+  List<String> userFilters = ['Last Week', '06 Months'];
   List<String> giftFilters = [
-    'this-week',
-    'quarterly',
-    'last-week',
-    'last-month'
+    'This Week',
+    'Quarterly',
+    'Last Week',
+    'Last Month'
   ];
-  List<String> contributorFilters = ['last90days'];
+  List<String> contributorFilters = ['03 Months'];
   List<String> totalUsersFilters = [
-    'this-week',
-    'last-week',
-    'last-month',
-    'quarterly'
+    'This Week',
+    'Last Week',
+    'Last Month',
+    'Quarterly'
   ];
   List<String> contributionFrequencyFilters = [
-    'this-week',
-    'last-week',
-    'half-yearly'
+    'This Week',
+    'Last Week',
+    '06 Months'
   ];
   final List<ChartData> contributorData = [];
   final List<ChartData> parentData = [];
@@ -102,8 +103,8 @@ class DashboardController extends GetxController {
       isUserLoading = true;
       update();
       await Future.delayed(const Duration(milliseconds: 500));
-      activeUsersChartDto =
-          await dashboardRepository.activeUsersChart(selectedUserFilter);
+      String filter = getDropdownString(selectedUserFilter);
+      activeUsersChartDto = await dashboardRepository.activeUsersChart(filter);
 
       activeUsersChartDto?.data?.contributorusers?.forEach((element) {
         contributorData
@@ -126,8 +127,9 @@ class DashboardController extends GetxController {
       topContributorChartData.clear();
       isContributorLoading = true;
       update();
-      topContributorsChartDto = await dashboardRepository
-          .topContributorsChart(selectedContributorFilter);
+      String filter = getDropdownString(selectedContributorFilter);
+      topContributorsChartDto =
+          await dashboardRepository.topContributorsChart(filter);
       topContributorsChartDto?.data?.chartData?.forEach((element) {
         topContributorChartData.add(ContributorChartData(
           month: element.month,
@@ -150,8 +152,8 @@ class DashboardController extends GetxController {
       isGiftLoading = true;
       await Future.delayed(const Duration(milliseconds: 500));
       update();
-      topGiftingChartDto =
-          await dashboardRepository.topGiftingChart(selectedGiftFilter);
+      String filter = getDropdownString(selectedGiftFilter);
+      topGiftingChartDto = await dashboardRepository.topGiftingChart(filter);
       print(topGiftingChartDto?.toJson());
       topGiftingChartDto?.data?.records?.forEach((element) {
         topGiftingData.add(ChartData(
@@ -173,8 +175,9 @@ class DashboardController extends GetxController {
       totalUsersLoading = true;
       update();
       await Future.delayed(const Duration(milliseconds: 500));
-      totalUsersChartDto =
-          await dashboardRepository.totalUsersChart(selectedTotalUsersFilter);
+
+      String filter = getDropdownString(selectedTotalUsersFilter);
+      totalUsersChartDto = await dashboardRepository.totalUsersChart(filter);
       totalUsersLoading = false;
       update();
     } catch (e) {
@@ -193,8 +196,9 @@ class DashboardController extends GetxController {
       quaterlyContributionFrequencyList.clear();
       update();
       await Future.delayed(const Duration(milliseconds: 500));
-      contributionFrequencyChartDto = await dashboardRepository
-          .contributionFrequencyChart(selectedContributionFrequencyFilter);
+      String filter = getDropdownString(selectedContributionFrequencyFilter);
+      contributionFrequencyChartDto =
+          await dashboardRepository.contributionFrequencyChart(filter);
 
       contributionFrequencyChartDto?.data?.result?.forEach((element) {
         if (element.frequency == 'Weekly') {

@@ -37,17 +37,17 @@ class CommonPagerWidget extends StatelessWidget {
           weight: FontWeight.w600,
         ),
         const HorizontalSpacing(10),
-        SizedBox(
-          width: 60,
-          child: CommonDropDownWidget(
-            borderColor: AppColors.primary,
-            disableBorder: AppColors.primary,
-            onChanged: (p0) {},
-            arryList: List.generate(totalPage, (index) => index.toString()),
-            selectedItem: 1,
-          ),
-        ),
-        const HorizontalSpacing(30),
+        // SizedBox(
+        //   width: 60,
+        //   child: CommonDropDownWidget(
+        //     borderColor: AppColors.primary,
+        //     disableBorder: AppColors.primary,
+        //     onChanged: (p0) {},
+        //     arryList: List.generate(totalPage, (index) => index.toString()),
+        //     selectedItem: 1,
+        //   ),
+        // ),
+        // const HorizontalSpacing(30),
         CommonText(
           text: '$currentPage of  $totalPage',
           fontSize: 12,

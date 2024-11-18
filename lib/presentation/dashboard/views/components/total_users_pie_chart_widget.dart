@@ -32,14 +32,13 @@ class TotalUsersPieChartWidget extends StatelessWidget {
                       dataSource: [
                         ChartData(
                             'Contributor',
-                            double.parse(controller
-                                .totalUsersChartDto!.data!.contributors
-                                .toString())),
+                            double.parse(
+                                '${controller.totalUsersChartDto?.data?.contributors ?? '0'}')),
                         ChartData(
                             'Parent',
-                            double.parse(controller
-                                .totalUsersChartDto!.data!.parents
-                                .toString())),
+                            double.parse(
+                              '${controller.totalUsersChartDto?.data?.parents ?? '0'}',
+                            )),
                       ],
                       xValueMapper: (ChartData data, _) => data.month,
                       yValueMapper: (ChartData data, _) => data.value,

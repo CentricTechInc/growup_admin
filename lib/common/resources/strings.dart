@@ -31,3 +31,23 @@ String dateToMonthName(DateTime date) {
   String monthName = DateFormat('MMMM').format(date);
   return monthName;
 }
+
+String getDropdownString(String value) {
+  switch (value) {
+    case 'This Week':
+      return 'this-week';
+    case 'Last Week':
+      return 'last-week';
+    case 'Last Month':
+      return 'last-month';
+    case '03 Months':
+      return 'last90days';
+    case '06 Months':
+      return 'half-yearly';
+    case 'Quarterly':
+      return 'quarterly';
+
+    default:
+      return '';
+  }
+}
