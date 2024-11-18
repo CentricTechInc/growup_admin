@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grow_up_admin_panel/app/extensions/build_context_ext.dart';
+import 'package:grow_up_admin_panel/app/util/responsive_builder.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 
@@ -21,7 +22,7 @@ class CommonAuthWidget extends StatelessWidget {
       color: AppColors.primary,
       child: Row(
         children: [
-          if (showLogo)
+          if (showLogo && !Responsive.isMobile(context))
             Container(
               color: AppColors.primary,
               height: context.height,
@@ -31,18 +32,24 @@ class CommonAuthWidget extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-          if (!showLogo) const Spacer(),
+          if (!showLogo && !Responsive.isMobile(context)) const Spacer(),
           Stack(
             children: [
               Container(
                   padding: padding ??
                       EdgeInsets.symmetric(horizontal: context.width * 0.15),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                       color: AppColors.white,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          topLeft: Radius.circular(30))),
-                  width: showLogo ? context.width * 0.6 : context.width * 0.9,
+                      borderRadius: Responsive.isMobile(context)
+                          ? null
+                          : const BorderRadius.only(
+                              bottomLeft: Radius.circular(30),
+                              topLeft: Radius.circular(30))),
+                  width: Responsive.isMobile(context)
+                      ? context.width
+                      : showLogo
+                          ? context.width * 0.6
+                          : context.width * 0.9,
                   child: child),
               if (showBackButton)
                 const Positioned(left: 20, top: 20, child: BackButton()),

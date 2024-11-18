@@ -15,7 +15,7 @@ class OtpController extends GetxController {
   TextEditingController pinController = TextEditingController();
 
   String otpEmail = '';
-  int secondsRemaining = 1;
+  int secondsRemaining = 60;
   Timer? timer;
   bool enableResend = false;
   void resendCode(String email) {

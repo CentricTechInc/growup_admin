@@ -9,6 +9,7 @@ enum ApiType {
   topContributorsChart,
   activeUsersChart,
   totalUsersChart,
+  contributionFrequencyChart
 }
 
 class DashboardApi extends APIRequestRepresentable {
@@ -24,6 +25,8 @@ class DashboardApi extends APIRequestRepresentable {
       : this._(apiType: ApiType.activeUsersChart, filter: filter);
   DashboardApi.totalUsersChart(String filter)
       : this._(apiType: ApiType.totalUsersChart, filter: filter);
+  DashboardApi.contrbutionFrequencyChart(String filter)
+      : this._(apiType: ApiType.contributionFrequencyChart, filter: filter);
 
   @override
   get body {
@@ -33,6 +36,7 @@ class DashboardApi extends APIRequestRepresentable {
       case ApiType.topContributorsChart:
       case ApiType.activeUsersChart:
       case ApiType.totalUsersChart:
+      case ApiType.contributionFrequencyChart:
         return {};
     }
   }
@@ -48,6 +52,7 @@ class DashboardApi extends APIRequestRepresentable {
       case ApiType.topContributorsChart:
       case ApiType.activeUsersChart:
       case ApiType.totalUsersChart:
+      case ApiType.contributionFrequencyChart:
         return {
           'accept': ' */*',
           'Content-Type': 'application/json; charset=utf-8',
@@ -65,6 +70,7 @@ class DashboardApi extends APIRequestRepresentable {
       case ApiType.topContributorsChart:
       case ApiType.activeUsersChart:
       case ApiType.totalUsersChart:
+      case ApiType.contributionFrequencyChart:
         return HTTPMethod.get;
     }
   }
@@ -82,6 +88,8 @@ class DashboardApi extends APIRequestRepresentable {
         return APIEndpoint.activeUsersUrl;
       case ApiType.totalUsersChart:
         return APIEndpoint.totalUserUrl;
+      case ApiType.contributionFrequencyChart:
+        return APIEndpoint.contributionFrequencyUrl;
     }
   }
 
@@ -102,6 +110,7 @@ class DashboardApi extends APIRequestRepresentable {
       case ApiType.topContributorsChart:
       case ApiType.activeUsersChart:
       case ApiType.totalUsersChart:
+      case ApiType.contributionFrequencyChart:
         return {'filter': filter ?? ''};
     }
   }

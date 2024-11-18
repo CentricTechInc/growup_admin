@@ -113,6 +113,7 @@ class AppRouter {
         navigatorKey: _shellNavigatorKey,
         builder: (context, state, child) {
           Get.put<SideBarController>(SideBarController(), permanent: true);
+          Get.put<DashboardController>(DashboardController(), permanent: true);
           return AdminDashboard(
             child: child,
           );
@@ -122,9 +123,6 @@ class AppRouter {
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.dashboard,
               pageBuilder: (context, state) {
-                Get.lazyPut(
-                  () => DashboardController(),
-                );
                 return const MaterialPage(child: DashboardPage());
               }),
           GoRoute(
@@ -184,9 +182,6 @@ class AppRouter {
             parentNavigatorKey: _shellNavigatorKey,
             path: PagePath.analytics,
             pageBuilder: (context, state) {
-              Get.lazyPut(
-                () => DashboardController(),
-              );
               return const MaterialPage(
                 child: AnalyticsPage(),
               );

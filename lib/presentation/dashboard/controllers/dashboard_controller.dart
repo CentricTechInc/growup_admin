@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grow_up_admin_panel/app/util/common_snack_bar.dart';
 import 'package:grow_up_admin_panel/data/dto/active_users_chart_dto.dart';
+import 'package:grow_up_admin_panel/data/dto/contribution_frequency_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/dashboard_listing_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/top_contributors_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/top_gifting_chart_dto.dart';
@@ -24,6 +24,7 @@ class DashboardController extends GetxController {
     getTopContributorsChart();
     getTopGiftingChart();
     getTotalUsersChart();
+    getContributionFrequencyChart();
   }
 
   DashboardListingDto? dashboardListingDto;
@@ -36,11 +37,13 @@ class DashboardController extends GetxController {
   TopContributorsChartDto? topContributorsChartDto;
   TopGiftingChartDto? topGiftingChartDto;
   TotalUsersChartDto? totalUsersChartDto;
+  ContributionFrequencyChartDto? contributionFrequencyChartDto;
 
   String selectedUserFilter = 'half-yearly';
   String selectedGiftFilter = 'this-week';
   String selectedContributorFilter = 'last90days';
   String selectedTotalUsersFilter = 'this-week';
+  String selectedContributionFrequencyFilter = 'half-yearly';
 
   List<String> userFilters = ['last-week', 'half-yearly'];
   List<String> giftFilters = [
@@ -56,10 +59,22 @@ class DashboardController extends GetxController {
     'last-month',
     'quarterly'
   ];
+  List<String> contributionFrequencyFilters = [
+    'this-week',
+    'last-week',
+    'half-yearly'
+  ];
   final List<ChartData> contributorData = [];
   final List<ChartData> parentData = [];
   final List<ChartData> topGiftingData = [];
   final List<ContributorChartData> topContributorChartData = [];
+
+  // contribution frequency lists data
+  List<ChartData> weeklyContributionFrequencyList = [];
+  List<ChartData> onceContributionFrequencyList = [];
+  List<ChartData> monthlyContributionFrequencyList = [];
+  List<ChartData> quaterlyContributionFrequencyList = [];
+
   getDashboardListingData() async {
     try {
       dashboardListingDto = await dashboardRepository.dashboardListingData();
@@ -78,6 +93,7 @@ class DashboardController extends GetxController {
   bool isGiftLoading = false;
   bool isContributorLoading = false;
   bool totalUsersLoading = false;
+  bool contributionFrequencyLoading = false;
 
   getActiveUsersChart() async {
     try {
@@ -159,11 +175,49 @@ class DashboardController extends GetxController {
       await Future.delayed(const Duration(milliseconds: 500));
       totalUsersChartDto =
           await dashboardRepository.totalUsersChart(selectedTotalUsersFilter);
-      print(totalUsersChartDto?.toJson());
       totalUsersLoading = false;
       update();
     } catch (e) {
       totalUsersLoading = false;
+      update();
+      print(e);
+    }
+  }
+
+  getContributionFrequencyChart() async {
+    try {
+      contributionFrequencyLoading = true;
+      weeklyContributionFrequencyList.clear();
+      onceContributionFrequencyList.clear();
+      monthlyContributionFrequencyList.clear();
+      quaterlyContributionFrequencyList.clear();
+      update();
+      await Future.delayed(const Duration(milliseconds: 500));
+      contributionFrequencyChartDto = await dashboardRepository
+          .contributionFrequencyChart(selectedContributionFrequencyFilter);
+
+      contributionFrequencyChartDto?.data?.result?.forEach((element) {
+        if (element.frequency == 'Weekly') {
+          weeklyContributionFrequencyList.add(
+            ChartData(element.month ?? '', element.percentage ?? 0.0),
+          );
+        } else if (element.frequency == 'Once') {
+          onceContributionFrequencyList.add(
+            ChartData(element.month ?? '', element.percentage ?? 0.0),
+          );
+        } else if (element.frequency == 'Monthly') {
+          monthlyContributionFrequencyList.add(
+            ChartData(element.month ?? '', element.percentage ?? 0.0),
+          );
+        } else if (element.frequency == 'Quarterly') {
+          quaterlyContributionFrequencyList
+              .add(ChartData(element.month ?? '', element.percentage ?? 0.0));
+        }
+      });
+      contributionFrequencyLoading = false;
+      update();
+    } catch (e) {
+      contributionFrequencyLoading = false;
       update();
       print(e);
     }

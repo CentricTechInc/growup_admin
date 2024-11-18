@@ -24,6 +24,7 @@ class TotalUsersPieChartWidget extends StatelessWidget {
           child: controller.totalUsersLoading
               ? const Center(child: CircularProgressIndicator())
               : SfCircularChart(
+                  tooltipBehavior: TooltipBehavior(enable: true),
                   legend: const Legend(
                       isVisible: true, position: LegendPosition.bottom),
                   series: <CircularSeries>[

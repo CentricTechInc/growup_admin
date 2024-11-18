@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:grow_up_admin_panel/data/dto/active_users_chart_dto.dart';
+import 'package:grow_up_admin_panel/data/dto/contribution_frequency_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/dashboard_listing_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/top_contributors_chart_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/top_gifting_chart_dto.dart';
@@ -62,6 +63,20 @@ class DashboardRepoImpl extends DashboardRepository {
       var json = jsonDecode(response);
 
       return TotalUsersChartDto.fromJson(json);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ContributionFrequencyChartDto> contributionFrequencyChart(
+      String filter) async {
+    try {
+      final response =
+          await DashboardApi.contrbutionFrequencyChart(filter).request();
+      var json = jsonDecode(response);
+
+      return ContributionFrequencyChartDto.fromJson(json);
     } catch (e) {
       rethrow;
     }

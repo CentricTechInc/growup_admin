@@ -23,6 +23,7 @@ class ContributionsChartWidget extends StatelessWidget {
         totalStats: '\$${controller.topContributorsChartDto?.data?.total ?? 0}',
         child: Expanded(
           child: SfCartesianChart(
+            tooltipBehavior: TooltipBehavior(enable: true),
             primaryXAxis: const CategoryAxis(
               majorGridLines: MajorGridLines(width: 0),
             ),
