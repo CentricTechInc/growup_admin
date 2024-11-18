@@ -126,33 +126,33 @@ class PageHeader extends StatelessWidget {
           weight: FontWeight.w700,
         ),
         const Spacer(),
-        Container(
-          width: 240,
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.primary, width: 0.5),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Row(
-            children: [
-              Image.asset(
-                Assets.calendarIcon,
-                color: AppColors.primary,
-                scale: 2,
-              ),
-              const HorizontalSpacing(5),
-              const CommonText(
-                text: 'Today',
-                fontSize: 16,
-                weight: FontWeight.w500,
-              ),
-              const Spacer(),
-              InkWell(
-                  onTap: () {},
-                  child: const Icon(Icons.keyboard_arrow_down_outlined))
-            ],
-          ),
-        ),
+        // Container(
+        //   width: 240,
+        //   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+        //   decoration: BoxDecoration(
+        //     border: Border.all(color: AppColors.primary, width: 0.5),
+        //     borderRadius: BorderRadius.circular(6),
+        //   ),
+        //   child: Row(
+        //     children: [
+        //       Image.asset(
+        //         Assets.calendarIcon,
+        //         color: AppColors.primary,
+        //         scale: 2,
+        //       ),
+        //       const HorizontalSpacing(5),
+        //       const CommonText(
+        //         text: 'Today',
+        //         fontSize: 16,
+        //         weight: FontWeight.w500,
+        //       ),
+        //       const Spacer(),
+        //       InkWell(
+        //           onTap: () {},
+        //           child: const Icon(Icons.keyboard_arrow_down_outlined))
+        //     ],
+        //   ),
+        // ),
         if (showTaxBtn) const HorizontalSpacing(10),
         if (showTaxBtn)
           InkWell(
@@ -174,7 +174,7 @@ class PageHeader extends StatelessWidget {
         if (showSearch)
           SizedBox(
             height: 40,
-            width: 260,
+            width: 300,
             child: CommonTextField(
               prefix: Image.asset(
                 Assets.searchIcon,

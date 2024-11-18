@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grow_up_admin_panel/app/config/app_router.dart';
 import 'package:grow_up_admin_panel/app/util/common_pager_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
@@ -49,27 +50,30 @@ class PayoutPage extends StatelessWidget {
               ],
             ),
             const VerticalSpacing(10),
-            // GetBuilder<SideBarController>(builder: (controller) {
-            // return
             Expanded(
               child: ListView.separated(
                 itemCount: controller.payoutModelList.length,
                 itemBuilder: (context, index) => PayoutTableBody(
                   model: controller.payoutModelList[index],
-                  onTap: () {
-                    context.go(
-                        PagePath.userParents + PagePath.parentDetails.toRoute);
-                    controller.selectedItemIndex = 1;
-                    controller.sideBarList[1].isSelected = true;
-                    controller.sideBarList[5].isSelected = false;
-                    controller.liveGiftingSelectedIndex = 2;
+                  onTap: () async {
+                    await controller.getGiftDetail(
+                        controller.payoutModelList[index].id.toString(),
+                        'Active');
+                    await controller.getUserBenes(
+                        controller.payoutModelList[index].id.toString());
+
+                    globalContext?.push(
+                        PagePath.payouts + PagePath.parentDetails.toRoute);
+                    // controller.selectedItemIndex = 1;
+                    // controller.sideBarList[1].isSelected = true;
+                    // controller.sideBarList[5].isSelected = false;
+                    // controller.liveGiftingSelectedIndex = 2;
                     controller.update();
                   },
                 ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
-            // }),
             CommonPagerWidget(
               currentPage: controller.payoutPageNo,
               totalPage: ((controller.elementCount == 0
