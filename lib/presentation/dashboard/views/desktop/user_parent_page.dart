@@ -6,6 +6,7 @@ import 'package:grow_up_admin_panel/app/util/common_pager_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/common_text_field.dart';
+import 'package:grow_up_admin_panel/common/loader_widget.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
@@ -65,6 +66,7 @@ class UserParentPage extends StatelessWidget {
                         'Active');
                     await controller.getUserBenes(
                         controller.userParentModelList[index].id.toString());
+
                     globalContext?.push(
                         PagePath.userParents + PagePath.parentDetails.toRoute);
                   },

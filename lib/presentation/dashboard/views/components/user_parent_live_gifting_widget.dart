@@ -4,7 +4,6 @@ import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
-import 'package:grow_up_admin_panel/data/dto/gift_payout_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/gifting_details_expansion_collapsed.dart';
@@ -17,12 +16,12 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user
 class UserParentLiveGiftingWidget extends StatelessWidget {
   UserParentLiveGiftingWidget({super.key, required this.giftingModel});
 
-  bool isCollapsed = true;
   final List<GiftingModel> giftingModel;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SideBarController>(builder: (controller) {
+      bool isCollapsed = true;
       return ListView.separated(
         itemCount: giftingModel.isEmpty ? 1 : giftingModel.length,
         itemBuilder: (context, listIndex) => giftingModel.isEmpty
@@ -40,10 +39,14 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                     controller.update();
                     print('isCollapsed : ' + isCollapsed.toString());
                   },
-                  title: isCollapsed
+                  title: !isCollapsed
                       ? GiftingDeatilsExpansionCollapsed(
                           giftingModel: giftingModel[listIndex],
-                          onDelete: () {},
+                          onDelete: () async {
+                            print('here delete');
+                            await controller
+                                .deleteGift(giftingModel[listIndex].id ?? 0);
+                          },
                         )
                       : Row(
                           children: [
@@ -75,6 +78,7 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                                     await controller
                                         .getGiftPayoutDetail(userId);
                                 }
+                                print(userId);
                                 // controller.liveGiftingPageController.animateToPage(
                                 //     index,
                                 //     duration: const Duration(seconds: 1),
@@ -89,7 +93,17 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                             const Spacer(),
                             CommonIconButton(
                               icon: Assets.deleteIcon,
-                              onTap: () {},
+                              onTap: () async {
+                                print('here delete');
+                                await controller.deleteGift(
+                                    giftingModel[listIndex].id ?? 0);
+                                await controller.getGiftDetail(
+                                    controller.giftingDetailData.data?.user?.id
+                                            .toString() ??
+                                        '',
+                                    'Active');
+                                controller.update();
+                              },
                               color: AppColors.red,
                             ),
                           ],
@@ -106,11 +120,10 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                                 GiftingModel(),
                           ),
                           UserParentsLiveGiftingPayout(
-                            model: controller.giftContributionList ?? [],
+                            model: controller.giftContributionList,
                           ),
                           UserParentsPayout(
-                            model:
-                                controller.giftPayoutData ?? GiftPayoutModel(),
+                            model: controller.giftPayoutData,
                           ),
                         ],
                       ),
@@ -160,7 +173,10 @@ class NoDataFound extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.asset(Assets.noGiftIconIcon,scale: 2,),
+        Image.asset(
+          Assets.noGiftIconIcon,
+          scale: 2,
+        ),
         const VerticalSpacing(10),
         CommonText(
           text: title,

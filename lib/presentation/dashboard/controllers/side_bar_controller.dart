@@ -239,6 +239,30 @@ class SideBarController extends GetxController {
     }
   }
 
+  Future<void> deleteGift(int id) async {
+    try {
+      Loader.showLoader();
+      final res = await userParentRepository.deleteGift(id);
+      Loader.hideLoading();
+      CommonSnackBar.message(message: res, type: SnackBarType.success);
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
+  Future<void> deleteBenefeciary(int id) async {
+    try {
+      Loader.showLoader();
+      final res = await userParentRepository.deleteBenefeciary(id);
+      Loader.hideLoading();
+      CommonSnackBar.message(message: res, type: SnackBarType.success);
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
   int getSerialNumber(
       {required int currentPage,
       required int index,
