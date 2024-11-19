@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/dashboard_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_chart_widget.dart';
@@ -21,7 +20,7 @@ class TopGiftingChartWidget extends StatelessWidget {
             controller.update();
           },
           totalStats:
-              '${controller.topGiftingChartDto?.data?.totalContributions ?? 0}',
+              '\$${controller.topGiftingChartDto?.data?.totalContributions?.toStringAsFixed(2)}',
           child: Expanded(
             child: controller.isGiftLoading
                 ? const Center(child: CircularProgressIndicator())

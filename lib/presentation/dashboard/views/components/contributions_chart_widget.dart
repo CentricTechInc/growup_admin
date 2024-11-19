@@ -12,13 +12,15 @@ class ContributionsChartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(builder: (controller) {
       return CommonChartWidget(
-        arryList: controller.contributorFilters,
-        selectedItem: controller.selectedContributorFilter,
-        onChanged: (p0) {
-          controller.selectedContributorFilter = p0 ?? '';
-          controller.getTopContributorsChart();
-          controller.update();
-        },
+        showDropDown: false,
+
+        // arryList: controller.contributorFilters,
+        // selectedItem: controller.selectedContributorFilter,
+        // onChanged: (p0) {
+        //   controller.selectedContributorFilter = p0 ?? '';
+        //   controller.getTopContributorsChart();
+        //   controller.update();
+        // },
         title: 'Contributions',
         totalStats: '\$${controller.topContributorsChartDto?.data?.total ?? 0}',
         child: Expanded(
