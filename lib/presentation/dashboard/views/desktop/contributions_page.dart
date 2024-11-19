@@ -5,6 +5,7 @@ import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
 
 class ContributionPage extends StatelessWidget {
@@ -19,6 +20,7 @@ class ContributionPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PageHeader(
+              hintText: 'Search by title, Contributor, name',
               label: 'Contributions',
               showSearch: true,
               searchController: controller.contributionsSearchController,
@@ -53,14 +55,20 @@ class ContributionPage extends StatelessWidget {
             const VerticalSpacing(10),
             Expanded(
               child: ListView.separated(
-                itemCount: controller.contributionModelList.length,
-                itemBuilder: (context, index) => ContributionsTableBody(
-                  model: controller.contributionModelList[index],
-                  onTap: () {},
-                ),
+                itemCount: controller.contributionModelList.isEmpty
+                    ? 1
+                    : controller.contributionModelList.length,
+                itemBuilder: (context, index) =>
+                    controller.contributionModelList.isEmpty
+                        ? const NoDataFound(title: 'No record found!')
+                        : ContributionsTableBody(
+                            model: controller.contributionModelList[index],
+                            onTap: () {},
+                          ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
+            if(controller.contributionsSearchController.text.isEmpty)
             CommonPagerWidget(
               currentPage: controller.contributonModulePageNo,
               totalPage: ((controller.elementCount == 0

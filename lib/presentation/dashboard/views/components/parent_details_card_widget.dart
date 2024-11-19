@@ -102,7 +102,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
           Row(children: [
             Expanded(
               child: CommonText(
-                text: '\$ ${giftModel.data?.totalGifts}' ?? '0',
+                text: '${giftModel.data?.totalGifts}' ?? '0',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,

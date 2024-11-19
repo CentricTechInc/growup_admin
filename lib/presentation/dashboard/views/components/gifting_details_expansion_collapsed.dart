@@ -71,7 +71,7 @@ class GiftingDeatilsExpansionCollapsed extends StatelessWidget {
               ),
               const HorizontalSpacing(10),
               CommonText(
-                text: '\$ ${giftingModel.contributionTotal}.00',
+                text: '\$ ${giftingModel.contributionTotal}',
                 fontSize: 16,
                 weight: FontWeight.w700,
               ),

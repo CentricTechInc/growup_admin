@@ -86,7 +86,10 @@ class UserParentDetails extends StatelessWidget {
                                     selectedItemColor: AppColors.primary,
                                     borderColor: AppColors.transparent,
                                     iconColor: AppColors.primary,
-                                    onChanged: (p0) {},
+                                    onChanged: (p0) async {
+                                      // await controller
+                                      //     .changeGiftStatus(p0 ?? '', controller.giftingDetailData.data.giftingModel[index]);
+                                    },
                                     arryList: const ['Active', 'Expired'],
                                   ),
                                 ),
@@ -150,7 +153,7 @@ class UserParentDetails extends StatelessWidget {
                               controller: controller.userParentPageController,
                               children: [
                                 controller.isLoading
-                                    ? const CupertinoActivityIndicator()
+                                    ? const SizedBox()
                                     : UserParentLiveGiftingWidget(
                                         giftingModel: controller
                                                 .giftingDetailData
@@ -159,7 +162,7 @@ class UserParentDetails extends StatelessWidget {
                                             [],
                                       ),
                                 controller.isLoading
-                                    ? const CupertinoActivityIndicator()
+                                    ? const SizedBox()
                                     : UserParentLiveGiftingWidget(
                                         giftingModel: controller
                                                 .giftingDetailData
@@ -168,7 +171,7 @@ class UserParentDetails extends StatelessWidget {
                                             [],
                                       ),
                                 controller.isLoading
-                                    ? const CupertinoActivityIndicator()
+                                    ? const SizedBox()
                                     : UserParentsActivity(
                                         activityModel: controller.activityModel,
                                       ),

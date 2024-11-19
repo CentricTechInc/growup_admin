@@ -8,6 +8,7 @@ import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
 
 class PayoutPage extends StatelessWidget {
@@ -22,6 +23,7 @@ class PayoutPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PageHeader(
+              hintText: 'Search by title, name',
               label: 'Payout',
               searchController: controller.payoutSearchController,
               searchCancelOnTap: () async {
@@ -52,28 +54,34 @@ class PayoutPage extends StatelessWidget {
             const VerticalSpacing(10),
             Expanded(
               child: ListView.separated(
-                itemCount: controller.payoutModelList.length,
-                itemBuilder: (context, index) => PayoutTableBody(
-                  model: controller.payoutModelList[index],
-                  onTap: () async {
-                    await controller.getGiftDetail(
-                        controller.payoutModelList[index].id.toString(),
-                        'Active');
-                    await controller.getUserBenes(
-                        controller.payoutModelList[index].id.toString());
+                itemCount: controller.payoutModelList.isEmpty
+                    ? 1
+                    : controller.payoutModelList.length,
+                itemBuilder: (context, index) => controller
+                        .payoutModelList.isEmpty
+                    ? const NoDataFound(title: 'No record found!')
+                    : PayoutTableBody(
+                        model: controller.payoutModelList[index],
+                        onTap: () async {
+                          await controller.getGiftDetail(
+                              controller.payoutModelList[index].id.toString(),
+                              'Active');
+                          await controller.getUserBenes(
+                              controller.payoutModelList[index].id.toString());
 
-                    globalContext?.push(
-                        PagePath.payouts + PagePath.parentDetails.toRoute);
-                    // controller.selectedItemIndex = 1;
-                    // controller.sideBarList[1].isSelected = true;
-                    // controller.sideBarList[5].isSelected = false;
-                    // controller.liveGiftingSelectedIndex = 2;
-                    controller.update();
-                  },
-                ),
+                          globalContext?.push(PagePath.payouts +
+                              PagePath.parentDetails.toRoute);
+                          // controller.selectedItemIndex = 1;
+                          // controller.sideBarList[1].isSelected = true;
+                          // controller.sideBarList[5].isSelected = false;
+                          // controller.liveGiftingSelectedIndex = 2;
+                          controller.update();
+                        },
+                      ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
+            if(controller.payoutSearchController.text.isEmpty)
             CommonPagerWidget(
               currentPage: controller.payoutPageNo,
               totalPage: ((controller.elementCount == 0

@@ -74,7 +74,7 @@ class BenefeciaryExpansionTile extends StatelessWidget {
             color: AppColors.primary,
           ),
           const VerticalSpacing(10),
-          CommonTile(title: 'Bank', subTitle: '${data.name}'),
+          CommonTile(title: 'Bank', subTitle: '${data.bank}'),
           const VerticalSpacing(10),
           CommonTile(title: 'Account Type', subTitle: '${data.accountType}'),
           const VerticalSpacing(10),

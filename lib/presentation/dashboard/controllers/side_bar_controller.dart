@@ -198,6 +198,18 @@ class SideBarController extends GetxController {
     }
   }
 
+  changeGiftStatus(String status, int giftId) async {
+    try {
+      Loader.showLoader();
+      final res = await userParentRepository.changeGiftStatus(status,giftId);
+      update();
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
   getContributionTable() async {
     try {
       Loader.showLoader();
@@ -241,14 +253,17 @@ class SideBarController extends GetxController {
 
   Future<void> getActivity(String id) async {
     try {
+      Loader.showLoader();
       isLoading = true;
       final res = await userParentRepository.getActivity(id, '1');
       activityModel.clear();
       activityModel.addAll(res);
       await Future.delayed(Duration(seconds: 1));
       isLoading = false;
+      Loader.hideLoading();
     } catch (e) {
       isLoading = false;
+      Loader.hideLoading();
       CommonSnackBar.message(message: e.toString());
     }
   }

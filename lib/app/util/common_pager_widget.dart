@@ -32,7 +32,7 @@ class CommonPagerWidget extends StatelessWidget {
       children: [
         // Spacer(),
         const CommonText(
-          text: 'Page size',
+          text: 'Page',
           fontSize: 14,
           weight: FontWeight.w600,
         ),

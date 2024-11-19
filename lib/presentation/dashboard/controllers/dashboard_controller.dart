@@ -106,11 +106,11 @@ class DashboardController extends GetxController {
       String filter = getDropdownString(selectedUserFilter);
       activeUsersChartDto = await dashboardRepository.activeUsersChart(filter);
 
-      activeUsersChartDto?.data?.contributorusers?.forEach((element) {
+      activeUsersChartDto?.data?.contributorusers?.data?.forEach((element) {
         contributorData
             .add(ChartData(element.date!, double.parse(element.total!)));
       });
-      activeUsersChartDto?.data?.parentusers?.forEach((element) {
+      activeUsersChartDto?.data?.parentusers?.data?.forEach((element) {
         parentData.add(ChartData(element.date!, double.parse(element.total!)));
       });
       isUserLoading = false;
@@ -178,6 +178,7 @@ class DashboardController extends GetxController {
 
       String filter = getDropdownString(selectedTotalUsersFilter);
       totalUsersChartDto = await dashboardRepository.totalUsersChart(filter);
+      print('totalUsersChartDto: ${totalUsersChartDto?.toJson()}');
       totalUsersLoading = false;
       update();
     } catch (e) {

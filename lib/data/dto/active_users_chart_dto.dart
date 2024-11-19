@@ -8,13 +8,13 @@ class ActiveUsersChartDto {
   ActiveUsersChartDto.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['status'] = status;
-    data['message'] = message;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -24,55 +24,72 @@ class ActiveUsersChartDto {
 
 class Data {
   int? totalUsers;
-  List<Parentusers>? parentusers;
-  List<Parentusers>? contributorusers;
+  Parentusers? parentusers;
+  Parentusers? contributorusers;
 
-  Data({this.parentusers, this.contributorusers, this.totalUsers});
+  Data({this.totalUsers, this.parentusers, this.contributorusers});
 
   Data.fromJson(Map<String, dynamic> json) {
     totalUsers = json['totalUsers'];
-    if (json['parentusers'] != null) {
-      parentusers = <Parentusers>[];
-      json['parentusers'].forEach((v) {
-        parentusers!.add(Parentusers.fromJson(v));
-      });
-    }
-    if (json['contributorusers'] != null) {
-      contributorusers = <Parentusers>[];
-      json['contributorusers'].forEach((v) {
-        contributorusers!.add(Parentusers.fromJson(v));
-      });
-    }
+    parentusers = json['parentusers'] != null
+        ? new Parentusers.fromJson(json['parentusers'])
+        : null;
+    contributorusers = json['contributorusers'] != null
+        ? new Parentusers.fromJson(json['contributorusers'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    if (parentusers != null) {
-      data['parentusers'] = parentusers!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['totalUsers'] = this.totalUsers;
+    if (this.parentusers != null) {
+      data['parentusers'] = this.parentusers!.toJson();
     }
-    if (contributorusers != null) {
-      data['contributorusers'] =
-          contributorusers!.map((v) => v.toJson()).toList();
+    if (this.contributorusers != null) {
+      data['contributorusers'] = this.contributorusers!.toJson();
     }
     return data;
   }
 }
 
 class Parentusers {
+  List<Data1>? data;
+
+  Parentusers({this.data});
+
+  Parentusers.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = <Data1>[];
+      json['data'].forEach((v) {
+        data!.add(new Data1.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Data1 {
   String? total;
   String? date;
 
-  Parentusers({this.total, this.date});
+  Data1({this.total, this.date});
 
-  Parentusers.fromJson(Map<String, dynamic> json) {
+  Data1.fromJson(Map<String, dynamic> json) {
     total = json['total'];
     date = json['date'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['total'] = total;
-    data['date'] = date;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['total'] = this.total;
+    data['date'] = this.date;
     return data;
   }
 }

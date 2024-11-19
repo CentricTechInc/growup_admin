@@ -6,6 +6,7 @@ import 'package:grow_up_admin_panel/app/util/responsive_builder.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/controllers/dashboard_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 
 class SideBarWidget extends StatelessWidget {
@@ -59,9 +60,11 @@ class SideBarWidget extends StatelessWidget {
                     switch (index) {
                       case 0:
                         context.go(PagePath.dashboard);
+                        await Get.find<DashboardController>().init();
                         break;
                       case 1:
                         context.go(PagePath.userParents);
+                        controller.parentTableSearchController.clear();
                         await controller.getParentTable();
                         controller.liveGiftingSelectedIndex = 0;
                         controller.userParentSelectedIndex = 0;
@@ -70,6 +73,7 @@ class SideBarWidget extends StatelessWidget {
                         break;
                       case 2:
                         context.go(PagePath.userContributor);
+                        controller.contributorTableSearchController.clear();
                         await controller.getContributorsTable();
                         // controller.resetPaging();
                         controller.liveGiftingSelectedIndex = 0;
@@ -80,14 +84,18 @@ class SideBarWidget extends StatelessWidget {
                         break;
                       case 3:
                         context.go(PagePath.giftings);
+                        controller.giftingSearchController.clear();
+
                         await controller.getGiftingTable();
                         break;
                       case 4:
                         context.go(PagePath.contrbutions);
+                        controller.contributionsSearchController.clear();
                         await controller.getContributionTable();
                         break;
                       case 5:
                         context.go(PagePath.payouts);
+                        controller.payoutSearchController.clear();
                         await controller.getPayoutTable();
                         break;
                       case 6:
@@ -122,13 +130,17 @@ class SideBarWidget extends StatelessWidget {
                         ),
                         Expanded(
                           child: CommonText(
-                              color:
+                              color: (controller
+                                          .sideBarList[index].isSelected ??
+                                      false)
+                                  ? AppColors.black
+                                  : AppColors.secondaryText.withOpacity(0.8),
+                              fontSize: 15,
+                              weight:
                                   (controller.sideBarList[index].isSelected ??
                                           false)
-                                      ? AppColors.black
-                                      : AppColors.grey,
-                              fontSize: 15,
-                              weight: FontWeight.w600,
+                                      ? FontWeight.w800
+                                      : FontWeight.w300,
                               text:
                                   controller.sideBarList[index].itemName ?? ''),
                         ),

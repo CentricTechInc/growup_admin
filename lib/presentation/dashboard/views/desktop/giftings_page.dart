@@ -8,6 +8,7 @@ import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
 
 class GiftingsPage extends StatelessWidget {
@@ -22,6 +23,7 @@ class GiftingsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PageHeader(
+              hintText: 'Search by Gifting title, Posted by, Benefeciary name',
               searchController: controller.giftingSearchController,
               searchCancelOnTap: () async {
                 controller.giftingSearchController.clear();
@@ -56,25 +58,33 @@ class GiftingsPage extends StatelessWidget {
             const VerticalSpacing(10),
             Expanded(
               child: ListView.separated(
-                itemCount: controller.giftingModelList.length,
-                itemBuilder: (context, index) => GiftingsTableBody(
-                  model: controller.giftingModelList[index],
-                  onTap: () async {
-                    await controller.getGiftDetail(
-                        controller.giftingModelList[index].userId.toString(),
-                        'Active');
-                    await controller.getUserBenes(
-                      controller.giftingModelList[index].userId.toString(),
-                    );
-                    globalContext?.push(
-                        PagePath.giftings + PagePath.parentDetails.toRoute);
+                itemCount: controller.giftingModelList.isEmpty
+                    ? 1
+                    : controller.giftingModelList.length,
+                itemBuilder: (context, index) =>
+                    controller.giftingModelList.isEmpty
+                        ? const NoDataFound(title: 'No record found!')
+                        : GiftingsTableBody(
+                            model: controller.giftingModelList[index],
+                            onTap: () async {
+                              await controller.getGiftDetail(
+                                  controller.giftingModelList[index].userId
+                                      .toString(),
+                                  'Active');
+                              await controller.getUserBenes(
+                                controller.giftingModelList[index].userId
+                                    .toString(),
+                              );
+                              globalContext?.push(PagePath.giftings +
+                                  PagePath.parentDetails.toRoute);
 
-                    controller.update();
-                  },
-                ),
+                              controller.update();
+                            },
+                          ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
+            if(controller.giftingSearchController.text.isEmpty)
             CommonPagerWidget(
               currentPage: controller.giftingsPageNo,
               totalPage: ((controller.elementCount == 0

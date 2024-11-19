@@ -7,6 +7,7 @@ import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
 
 class UserContributionPage extends StatelessWidget {
@@ -43,36 +44,41 @@ class UserContributionPage extends StatelessWidget {
             const VerticalSpacing(10),
             Expanded(
               child: ListView.separated(
-                itemCount: controller.userContributorModelList.length,
-                itemBuilder: (context, index) => ParentTableBody(
-                  onTap: () async {
-                    await controller.getGiftDetail(
-                        controller.userContributorModelList[index].id
-                                .toString() ??
-                            '',
-                        'Active');
-                    context.push(
-                        PagePath.userParents + PagePath.parentDetails.toRoute);
-                  },
-                  model: controller.userContributorModelList[index],
-                ),
+                itemCount: controller.userContributorModelList.isEmpty
+                    ? 1
+                    : controller.userContributorModelList.length,
+                itemBuilder: (context, index) =>
+                    controller.userContributorModelList.isEmpty
+                        ? const NoDataFound(title: 'No record found!')
+                        : ParentTableBody(
+                            onTap: () async {
+                              await controller.getGiftDetail(
+                                  controller.userContributorModelList[index].id
+                                          .toString() ??
+                                      '',
+                                  'Active');
+                              context.push(PagePath.userParents +
+                                  PagePath.parentDetails.toRoute);
+                            },
+                            model: controller.userContributorModelList[index],
+                          ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
-            if(controller.contributorTableSearchController.text.isEmpty)
-            CommonPagerWidget(
-              currentPage: controller.contributorPageNo,
-              totalPage: ((controller.elementCount == 0
-                          ? 1
-                          : controller.elementCount) /
-                      10)
-                  .ceil(),
-              onPageChanged: (page) async {
-                controller.contributorPageNo = page;
-                await controller.getContributorsTable();
-                controller.update();
-              },
-            ),
+            if (controller.contributorTableSearchController.text.isEmpty)
+              CommonPagerWidget(
+                currentPage: controller.contributorPageNo,
+                totalPage: ((controller.elementCount == 0
+                            ? 1
+                            : controller.elementCount) /
+                        10)
+                    .ceil(),
+                onPageChanged: (page) async {
+                  controller.contributorPageNo = page;
+                  await controller.getContributorsTable();
+                  controller.update();
+                },
+              ),
           ],
         );
       }),

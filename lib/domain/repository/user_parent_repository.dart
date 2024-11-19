@@ -10,6 +10,8 @@ abstract class UserParentRepository {
 
   Future<PaginationModel> searchParentTable(String search, int pageNo);
 
+  Future<String> changeGiftStatus(String status, int giftId);
+
   Future<GiftDetailDto> getGiftDetail(String id, status);
 
   Future<UserBeneficiaryDto> getUserBeneficiary(String id, String page);

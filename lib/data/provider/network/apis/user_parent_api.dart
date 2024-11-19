@@ -13,6 +13,7 @@ enum UserParentApiType {
   getGiftsContributions,
   deleteGift,
   deleteBenefeciary,
+  changeGiftStatus,
 }
 
 class UserParentApi implements APIRequestRepresentable {
@@ -93,6 +94,13 @@ class UserParentApi implements APIRequestRepresentable {
           id: id,
         );
 
+  UserParentApi.changeGiftStatus(String status, int id)
+      : this._(
+          type: UserParentApiType.changeGiftStatus,
+          status: status,
+          id: id,
+        );
+
   @override
   get body {
     switch (type) {
@@ -106,6 +114,11 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.deleteGift:
       case UserParentApiType.deleteBenefeciary:
         return {};
+      case UserParentApiType.changeGiftStatus:
+        return {
+          'status': status,
+          'giftId': id,
+        };
     }
   }
 
@@ -129,6 +142,8 @@ class UserParentApi implements APIRequestRepresentable {
         return '${APIEndpoint.giftsUrl}/$id';
       case UserParentApiType.deleteBenefeciary:
         return '${APIEndpoint.userBenefeciaryUrl}/$id';
+      case UserParentApiType.changeGiftStatus:
+        return APIEndpoint.changeGiftStatusUrl;
     }
   }
 
@@ -144,6 +159,7 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getGiftsContributions:
       case UserParentApiType.deleteGift:
       case UserParentApiType.deleteBenefeciary:
+      case UserParentApiType.changeGiftStatus:
         return {
           'Content-Type': 'application/json; charset=utf-8',
           'accept': '*/*',
@@ -166,6 +182,8 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.deleteGift:
       case UserParentApiType.deleteBenefeciary:
         return HTTPMethod.delete;
+      case UserParentApiType.changeGiftStatus:
+        return HTTPMethod.put;
     }
   }
 
@@ -192,6 +210,7 @@ class UserParentApi implements APIRequestRepresentable {
         return {'userId': userId ?? '', 'status': status ?? ''};
       case UserParentApiType.getUserBeneficiary:
         return {'userId': userId ?? '', 'pageNumber': pageId ?? ''};
+
       default:
         return {};
     }
