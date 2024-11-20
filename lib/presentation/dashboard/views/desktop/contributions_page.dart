@@ -20,7 +20,7 @@ class ContributionPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PageHeader(
-              hintText: 'Search by title, Contributor, name',
+              hintText: 'Search by Gifting title',
               label: 'Contributions',
               showSearch: true,
               searchController: controller.contributionsSearchController,

@@ -86,7 +86,7 @@ class UserParentRepositoryImpl extends UserParentRepository {
 
   @override
   Future<List<ContributionModel>> getGiftContributions(
-      String userId, int page) async {
+      int userId, int page) async {
     try {
       final response =
           await UserParentApi.getGiftsContributions(userId, page).request();

@@ -74,23 +74,23 @@ class BenefeciaryExpansionTile extends StatelessWidget {
             color: AppColors.primary,
           ),
           const VerticalSpacing(10),
-          CommonTile(title: 'Bank', subTitle: '${data.bank}'),
+          CommonTile(title: 'Bank', subTitle: data.bank ?? ''),
           const VerticalSpacing(10),
-          CommonTile(title: 'Account Type', subTitle: '${data.accountType}'),
+          CommonTile(title: 'Account Type', subTitle: data.accountType ?? ''),
           const VerticalSpacing(10),
           CommonTile(
               title: 'Account Owner Name',
-              subTitle: '${data.accountOwnerName}'),
+              subTitle: data.accountOwnerName ?? ''),
           const VerticalSpacing(10),
           Row(
             children: [
               CommonTile(
-                  title: 'Account Number', subTitle: '${data.accountNumber}'),
+                  title: 'Account Number', subTitle: data.accountNumber ?? ''),
               const Spacer(),
               InkWell(
                   onTap: () async {
                     await Clipboard.setData(
-                        ClipboardData(text: '${data.accountNumber}'));
+                        ClipboardData(text: data.accountNumber ?? ''));
                     CommonSnackBar.message(
                         message: 'Account number copied',
                         type: SnackBarType.success);
@@ -102,11 +102,14 @@ class BenefeciaryExpansionTile extends StatelessWidget {
             ],
           ),
           const VerticalSpacing(10),
-          CommonTile(title: 'City ', subTitle: '${data.city}'),
+          CommonTile(
+              title: 'Routing Number', subTitle: data.routingNumber?.toString() ?? ''),
           const VerticalSpacing(10),
-          CommonTile(title: 'State', subTitle: '${data.state}'),
+          CommonTile(title: 'City ', subTitle: data.city ?? ''),
           const VerticalSpacing(10),
-          CommonTile(title: 'Zip', subTitle: '${data.zip}'),
+          CommonTile(title: 'State', subTitle: data.state ?? ''),
+          const VerticalSpacing(10),
+          CommonTile(title: 'Zip', subTitle: data.zip ?? ''),
         ],
       ),
     );

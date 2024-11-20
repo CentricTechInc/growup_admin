@@ -10,14 +10,17 @@ import 'package:grow_up_admin_panel/data/repositories/auth_repo_impl.dart';
 import 'package:grow_up_admin_panel/domain/repository/auth_repo.dart';
 
 class LoginController extends GetxController {
-  TextEditingController emailController =
-      TextEditingController(text: 'deepak.kumar@centrictech.co');
-  TextEditingController passwordController =
-      TextEditingController(text: '123456');
+  // TextEditingController emailController =
+  //     TextEditingController(text: 'deepak.kumar@centrictech.co');
+  // TextEditingController passwordController =
+  //     TextEditingController(text: '123456');
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   RxBool showPassword = false.obs;
   AuthRepo authRepo = AuthRepoImpl();
   bool isLoading = false;
+
   login() async {
     try {
       isLoading = true;

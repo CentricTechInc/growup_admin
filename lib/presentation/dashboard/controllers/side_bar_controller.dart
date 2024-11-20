@@ -101,7 +101,10 @@ class SideBarController extends GetxController {
   final parentTableSearchController = TextEditingController();
   final contributorTableSearchController = TextEditingController();
 
-  //
+  //============
+  bool isGiftActive = true;
+
+  //============
   final giftingSearchController = TextEditingController();
   final contributionsSearchController = TextEditingController();
   final payoutSearchController = TextEditingController();
@@ -201,7 +204,7 @@ class SideBarController extends GetxController {
   changeGiftStatus(String status, int giftId) async {
     try {
       Loader.showLoader();
-      final res = await userParentRepository.changeGiftStatus(status,giftId);
+      final res = await userParentRepository.changeGiftStatus(status, giftId);
       update();
       Loader.hideLoading();
     } catch (e) {
@@ -279,9 +282,9 @@ class SideBarController extends GetxController {
 
   final List<ContributionModel> giftContributionList = [];
 
-  Future<void> getGiftContributions(String userId) async {
+  Future<void> getGiftContributions(int giftId) async {
     try {
-      final res = await userParentRepository.getGiftContributions(userId, 1);
+      final res = await userParentRepository.getGiftContributions(giftId, 1);
       giftContributionList.clear();
       giftContributionList.addAll(res);
     } catch (e) {

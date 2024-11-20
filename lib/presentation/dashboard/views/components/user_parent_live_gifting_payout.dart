@@ -21,7 +21,7 @@ class UserParentsLiveGiftingPayout extends StatelessWidget {
             'Frequency',
             'Date & Time',
             'Amount',
-            'Status',
+            // 'Status',
           ],
         ),
         const VerticalSpacing(10),
@@ -86,27 +86,27 @@ class UserParentsLiveGiftingPayout extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 30.0),
                       child: CommonText(
-                        text: model[index].amount ?? '',
+                        text: '\$ ${model[index].amount}' ?? '',
                         fontSize: 12,
                         weight: FontWeight.w500,
                       ),
                     ),
                   ),
-                  const CommonVerticalDivider(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    color: AppColors.grey,
-                    thickness: 2,
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 30.0),
-                      child: CommonText(
-                        text: model[index].createdAt ?? '',
-                        fontSize: 12,
-                        weight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                  // const CommonVerticalDivider(
+                  //   padding: EdgeInsets.symmetric(vertical: 10),
+                  //   color: AppColors.grey,
+                  //   thickness: 2,
+                  // ),
+                  // Expanded(
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(left: 30.0),
+                  //     child: CommonText(
+                  //       text: model[index].createdAt ?? '',
+                  //       fontSize: 12,
+                  //       weight: FontWeight.w500,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

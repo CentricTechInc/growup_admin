@@ -86,16 +86,16 @@ class GiftingDeatilsExpansionCollapsed extends StatelessWidget {
           ),
         ),
         const HorizontalSpacing(30),
-        SizedBox(
-          width: 131,
-          child: CommonDropDownWidget(
-            onChanged: (p0) {},
-            arryList: const ['Paid', 'Un-Paid'],
-            borderColor: AppColors.transparent,
-            selectedItem: 'Paid',
-          ),
-        ),
-        const HorizontalSpacing(40),
+        // SizedBox(
+        //   width: 131,
+        //   child: CommonDropDownWidget(
+        //     onChanged: (p0) {},
+        //     arryList: const ['Paid', 'Un-Paid'],
+        //     borderColor: AppColors.transparent,
+        //     selectedItem: 'Paid',
+        //   ),
+        // ),
+        // const HorizontalSpacing(40),
         CommonIconButton(
           icon: Assets.deleteIcon,
           onTap: onDelete,

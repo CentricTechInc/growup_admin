@@ -73,7 +73,8 @@ class UserParentPage extends StatelessWidget {
                               await controller.getUserBenes(controller
                                   .userParentModelList[index].id
                                   .toString());
-
+                              controller.userParentSelectedIndex = 0;
+                              controller.liveGiftingSelectedIndex = 0;
                               globalContext?.push(PagePath.userParents +
                                   PagePath.parentDetails.toRoute);
                             },

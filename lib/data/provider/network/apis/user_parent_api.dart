@@ -20,7 +20,7 @@ class UserParentApi implements APIRequestRepresentable {
   UserParentApiType type;
   String? search;
   String? userId, pageId, status;
-  int? pageNo, id;
+  int? pageNo, id,giftId;
 
   UserParentApi._({
     required this.type,
@@ -30,6 +30,7 @@ class UserParentApi implements APIRequestRepresentable {
     this.status,
     this.pageNo,
     this.id,
+    this.giftId,
   });
 
   UserParentApi.getParentTable(int pageNo)
@@ -75,10 +76,10 @@ class UserParentApi implements APIRequestRepresentable {
           pageId: pageId,
         );
 
-  UserParentApi.getGiftsContributions(String userId, int pageId)
+  UserParentApi.getGiftsContributions(int giftId, int pageId)
       : this._(
           type: UserParentApiType.getGiftsContributions,
-          userId: userId,
+          giftId: giftId,
           pageNo: pageId,
         );
 
@@ -137,7 +138,7 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getGiftsPayout:
         return '${APIEndpoint.giftDetailsPayoutUrl}/$userId/$pageNo';
       case UserParentApiType.getGiftsContributions:
-        return '${APIEndpoint.getGiftContributorUrl}/$userId/$pageNo';
+        return '${APIEndpoint.getGiftContributorUrl}/$giftId/$pageNo';
       case UserParentApiType.deleteGift:
         return '${APIEndpoint.giftsUrl}/$id';
       case UserParentApiType.deleteBenefeciary:

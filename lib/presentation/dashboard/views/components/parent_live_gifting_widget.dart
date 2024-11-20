@@ -145,7 +145,7 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
                           child: CommonText(
                             text: [
                               giftingModel.frequency ?? '',
-                              giftingModel.contributionTotal ?? '',
+                              '\$ ${giftingModel.contributionTotal}' ?? '',
                               giftingModel.beneficiary?.name ?? '',
                             ][index],
                             fontSize: 16,

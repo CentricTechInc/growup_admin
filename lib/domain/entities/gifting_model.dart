@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/user_dto.dart';
 
-enum GiftStatus { Active, Expired }
+enum GiftStatus { Active, Expired, Deleted }
 
 class EnumValues<T> {
   Map<String, T> map;
@@ -20,6 +20,7 @@ class EnumValues<T> {
 final giftStatusValues = EnumValues({
   "Active": GiftStatus.Active,
   "Expired": GiftStatus.Expired,
+  "Deleted": GiftStatus.Deleted,
 });
 
 class GiftingModel {

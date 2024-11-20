@@ -14,9 +14,12 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parents_payout.dart';
 
 class UserParentLiveGiftingWidget extends StatelessWidget {
-  UserParentLiveGiftingWidget({super.key, required this.giftingModel});
+  UserParentLiveGiftingWidget(
+      {super.key, required this.giftingModel, required this.isLive});
 
   final List<GiftingModel> giftingModel;
+  final bool isLive;
+  // final expansionController = ExpansionTileController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +37,24 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                   ),
                   child: ExpansionTile(
                     shape: const Border(),
+                    // controller: expansionController,
+                    maintainState: false,
+                    enabled: true,
                     onExpansionChanged: (collapse) {
-                        giftingModel[listIndex].isCollapsed = !collapse;
-                        controller.update();
+                      // giftingModel.every((e) => e.isCollapsed = true);
+                      // if(giftingModel.any((e)=>e.isCollapsed == false)){
+                      //   expansionController.collapse();
+                      // }
+                      // if(giftingModel.every((e)=>e.isCollapsed == true)){
+                      //   expansionController.collapse();
+                      // }
+                      // collapse = true;
+                      // expansionController.collapse();
+                      giftingModel[listIndex].isCollapsed = !collapse;
+                      if (collapse == false) {
+                        controller.liveGiftingSelectedIndex = 0;
+                      }
+                      controller.update();
                     },
                     title: Visibility(
                       visible: giftingModel[listIndex].isCollapsed ?? false,
@@ -55,16 +73,18 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                               controller.liveGiftingSelectedIndex = index;
 
                               final String userId =
-                                 giftingModel[listIndex].userId?.toString() ??
+                                  giftingModel[listIndex].userId?.toString() ??
                                       '0';
+                              final int giftId =
+                                  giftingModel[listIndex].id ?? 0;
                               switch (index) {
                                 case 0:
                                   await controller.getGiftDetail(
-                                      userId, 'Active');
+                                      userId.toString(), isLive ? 'Active' : 'Expired');
                                 case 1:
-                                  await controller.getGiftContributions(userId);
+                                  await controller.getGiftContributions(giftId);
                                 case 2:
-                                  await controller.getGiftPayoutDetail(userId);
+                                  await controller.getGiftPayoutDetail(giftId.toString());
                               }
                               print(userId);
                               // controller.liveGiftingPageController.animateToPage(
@@ -89,7 +109,7 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                                   controller.giftingDetailData.data?.user?.id
                                           .toString() ??
                                       '',
-                                  'Active');
+                                  isLive ? 'Active' : 'Expired');
                               controller.update();
                             },
                             color: AppColors.red,
@@ -97,10 +117,16 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                         ],
                       ),
                       child: GiftingDeatilsExpansionCollapsed(
-                        giftingModel:giftingModel[listIndex],
+                        giftingModel: giftingModel[listIndex],
                         onDelete: () async {
                           await controller
                               .deleteGift(giftingModel[listIndex].id ?? 0);
+                          await controller.getGiftDetail(
+                              controller.giftingDetailData.data?.user?.id
+                                      .toString() ??
+                                  '',
+                              isLive ? 'Active' : 'Expired');
+                          controller.update();
                         },
                       ),
                     ),

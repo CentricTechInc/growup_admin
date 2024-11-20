@@ -20,7 +20,7 @@ abstract class UserParentRepository {
 
   Future<GiftPayoutModel> parentDetailPayoutTable(String userId, int page);
 
-  Future<List<ContributionModel>> getGiftContributions(String userId, int page);
+  Future<List<ContributionModel>> getGiftContributions(int userId, int page);
 
   Future<String> deleteGift(int id);
 

@@ -64,6 +64,7 @@ class Beneficiary {
   String? accountType;
   String? accountOwnerName;
   String? accountNumber;
+  int? routingNumber;
   String? city;
   String? state;
   String? zip;
@@ -84,6 +85,7 @@ class Beneficiary {
     accountType = json['account_type'];
     accountOwnerName = json['account_owner_name'];
     accountNumber = json['account_number'];
+    routingNumber = json['routing_number'];
     city = json['city'];
     state = json['state'];
     zip = json['zip'];
@@ -96,6 +98,7 @@ class Beneficiary {
     data['account_type'] = accountType;
     data['account_owner_name'] = accountOwnerName;
     data['account_number'] = accountNumber;
+    data['routing_number'] = routingNumber;
     data['city'] = city;
     data['state'] = state;
     data['zip'] = zip;

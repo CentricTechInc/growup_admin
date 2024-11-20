@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:go_router/go_router.dart';
-import 'package:grow_up_admin_panel/app/util/common_drop_down_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
@@ -71,28 +70,28 @@ class UserParentDetails extends StatelessWidget {
                                   weight: FontWeight.w700,
                                 ),
                                 const Spacer(),
-                                const CommonText(
-                                  text: 'Status',
-                                  fontSize: 16,
-                                  weight: FontWeight.w700,
-                                ),
+                                // const CommonText(
+                                //   text: 'Status',
+                                //   fontSize: 16,
+                                //   weight: FontWeight.w700,
+                                // ),
                                 const HorizontalSpacing(20),
-                                SizedBox(
-                                  width: 160,
-                                  child: CommonDropDownWidget(
-                                    fillColor:
-                                        AppColors.primary.withOpacity(0.2),
-                                    selectedItem: 'Active',
-                                    selectedItemColor: AppColors.primary,
-                                    borderColor: AppColors.transparent,
-                                    iconColor: AppColors.primary,
-                                    onChanged: (p0) async {
-                                      // await controller
-                                      //     .changeGiftStatus(p0 ?? '', controller.giftingDetailData.data.giftingModel[index]);
-                                    },
-                                    arryList: const ['Active', 'Expired'],
-                                  ),
-                                ),
+                                // SizedBox(
+                                //   width: 160,
+                                //   child: CommonDropDownWidget(
+                                //     fillColor:
+                                //         AppColors.primary.withOpacity(0.2),
+                                //     selectedItem: 'Active',
+                                //     selectedItemColor: AppColors.primary,
+                                //     borderColor: AppColors.transparent,
+                                //     iconColor: AppColors.primary,
+                                //     onChanged: (p0) async {
+                                //       // await controller
+                                //       //     .changeGiftStatus(p0 ?? '', controller.giftingDetailData.data.giftingModel[index]);
+                                //     },
+                                //     arryList: const ['Active', 'Expired'],
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -155,6 +154,7 @@ class UserParentDetails extends StatelessWidget {
                                 controller.isLoading
                                     ? const SizedBox()
                                     : UserParentLiveGiftingWidget(
+                                        isLive: true,
                                         giftingModel: controller
                                                 .giftingDetailData
                                                 .data
@@ -164,6 +164,7 @@ class UserParentDetails extends StatelessWidget {
                                 controller.isLoading
                                     ? const SizedBox()
                                     : UserParentLiveGiftingWidget(
+                                        isLive: false,
                                         giftingModel: controller
                                                 .giftingDetailData
                                                 .data
@@ -205,7 +206,9 @@ class UserParentDetails extends StatelessWidget {
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                return controller.benefeciaryData.data == null
+                                return controller
+                                            .benefeciaryData.data?.length ==
+                                        0
                                     ? const NoDataFound(
                                         title: 'No beneficiaries yet!')
                                     : BenefeciaryExpansionTile(
@@ -227,11 +230,12 @@ class UserParentDetails extends StatelessWidget {
                                           controller.update();
                                         });
                               },
-                              itemCount: controller.benefeciaryData?.data ==
-                                      null
-                                  ? 1
-                                  : controller.benefeciaryData.data?.length ??
-                                      0,
+                              itemCount:
+                                  controller.benefeciaryData.data?.length == 0
+                                      ? 1
+                                      : controller
+                                              .benefeciaryData.data?.length ??
+                                          0,
                               separatorBuilder: (context, index) {
                                 return const VerticalSpacing(20);
                               },

@@ -23,7 +23,7 @@ class GiftingsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PageHeader(
-              hintText: 'Search by Gifting title, Posted by, Benefeciary name',
+              hintText: 'Search by Gifting title',
               searchController: controller.giftingSearchController,
               searchCancelOnTap: () async {
                 controller.giftingSearchController.clear();
@@ -75,6 +75,8 @@ class GiftingsPage extends StatelessWidget {
                                 controller.giftingModelList[index].userId
                                     .toString(),
                               );
+                              controller.liveGiftingSelectedIndex = 0;
+                              controller.userParentSelectedIndex = 0;
                               globalContext?.push(PagePath.giftings +
                                   PagePath.parentDetails.toRoute);
 
@@ -84,20 +86,20 @@ class GiftingsPage extends StatelessWidget {
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
-            if(controller.giftingSearchController.text.isEmpty)
-            CommonPagerWidget(
-              currentPage: controller.giftingsPageNo,
-              totalPage: ((controller.elementCount == 0
-                          ? 1
-                          : controller.elementCount) /
-                      10)
-                  .ceil(),
-              onPageChanged: (page) async {
-                controller.giftingsPageNo = page;
-                await controller.getGiftingTable();
-                controller.update();
-              },
-            ),
+            if (controller.giftingSearchController.text.isEmpty)
+              CommonPagerWidget(
+                currentPage: controller.giftingsPageNo,
+                totalPage: ((controller.elementCount == 0
+                            ? 1
+                            : controller.elementCount) /
+                        10)
+                    .ceil(),
+                onPageChanged: (page) async {
+                  controller.giftingsPageNo = page;
+                  await controller.getGiftingTable();
+                  controller.update();
+                },
+              ),
           ],
         ),
       );
