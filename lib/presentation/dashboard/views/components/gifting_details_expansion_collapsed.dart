@@ -18,10 +18,13 @@ class GiftingDeatilsExpansionCollapsed extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CommonText(
-          text: giftingModel.title ?? '',
-          fontSize: 16,
-          weight: FontWeight.w600,
+        Expanded(
+          flex: 10,
+          child: CommonText(
+            text: giftingModel.title ?? '',
+            fontSize: 16,
+            weight: FontWeight.w600,
+          ),
         ),
         const Spacer(),
         Container(

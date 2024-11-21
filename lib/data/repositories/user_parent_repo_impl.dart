@@ -7,6 +7,7 @@ import 'package:grow_up_admin_panel/data/provider/network/apis/pagination_model.
 import 'package:grow_up_admin_panel/data/provider/network/apis/user_parent_api.dart';
 import 'package:grow_up_admin_panel/data/repositories/activity_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
 import 'package:grow_up_admin_panel/domain/repository/user_parent_repository.dart';
 
@@ -37,10 +38,13 @@ class UserParentRepositoryImpl extends UserParentRepository {
   }
 
   @override
-  Future<GiftDetailDto> getGiftDetail(String id, status) async {
+  Future<List<GiftingModel>> getGiftDetail(String id, status) async {
     try {
       final response = await UserParentApi.getDetail(id, status).request();
-      return GiftDetailDto.fromJson(jsonDecode(response));
+      final List<dynamic> json = jsonDecode(response)['data'];
+      final List<GiftingModel> data =
+          json.map((e) => GiftingModel.fromJson(e)).toList();
+      return data;
     } catch (e) {
       rethrow;
     }
@@ -124,7 +128,8 @@ class UserParentRepositoryImpl extends UserParentRepository {
   @override
   Future<String> changeGiftStatus(String status, int giftId) async {
     try {
-      final response = await UserParentApi.changeGiftStatus(status,giftId).request();
+      final response =
+          await UserParentApi.changeGiftStatus(status, giftId).request();
       final msg = jsonDecode(response)['message'];
       return msg;
     } catch (e) {

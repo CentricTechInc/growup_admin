@@ -154,13 +154,9 @@ class UserParentDetails extends StatelessWidget {
                                 controller.isLoading
                                     ? const SizedBox()
                                     : UserParentLiveGiftingWidget(
-                                        isLive: true,
-                                        giftingModel: controller
-                                                .giftingDetailData
-                                                .data
-                                                ?.giftingModel ??
-                                            [],
-                                      ),
+                                            isLive: true,
+                                            giftingModel: controller.giftDetailList
+                                          ),
                                 controller.isLoading
                                     ? const SizedBox()
                                     : UserParentLiveGiftingWidget(

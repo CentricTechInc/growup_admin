@@ -229,17 +229,23 @@ class SideBarController extends GetxController {
     }
   }
 
+  final List<GiftingModel> giftDetailList = [];
+
   Future<void> getGiftDetail(String id, String status) async {
     try {
-      Loader.showLoader();
+      // Loader.showLoader();
       isLoading = true;
-      giftingDetailData = await userParentRepository.getGiftDetail(id, status);
+      final res = await userParentRepository.getGiftDetail(id, status);
+      giftDetailList.clear();
+      giftDetailList.addAll(res);
+      print('THIS LIST COMING');
+      print(giftDetailList.toList());
       await Future.delayed(Duration(seconds: 1));
       isLoading = false;
-      Loader.hideLoading();
+      // Loader.hideLoading();
     } catch (e) {
       isLoading = false;
-      Loader.hideLoading();
+      // Loader.hideLoading();
       CommonSnackBar.message(message: e.toString());
     }
   }

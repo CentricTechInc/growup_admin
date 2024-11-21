@@ -35,12 +35,12 @@ class Data {
   Data({this.user, this.contributed, this.recieved, this.totalGifts});
 
   Data.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? UserModelDto.fromJson(json['user']) : null;
+    // user = json['user'] != null ? UserModelDto.fromJson(json['user']) : null;
     giftingModel = List<GiftingModel>.from(json['gifts'].map((e) => GiftingModel.fromJson(e)));
         // json['gifts'] != null ? GiftingModel.fromJson(json['gifts']) : null;
-    contributed = json['contributed'];
-    recieved = json['received'];
-    totalGifts = json['totalGiftings'];
+    // contributed = json['contributed'];
+    // recieved = json['received'];
+    // totalGifts = json['totalGiftings'];
   }
 
   Map<String, dynamic> toJson() {

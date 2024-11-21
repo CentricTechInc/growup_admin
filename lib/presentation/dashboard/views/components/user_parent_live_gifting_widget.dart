@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
@@ -19,142 +21,152 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
 
   final List<GiftingModel> giftingModel;
   final bool isLive;
-  // final expansionController = ExpansionTileController();
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SideBarController>(builder: (controller) {
-      return ListView.separated(
-        itemCount: giftingModel.isEmpty ? 1 : giftingModel.length,
-        itemBuilder: (context, listIndex) {
-          return giftingModel.isEmpty
-              ? const NoDataFound(title: 'No gifts found!')
-              : Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: AppColors.cardGrey,
-                  ),
-                  child: ExpansionTile(
-                    shape: const Border(),
-                    // controller: expansionController,
-                    maintainState: false,
-                    enabled: true,
-                    onExpansionChanged: (collapse) {
-                      // giftingModel.every((e) => e.isCollapsed = true);
-                      // if(giftingModel.any((e)=>e.isCollapsed == false)){
-                      //   expansionController.collapse();
-                      // }
-                      // if(giftingModel.every((e)=>e.isCollapsed == true)){
-                      //   expansionController.collapse();
-                      // }
-                      // collapse = true;
-                      // expansionController.collapse();
-                      giftingModel[listIndex].isCollapsed = !collapse;
-                      if (collapse == false) {
-                        controller.liveGiftingSelectedIndex = 0;
-                      }
-                      controller.update();
-                    },
-                    title: Visibility(
-                      visible: giftingModel[listIndex].isCollapsed ?? false,
-                      replacement: Row(
-                        children: [
-                          TabBarWidget(
-                            selectedIndex: controller.liveGiftingSelectedIndex,
-                            controller: controller.liveGiftingPageController,
-                            selectedColor: AppColors.white,
-                            title: const [
-                              'Gifting Details',
-                              'Contributions',
-                              'Payout'
-                            ],
-                            onTap: (index) async {
-                              controller.liveGiftingSelectedIndex = index;
-
-                              final String userId =
-                                  giftingModel[listIndex].userId?.toString() ??
-                                      '0';
-                              final int giftId =
-                                  giftingModel[listIndex].id ?? 0;
-                              switch (index) {
-                                case 0:
-                                  await controller.getGiftDetail(
-                                      userId.toString(), isLive ? 'Active' : 'Expired');
-                                case 1:
-                                  await controller.getGiftContributions(giftId);
-                                case 2:
-                                  await controller.getGiftPayoutDetail(giftId.toString());
-                              }
-                              print(userId);
-                              // controller.liveGiftingPageController.animateToPage(
-                              //     index,
-                              //     duration: const Duration(seconds: 1),
-                              //     curve: Curves.ease);
-                              // controller.liveGiftingSelectedIndex = controller
-                              //         .liveGiftingPageController.page
-                              //         ?.toInt() ??
-                              //     0;
-                              controller.update();
-                            },
-                          ),
-                          const Spacer(),
-                          CommonIconButton(
-                            icon: Assets.deleteIcon,
-                            onTap: () async {
-                              print('here delete');
-                              await controller
-                                  .deleteGift(giftingModel[listIndex].id ?? 0);
-                              await controller.getGiftDetail(
-                                  controller.giftingDetailData.data?.user?.id
-                                          .toString() ??
-                                      '',
-                                  isLive ? 'Active' : 'Expired');
-                              controller.update();
-                            },
-                            color: AppColors.red,
-                          ),
-                        ],
-                      ),
-                      child: GiftingDeatilsExpansionCollapsed(
-                        giftingModel: giftingModel[listIndex],
-                        onDelete: () async {
-                          await controller
-                              .deleteGift(giftingModel[listIndex].id ?? 0);
-                          await controller.getGiftDetail(
-                              controller.giftingDetailData.data?.user?.id
-                                      .toString() ??
-                                  '',
-                              isLive ? 'Active' : 'Expired');
-                          controller.update();
-                        },
-                      ),
+      // final expansionController = ExpansionTileController();
+      return SizedBox(
+        height: 50,
+        child: ListView.separated(
+          itemCount: giftingModel.isEmpty ? 1 : giftingModel.length,
+          itemBuilder: (context, listIndex) {
+            return giftingModel.isEmpty
+                ? const NoDataFound(title: 'No gifts found!')
+                : Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.cardGrey,
                     ),
-                    children: [
-                      SizedBox(
-                        height: context.height / 1.8,
-                        child: PageView(
-                          controller: controller.liveGiftingPageController,
+                    child: ExpansionTile(
+                      // controller: ExpansionTileController(),
+                      shape: const Border(),
+                      onExpansionChanged: (collapse) {
+                        // giftingModel.every((e) => e.isCollapsed = true);
+                        // if(giftingModel.any((e)=>e.isCollapsed == false)){
+                        //   giftingModel.forEach((e)=> e.isCollapsed ? print('ALL COLLAPSED') :  print('ALL Expanded'));
+                        //   giftingModel.forEach((e)=> e.isCollapsed ? null : expansionController.collapse);
+                          // for(int i = 0; i<giftingModel.length; i++){
+                          //   if(giftingModel[i].isCollapsed == false )
+                          //     {
+                          //       expansionController.collapse();
+                          //     }
+                          // }
+                          // controller.update();
+                          // expansionController.collapse();
+                        // }
+                        // if(giftingModel.every((e)=>e.isCollapsed == true)){
+                        //   expansionController.collapse();
+                        // }
+                        // collapse = true;
+                        // expansionController.collapse();
+                        giftingModel[listIndex].isCollapsed = !collapse;
+                        if (collapse == false) {
+                          controller.liveGiftingSelectedIndex = 0;
+                        }
+                        controller.update();
+                      },
+                      title: Visibility(
+                        visible: giftingModel[listIndex].isCollapsed?? false,
+                        replacement: Row(
                           children: [
-                            ParentLiveGiftingsWidget(
-                              giftingModel: controller.giftingDetailData.data
-                                      ?.giftingModel?[listIndex] ??
-                                  GiftingModel(),
+                            TabBarWidget(
+                              selectedIndex: controller.liveGiftingSelectedIndex,
+                              controller: controller.liveGiftingPageController,
+                              selectedColor: AppColors.white,
+                              title: const [
+                                'Gifting Details',
+                                'Contributions',
+                                'Payout'
+                              ],
+                              onTap: (index) async {
+                                controller.liveGiftingSelectedIndex = index;
+
+                                final String userId =
+                                    giftingModel[listIndex].userId?.toString() ??
+                                        '0';
+                                final int giftId =
+                                    giftingModel[listIndex].id ?? 0;
+                                switch (index) {
+                                  case 0:
+                                    await controller.getGiftDetail(
+                                        userId.toString(), isLive ? 'Active' : 'Expired');
+                                  case 1:
+                                    await controller.getGiftContributions(giftId);
+                                  case 2:
+                                    await controller.getGiftPayoutDetail(giftId.toString());
+                                }
+                                print(userId);
+                                // controller.liveGiftingPageController.animateToPage(
+                                //     index,
+                                //     duration: const Duration(seconds: 1),
+                                //     curve: Curves.ease);
+                                // controller.liveGiftingSelectedIndex = controller
+                                //         .liveGiftingPageController.page
+                                //         ?.toInt() ??
+                                //     0;
+                                controller.update();
+                              },
                             ),
-                            UserParentsLiveGiftingPayout(
-                              model: controller.giftContributionList,
-                            ),
-                            UserParentsPayout(
-                              model: controller.giftPayoutData,
+                            const Spacer(),
+                            CommonIconButton(
+                              icon: Assets.deleteIcon,
+                              onTap: () async {
+                                print('here delete');
+                                await controller
+                                    .deleteGift(giftingModel[listIndex].id ?? 0);
+                                await controller.getGiftDetail(
+                                    controller.giftingDetailData.data?.user?.id
+                                            .toString() ??
+                                        '',
+                                    isLive ? 'Active' : 'Expired');
+                                controller.update();
+                              },
+                              color: AppColors.red,
                             ),
                           ],
                         ),
+                        child: GiftingDeatilsExpansionCollapsed(
+                          giftingModel: giftingModel[listIndex],
+                          onDelete: () async {
+                            await controller
+                                .deleteGift(giftingModel[listIndex].id ?? 0);
+                            await controller.getGiftDetail(
+                                controller.giftingDetailData.data?.user?.id
+                                        .toString() ??
+                                    '',
+                                isLive ? 'Active' : 'Expired');
+                            controller.update();
+                          },
+                        ),
                       ),
-                    ],
-                  ),
-                );
-        },
-        separatorBuilder: (context, index) => const VerticalSpacing(10),
+                      children: [
+                        SizedBox(
+                          height: context.height / 1.8,
+                          child: PageView(
+                            controller: controller.liveGiftingPageController,
+                            children: [
+                              ParentLiveGiftingsWidget(
+                                giftingModel: controller.giftingDetailData.data
+                                        ?.giftingModel?[listIndex] ??
+                                    GiftingModel(),
+                              ),
+                              UserParentsLiveGiftingPayout(
+                                model: controller.giftContributionList,
+                              ),
+                              UserParentsPayout(
+                                model: controller.giftPayoutData,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+          },
+          separatorBuilder: (context, index) => const VerticalSpacing(10),
+        ),
       );
     });
 
