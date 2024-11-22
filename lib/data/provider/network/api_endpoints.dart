@@ -56,4 +56,5 @@ class APIEndpoint {
   static String get getGiftContributorUrl => '/api/gift-contributor';
 
   static String get changeGiftStatusUrl => '/api/gifts/change-status';
+  static String get parentDetailUrl => '/api/users';
 }

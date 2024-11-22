@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
-import 'package:grow_up_admin_panel/app/util/common_vertical_divider_widget.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 
 class CommonListWidget extends StatelessWidget {
-  CommonListWidget({
+  const CommonListWidget({
     super.key,
     this.title,
     required this.header,
     required this.body,
+    required this.onTap,
   });
+
   final String? title;
   final Widget header;
   final Widget body;
+  final VoidCallback onTap;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,9 +26,29 @@ class CommonListWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (title != null)
-            CommonText(
-                text: title ?? '', fontSize: 30, weight: FontWeight.bold),
+          Row(
+            children: [
+              if (title != null)
+                CommonText(
+                    text: title ?? '', fontSize: 30, weight: FontWeight.bold),
+              const Spacer(),
+              InkWell(
+                onTap: onTap,
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.grey.withOpacity(0.4),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const CommonText(
+                    text: 'View All',
+                    fontSize: 12,
+                    weight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
           if (title != null) const VerticalSpacing(20),
           SizedBox(
               height: 30,

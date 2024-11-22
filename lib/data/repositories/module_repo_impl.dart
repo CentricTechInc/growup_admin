@@ -4,6 +4,7 @@ import 'package:grow_up_admin_panel/data/provider/network/apis/module_api.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/pagination_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/payout_model.dart';
 import 'package:grow_up_admin_panel/domain/repository/module_repository.dart';
 
@@ -41,4 +42,5 @@ class ModuleRepositoryImpl extends ModuleRepository {
     return PaginationModel(
         data: data, count: jsonDecode(response)['data']['count']);
   }
+
 }

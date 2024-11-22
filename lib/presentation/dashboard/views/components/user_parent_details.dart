@@ -16,7 +16,10 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user
 class UserParentDetails extends StatelessWidget {
   const UserParentDetails({
     super.key,
+    required this.isParent,
   });
+
+  final bool isParent;
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +64,7 @@ class UserParentDetails extends StatelessWidget {
                                 ),
                                 const HorizontalSpacing(20),
                                 CommonText(
-                                  text: controller
-                                          .giftingDetailData.data?.user?.id
+                                  text: controller.parentDetailData.id
                                           .toString() ??
                                       '',
                                   fontSize: 16,
@@ -96,7 +98,9 @@ class UserParentDetails extends StatelessWidget {
                             ),
                           ),
                           const VerticalSpacing(20),
-                          ParentDetailsCardWidget(
+                          DetailsCardWidget(
+                            title: 'Parent Details',
+                            parentModel: controller.parentDetailData,
                             giftModel: controller.giftingDetailData,
                           ),
                           const VerticalSpacing(20),
@@ -110,33 +114,23 @@ class UserParentDetails extends StatelessWidget {
                             ],
                             onTap: (index) async {
                               controller.userParentSelectedIndex = index;
-                              print(index);
+                              final int parentId =
+                                  controller.parentDetailData.id ?? -1;
                               switch (index) {
                                 case 0:
                                   await controller.getGiftDetail(
-                                      controller
-                                              .giftingDetailData.data?.user?.id
-                                              .toString() ??
-                                          '',
-                                      'Active');
+                                      parentId.toString() ?? '', 'Active');
                                   break;
                                 case 1:
                                   await controller.getGiftDetail(
-                                      controller
-                                              .giftingDetailData.data?.user?.id
-                                              .toString() ??
-                                          '',
-                                      'Expired');
+                                      parentId.toString() ?? '', 'Expired');
                                   break;
                                 case 2:
-                                  await controller.getActivity(controller
-                                          .giftingDetailData.data?.user?.id
-                                          .toString() ??
-                                      '');
+                                  await controller
+                                      .getActivity(parentId.toString() ?? '');
                                   break;
                               }
                               controller.update();
-                              print(index);
                               // if(_scrollController.hasClients){
                               //   controller.userParentPageController.animateToPage(
                               //       index,
@@ -152,23 +146,19 @@ class UserParentDetails extends StatelessWidget {
                               controller: controller.userParentPageController,
                               children: [
                                 controller.isLoading
-                                    ? const SizedBox()
+                                    ? const CupertinoActivityIndicator()
                                     : UserParentLiveGiftingWidget(
-                                            isLive: true,
-                                            giftingModel: controller.giftDetailList
-                                          ),
+                                        isLive: true,
+                                        giftingModel:
+                                            controller.giftDetailList),
                                 controller.isLoading
-                                    ? const SizedBox()
+                                    ? const CupertinoActivityIndicator()
                                     : UserParentLiveGiftingWidget(
                                         isLive: false,
-                                        giftingModel: controller
-                                                .giftingDetailData
-                                                .data
-                                                ?.giftingModel ??
-                                            [],
+                                        giftingModel: controller.giftDetailList,
                                       ),
                                 controller.isLoading
-                                    ? const SizedBox()
+                                    ? const CupertinoActivityIndicator()
                                     : UserParentsActivity(
                                         activityModel: controller.activityModel,
                                       ),
@@ -197,6 +187,12 @@ class UserParentDetails extends StatelessWidget {
                             weight: FontWeight.w600,
                           ),
                           const VerticalSpacing(20),
+                          if(!isParent)
+                            const Center(
+                              child: NoDataFound(
+                                  title: 'No beneficiaries yet!'),
+                            )
+                          else
                           GetBuilder<SideBarController>(builder: (controller) {
                             return ListView.separated(
                               physics: const NeverScrollableScrollPhysics(),

@@ -12,12 +12,13 @@ enum ModuleApiType {
 class ModuleApi implements APIRequestRepresentable {
   ModuleApiType type;
   String? search;
-  int? pageNo;
+  int? pageNo, id;
 
   ModuleApi._({
     required this.type,
     this.search,
     this.pageNo,
+    this.id,
   });
 
   ModuleApi.getGiftingTable(int pageNo, String? search)
@@ -41,6 +42,7 @@ class ModuleApi implements APIRequestRepresentable {
           search: search,
         );
 
+
   @override
   get body {
     switch (type) {
@@ -58,6 +60,7 @@ class ModuleApi implements APIRequestRepresentable {
         return APIEndpoint.payoutTableUrl;
       case ModuleApiType.getContributionTable:
         return APIEndpoint.contributionTableUrl;
+
     }
   }
 
@@ -104,6 +107,7 @@ class ModuleApi implements APIRequestRepresentable {
           'pageNumber': pageNo?.toString() ?? '0',
           'search': search ?? ''
         };
+        return {};
     }
   }
 }

@@ -61,25 +61,26 @@ class UserParentPage extends StatelessWidget {
                 itemCount: controller.userParentModelList.isEmpty
                     ? 1
                     : controller.userParentModelList.length,
-                itemBuilder: (context, index) =>
-                    controller.userParentModelList.isEmpty
-                        ? const NoDataFound(title: 'No record found!')
-                        : ParentTableBody(
-                            onTap: () async {
-                              await controller.getGiftDetail(
-                                  controller.userParentModelList[index].id
-                                      .toString(),
-                                  'Active');
-                              await controller.getUserBenes(controller
-                                  .userParentModelList[index].id
-                                  .toString());
-                              controller.userParentSelectedIndex = 0;
-                              controller.liveGiftingSelectedIndex = 0;
-                              globalContext?.push(PagePath.userParents +
-                                  PagePath.parentDetails.toRoute);
-                            },
-                            model: controller.userParentModelList[index],
-                          ),
+                itemBuilder: (context, index) => controller
+                        .userParentModelList.isEmpty
+                    ? const NoDataFound(title: 'No record found!')
+                    : ParentTableBody(
+                        onTap: () async {
+                          await controller.getParentDetail(
+                              controller.userParentModelList[index].id ?? 0);
+                          await controller.getGiftDetail(
+                              controller.userParentModelList[index].id
+                                  .toString(),
+                              'Active');
+                          await controller.getUserBenes(controller
+                              .userParentModelList[index].id
+                              .toString());
+                          controller.userParentSelectedIndex = 0;
+                          controller.liveGiftingSelectedIndex = 0;
+                          context.push('${PagePath.userParents}${PagePath.parentDetails.toRoute}?isParent=${true}');
+                        },
+                        model: controller.userParentModelList[index],
+                      ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),

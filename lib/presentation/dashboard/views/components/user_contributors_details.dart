@@ -153,9 +153,9 @@ class UserContributerDetails extends StatelessWidget {
                         const VerticalSpacing(20),
                         GetBuilder<SideBarController>(builder: (controller) {
                           return TabBarWidget(
-                            // selectedIndex:
-                            //     controller.userContributerSelectedIndex,
-                            selectedIndex: 2,
+                            selectedIndex:
+                                controller.userContributerSelectedIndex,
+                            // selectedIndex: 2,
                             controller: PageController(),
                             title: const [
                               'Live Giftings',
@@ -177,7 +177,7 @@ class UserContributerDetails extends StatelessWidget {
                             },
                           );
                         }),
-                        VerticalSpacing(20),
+                        const VerticalSpacing(20),
                         GetBuilder<SideBarController>(
                           builder: (controller) {
                             return SizedBox(
@@ -268,13 +268,6 @@ class UserContributerDetails extends StatelessWidget {
                           ),
                         ),
                         const VerticalSpacing(20),
-                        // Container(
-                        //     padding: const EdgeInsets.all(20),
-                        //     decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(20),
-                        //       color: AppColors.cardGrey,
-                        //     ),
-                        //     child: const ProfileTile()),
                       ],
                     ),
                   ),

@@ -3,10 +3,19 @@ import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
+import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
 
-class ParentDetailsCardWidget extends StatelessWidget {
-  ParentDetailsCardWidget({super.key, required this.giftModel});
+class DetailsCardWidget extends StatelessWidget {
+  DetailsCardWidget(
+      {super.key,
+      required this.giftModel,
+      required this.parentModel,
+      required this.title});
+
+  final String title;
   GiftDetailDto giftModel;
+  ParentModel parentModel;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,8 +27,8 @@ class ParentDetailsCardWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CommonText(
-            text: 'Parent Details',
+          CommonText(
+            text: title,
             fontSize: 20,
             weight: FontWeight.w700,
           ),
@@ -51,7 +60,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
           Row(children: [
             Expanded(
               child: CommonText(
-                text: giftModel.data?.user?.name ?? '',
+                text: parentModel.name ?? '',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -59,7 +68,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
             ),
             Expanded(
               child: CommonText(
-                text: giftModel.data?.user?.email ?? '',
+                text: parentModel.email ?? '',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -67,7 +76,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
             ),
             Expanded(
               child: CommonText(
-                text: giftModel.data?.user?.phone ?? '',
+                text: parentModel.phone ?? '',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -102,7 +111,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
           Row(children: [
             Expanded(
               child: CommonText(
-                text: '${giftModel.data?.totalGifts}' ?? '0',
+                text: '${parentModel.totalGifts?? '0'}',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -110,7 +119,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
             ),
             Expanded(
               child: CommonText(
-                text: '\$ ${giftModel.data?.recieved}' ?? '0',
+                text: '\$ ${parentModel.totalReceived?? '0'}' ,
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
@@ -118,7 +127,7 @@ class ParentDetailsCardWidget extends StatelessWidget {
             ),
             Expanded(
               child: CommonText(
-                text: '\$ ${giftModel.data?.contributed}' ?? '0',
+                text: '\$ ${parentModel.totalContributed ?? 0}',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,

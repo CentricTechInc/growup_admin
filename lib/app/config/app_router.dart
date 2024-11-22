@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
-import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
-import 'package:grow_up_admin_panel/data/dto/user_bene_dto.dart';
-import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 import 'package:grow_up_admin_panel/presentation/auth/controllers/create_new_pass_controller.dart';
 import 'package:grow_up_admin_panel/presentation/auth/controllers/forget_pass_controller.dart';
 import 'package:grow_up_admin_panel/presentation/auth/controllers/login_controller.dart';
@@ -123,7 +120,7 @@ class AppRouter {
               parentNavigatorKey: _shellNavigatorKey,
               path: PagePath.dashboard,
               pageBuilder: (context, state) {
-                return const MaterialPage(child: DashboardPage());
+                return MaterialPage(child: DashboardPage());
               }),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
@@ -138,7 +135,13 @@ class AppRouter {
                 GoRoute(
                   path: PagePath.parentDetails,
                   pageBuilder: (context, state) {
-                    return MaterialPage(child: UserParentDetails());
+                    final bool val = bool.parse(
+                        state.uri.queryParameters['isParent'].toString());
+                    return MaterialPage(
+                      child: UserParentDetails(
+                        isParent: val,
+                      ),
+                    );
                   },
                 ),
               ]),
@@ -167,7 +170,13 @@ class AppRouter {
                 GoRoute(
                   path: PagePath.parentDetails,
                   pageBuilder: (context, state) {
-                    return MaterialPage(child: UserParentDetails());
+                    final bool val = bool.parse(
+                        state.uri.queryParameters['isParent'].toString());
+                    return MaterialPage(
+                      child: UserParentDetails(
+                        isParent: val,
+                      ),
+                    );
                   },
                 ),
               ]),
@@ -188,7 +197,12 @@ class AppRouter {
                 GoRoute(
                   path: PagePath.parentDetails,
                   pageBuilder: (context, state) {
-                    return const MaterialPage(child: UserParentDetails());
+                    final bool val = bool.parse(
+                        state.uri.queryParameters['isParent'].toString());
+                    return MaterialPage(
+                        child: UserParentDetails(
+                      isParent: val,
+                    ));
                   },
                 ),
               ]),
@@ -196,7 +210,7 @@ class AppRouter {
             parentNavigatorKey: _shellNavigatorKey,
             path: PagePath.analytics,
             pageBuilder: (context, state) {
-              return const MaterialPage(
+              return MaterialPage(
                 child: AnalyticsPage(),
               );
             },

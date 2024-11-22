@@ -52,13 +52,16 @@ class UserContributionPage extends StatelessWidget {
                         ? const NoDataFound(title: 'No record found!')
                         : ParentTableBody(
                             onTap: () async {
+                              await controller.getParentDetail(controller
+                                      .userContributorModelList[index].id ??
+                                  0);
                               await controller.getGiftDetail(
                                   controller.userContributorModelList[index].id
                                           .toString() ??
                                       '',
                                   'Active');
-                              context.push(PagePath.userParents +
-                                  PagePath.parentDetails.toRoute);
+                              context.push(
+                                  '${PagePath.userParents}${PagePath.parentDetails.toRoute}?isParent=${false}');
                             },
                             model: controller.userContributorModelList[index],
                           ),

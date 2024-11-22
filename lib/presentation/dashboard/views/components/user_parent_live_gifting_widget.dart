@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
@@ -47,14 +45,14 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                         // if(giftingModel.any((e)=>e.isCollapsed == false)){
                         //   giftingModel.forEach((e)=> e.isCollapsed ? print('ALL COLLAPSED') :  print('ALL Expanded'));
                         //   giftingModel.forEach((e)=> e.isCollapsed ? null : expansionController.collapse);
-                          // for(int i = 0; i<giftingModel.length; i++){
-                          //   if(giftingModel[i].isCollapsed == false )
-                          //     {
-                          //       expansionController.collapse();
-                          //     }
-                          // }
-                          // controller.update();
-                          // expansionController.collapse();
+                        // for(int i = 0; i<giftingModel.length; i++){
+                        //   if(giftingModel[i].isCollapsed == false )
+                        //     {
+                        //       expansionController.collapse();
+                        //     }
+                        // }
+                        // controller.update();
+                        // expansionController.collapse();
                         // }
                         // if(giftingModel.every((e)=>e.isCollapsed == true)){
                         //   expansionController.collapse();
@@ -68,11 +66,12 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                         controller.update();
                       },
                       title: Visibility(
-                        visible: giftingModel[listIndex].isCollapsed?? false,
+                        visible: giftingModel[listIndex].isCollapsed ?? false,
                         replacement: Row(
                           children: [
                             TabBarWidget(
-                              selectedIndex: controller.liveGiftingSelectedIndex,
+                              selectedIndex:
+                                  controller.liveGiftingSelectedIndex,
                               controller: controller.liveGiftingPageController,
                               selectedColor: AppColors.white,
                               title: const [
@@ -83,19 +82,23 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                               onTap: (index) async {
                                 controller.liveGiftingSelectedIndex = index;
 
-                                final String userId =
-                                    giftingModel[listIndex].userId?.toString() ??
-                                        '0';
+                                final String userId = giftingModel[listIndex]
+                                        .userId
+                                        ?.toString() ??
+                                    '0';
                                 final int giftId =
                                     giftingModel[listIndex].id ?? 0;
                                 switch (index) {
                                   case 0:
                                     await controller.getGiftDetail(
-                                        userId.toString(), isLive ? 'Active' : 'Expired');
+                                        userId.toString(),
+                                        isLive ? 'Active' : 'Expired');
                                   case 1:
-                                    await controller.getGiftContributions(giftId);
+                                    await controller
+                                        .getGiftContributions(giftId);
                                   case 2:
-                                    await controller.getGiftPayoutDetail(giftId.toString());
+                                    await controller
+                                        .getGiftPayoutDetail(giftId.toString());
                                 }
                                 print(userId);
                                 // controller.liveGiftingPageController.animateToPage(
@@ -113,9 +116,8 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                             CommonIconButton(
                               icon: Assets.deleteIcon,
                               onTap: () async {
-                                print('here delete');
-                                await controller
-                                    .deleteGift(giftingModel[listIndex].id ?? 0);
+                                await controller.deleteGift(
+                                    giftingModel[listIndex].id ?? 0);
                                 await controller.getGiftDetail(
                                     controller.giftingDetailData.data?.user?.id
                                             .toString() ??
@@ -148,9 +150,7 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                             controller: controller.liveGiftingPageController,
                             children: [
                               ParentLiveGiftingsWidget(
-                                giftingModel: controller.giftingDetailData.data
-                                        ?.giftingModel?[listIndex] ??
-                                    GiftingModel(),
+                                giftingModel: giftingModel[listIndex],
                               ),
                               UserParentsLiveGiftingPayout(
                                 model: controller.giftContributionList,

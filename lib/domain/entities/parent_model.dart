@@ -11,6 +11,9 @@ class ParentModel {
   final String? googleId;
   final String? appleId;
   final String? registrationType;
+  final int? totalGifts;
+  final String? totalContributed;
+  final String? totalReceived;
   final int? roleId;
   bool? isSelected;
 
@@ -27,6 +30,9 @@ class ParentModel {
     this.appleId,
     this.registrationType,
     this.roleId,
+    this.totalGifts,
+    this.totalContributed,
+    this.totalReceived,
   });
 
   factory ParentModel.fromRawJson(String str) =>
@@ -46,6 +52,9 @@ class ParentModel {
         appleId: json["appleId"],
         registrationType: json["registration_type"],
         roleId: json["RoleId"],
+        totalGifts: json["total_gifts"],
+        totalContributed: json["total_contributed"],
+        totalReceived: json["total_received"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -60,5 +69,8 @@ class ParentModel {
         "appleId": appleId,
         "registration_type": registrationType,
         "RoleId": roleId,
+        "total_contributed": totalContributed,
+        "total_gifts": totalGifts,
+        "total_received": totalReceived,
       };
 }

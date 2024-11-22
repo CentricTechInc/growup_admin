@@ -7,6 +7,7 @@ import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/data/dto/gift_payout_model.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_payout_table.dart';
 
 class UserParentsPayout extends StatelessWidget {
   const UserParentsPayout({super.key, required this.model});

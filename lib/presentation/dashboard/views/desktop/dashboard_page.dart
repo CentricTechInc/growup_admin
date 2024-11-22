@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
+import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/dashboard_controller.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/active_user__chart_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_list_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/contributions_chart_widget.dart';
@@ -17,7 +20,9 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/rece
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/top_gifting_chart_widget.dart';
 
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
+  DashboardPage({super.key});
+
+  final sidebarcontroller = Get.find<SideBarController>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +56,11 @@ class DashboardPage extends StatelessWidget {
                   height: 350,
                   child: CommonListWidget(
                     title: "Payout",
+                    onTap: () async {
+                      await sidebarcontroller.getPayoutTable();
+                      sidebarcontroller.toRoute(5);
+                      context.go(PagePath.payouts);
+                    },
                     header: const PayoutHeaderWidget(),
                     body: PayoutBodyWidget(
                       payoutList: controller.payoutObject,
@@ -60,6 +70,12 @@ class DashboardPage extends StatelessWidget {
                   width: 750,
                   height: 350,
                   child: CommonListWidget(
+                    onTap: () async {
+                      await sidebarcontroller.getParentTable();
+                      sidebarcontroller.toRoute(1);
+
+                      context.go(PagePath.userParents);
+                    },
                     title: "Recent Users",
                     header: const RecentUsersHeaderWidget(),
                     body: RecentUsersBodyWidget(
@@ -71,6 +87,11 @@ class DashboardPage extends StatelessWidget {
                   height: 350,
                   child: CommonListWidget(
                     title: "Recent Contributions",
+                    onTap: () async {
+                      await sidebarcontroller.getContributorsTable();
+                      sidebarcontroller.toRoute(2);
+                      context.go(PagePath.userContributor);
+                    },
                     header: const RecentContributionHeaderWidget(),
                     body: RecentContributionBodyWidget(
                       recentContributions: controller.recentContributions,

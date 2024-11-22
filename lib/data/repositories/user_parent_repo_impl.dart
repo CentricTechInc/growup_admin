@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:grow_up_admin_panel/data/dto/gift_detail_dto.dart';
 import 'package:grow_up_admin_panel/data/dto/gift_payout_model.dart';
 import 'package:grow_up_admin_panel/data/dto/user_bene_dto.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/pagination_model.dart';
@@ -135,5 +134,13 @@ class UserParentRepositoryImpl extends UserParentRepository {
     } catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<ParentModel> getParentDetail(parentId) async {
+    final response = await UserParentApi.getParentDetail(parentId).request();
+    final json = jsonDecode(response)['data'];
+    final data = ParentModel.fromJson(json);
+    return data;
   }
 }

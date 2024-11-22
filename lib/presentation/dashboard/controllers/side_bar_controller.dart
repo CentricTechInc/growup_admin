@@ -23,6 +23,13 @@ class SideBarController extends GetxController {
   int selectedItemIndex = 0;
   final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
 
+  toRoute(int index) {
+    selectedItemIndex = index;
+    sideBarList.every((e) => e.isSelected = false);
+    sideBarList[index].isSelected = true;
+    update();
+  }
+
   List<SideBarItemModel> sideBarList = [
     SideBarItemModel(
         itemName: 'Dashboard',
@@ -229,6 +236,22 @@ class SideBarController extends GetxController {
     }
   }
 
+  ParentModel parentDetailData = ParentModel();
+
+  getParentDetail(int id) async {
+    try {
+      print(id);
+      Loader.showLoader();
+      final res = await userParentRepository.getParentDetail(id);
+      parentDetailData = res;
+      update();
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
   final List<GiftingModel> giftDetailList = [];
 
   Future<void> getGiftDetail(String id, String status) async {
@@ -238,8 +261,6 @@ class SideBarController extends GetxController {
       final res = await userParentRepository.getGiftDetail(id, status);
       giftDetailList.clear();
       giftDetailList.addAll(res);
-      print('THIS LIST COMING');
-      print(giftDetailList.toList());
       await Future.delayed(Duration(seconds: 1));
       isLoading = false;
       // Loader.hideLoading();
@@ -262,17 +283,17 @@ class SideBarController extends GetxController {
 
   Future<void> getActivity(String id) async {
     try {
-      Loader.showLoader();
+      // Loader.showLoader();
       isLoading = true;
       final res = await userParentRepository.getActivity(id, '1');
       activityModel.clear();
       activityModel.addAll(res);
       await Future.delayed(Duration(seconds: 1));
       isLoading = false;
-      Loader.hideLoading();
+      // Loader.hideLoading();
     } catch (e) {
       isLoading = false;
-      Loader.hideLoading();
+      // Loader.hideLoading();
       CommonSnackBar.message(message: e.toString());
     }
   }
