@@ -28,4 +28,6 @@ abstract class UserParentRepository {
   Future<String> deleteBenefeciary(int id);
 
   Future<ParentModel> getParentDetail(parentId);
+
+  Future<String> exportTable(String role);
 }

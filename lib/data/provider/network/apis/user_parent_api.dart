@@ -15,12 +15,13 @@ enum UserParentApiType {
   deleteGift,
   deleteBenefeciary,
   changeGiftStatus,
+  exportParentTable,
 }
 
 class UserParentApi implements APIRequestRepresentable {
   UserParentApiType type;
   String? search;
-  String? userId, pageId, status;
+  String? userId, pageId, status, role;
   int? pageNo, id, giftId;
 
   UserParentApi._({
@@ -32,80 +33,89 @@ class UserParentApi implements APIRequestRepresentable {
     this.pageNo,
     this.id,
     this.giftId,
+    this.role,
   });
 
   UserParentApi.getParentTable(int pageNo)
       : this._(
-    type: UserParentApiType.getParentTable,
-    pageNo: pageNo,
-  );
+          type: UserParentApiType.getParentTable,
+          pageNo: pageNo,
+        );
 
   UserParentApi.searchParentTable(String search, int pageNo)
       : this._(
-    type: UserParentApiType.searchParentTable,
-    search: search,
-    pageNo: pageNo,
-  );
+          type: UserParentApiType.searchParentTable,
+          search: search,
+          pageNo: pageNo,
+        );
 
   UserParentApi.parentDetailPayoutTable(String userId, int pageNo)
       : this._(
-    type: UserParentApiType.getGiftsPayout,
-    pageNo: pageNo,
-    userId: userId,
-  );
+          type: UserParentApiType.getGiftsPayout,
+          pageNo: pageNo,
+          userId: userId,
+        );
 
-  UserParentApi.getDetail(String userId,
-      String status,) : this._(
-    type: UserParentApiType.getDetail,
-    userId: userId,
-    status: status,
-  );
+  UserParentApi.getDetail(
+    String userId,
+    String status,
+  ) : this._(
+          type: UserParentApiType.getDetail,
+          userId: userId,
+          status: status,
+        );
 
   UserParentApi.getUserBeneficiary(String userId, String pageId)
       : this._(
-    type: UserParentApiType.getUserBeneficiary,
-    userId: userId,
-    pageId: pageId,
-  );
+          type: UserParentApiType.getUserBeneficiary,
+          userId: userId,
+          pageId: pageId,
+        );
 
   UserParentApi.getActivity(String userId, String pageId)
       : this._(
-    type: UserParentApiType.getActivity,
-    userId: userId,
-    pageId: pageId,
-  );
+          type: UserParentApiType.getActivity,
+          userId: userId,
+          pageId: pageId,
+        );
 
   UserParentApi.getGiftsContributions(int giftId, int pageId)
       : this._(
-    type: UserParentApiType.getGiftsContributions,
-    giftId: giftId,
-    pageNo: pageId,
-  );
+          type: UserParentApiType.getGiftsContributions,
+          giftId: giftId,
+          pageNo: pageId,
+        );
 
   UserParentApi.deleteGift(int id)
       : this._(
-    type: UserParentApiType.deleteGift,
-    id: id,
-  );
+          type: UserParentApiType.deleteGift,
+          id: id,
+        );
 
   UserParentApi.deletebenefeciary(int id)
       : this._(
-    type: UserParentApiType.deleteBenefeciary,
-    id: id,
-  );
+          type: UserParentApiType.deleteBenefeciary,
+          id: id,
+        );
 
   UserParentApi.changeGiftStatus(String status, int id)
       : this._(
-    type: UserParentApiType.changeGiftStatus,
-    status: status,
-    id: id,
-  );
+          type: UserParentApiType.changeGiftStatus,
+          status: status,
+          id: id,
+        );
 
   UserParentApi.getParentDetail(int id)
       : this._(
-    type: UserParentApiType.getParentDetail,
-    id: id,
-  );
+          type: UserParentApiType.getParentDetail,
+          id: id,
+        );
+
+  UserParentApi.exportParentTable(String role)
+      : this._(
+          type: UserParentApiType.exportParentTable,
+          role: role,
+        );
 
   @override
   get body {
@@ -120,6 +130,7 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getGiftsContributions:
       case UserParentApiType.deleteGift:
       case UserParentApiType.deleteBenefeciary:
+      case UserParentApiType.exportParentTable:
         return {};
       case UserParentApiType.changeGiftStatus:
         return {
@@ -153,6 +164,8 @@ class UserParentApi implements APIRequestRepresentable {
         return APIEndpoint.changeGiftStatusUrl;
       case UserParentApiType.getParentDetail:
         return '${APIEndpoint.parentDetailUrl}/$id';
+      case UserParentApiType.exportParentTable:
+        return APIEndpoint.exportExcelUrl;
     }
   }
 
@@ -176,6 +189,7 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getGiftsPayout:
       case UserParentApiType.getGiftsContributions:
       case UserParentApiType.getParentDetail:
+      case UserParentApiType.exportParentTable:
         return HTTPMethod.get;
       case UserParentApiType.deleteGift:
       case UserParentApiType.deleteBenefeciary:
@@ -208,6 +222,8 @@ class UserParentApi implements APIRequestRepresentable {
         return {'userId': userId ?? '', 'status': status ?? ''};
       case UserParentApiType.getUserBeneficiary:
         return {'userId': userId ?? '', 'pageNumber': pageId ?? ''};
+      case UserParentApiType.exportParentTable:
+        return {'role': role ?? '',};
 
       default:
         return {};

@@ -142,7 +142,7 @@ class UserParentsPayout extends StatelessWidget {
               ),
               const HorizontalSpacing(30),
               const CommonText(
-                text: 'Payment ID',
+                text: 'Amount',
                 fontSize: 16,
                 weight: FontWeight.w500,
               ),

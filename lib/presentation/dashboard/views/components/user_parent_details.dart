@@ -99,7 +99,9 @@ class UserParentDetails extends StatelessWidget {
                           ),
                           const VerticalSpacing(20),
                           DetailsCardWidget(
-                            title: 'Parent Details',
+                            title: isParent
+                                ? 'Parent Details'
+                                : 'Contributor Details',
                             parentModel: controller.parentDetailData,
                             giftModel: controller.giftingDetailData,
                           ),
@@ -116,27 +118,30 @@ class UserParentDetails extends StatelessWidget {
                               controller.userParentSelectedIndex = index;
                               final int parentId =
                                   controller.parentDetailData.id ?? -1;
-                              switch (index) {
-                                case 0:
-                                  await controller.getGiftDetail(
-                                      parentId.toString() ?? '', 'Active');
-                                  break;
-                                case 1:
-                                  await controller.getGiftDetail(
-                                      parentId.toString() ?? '', 'Expired');
-                                  break;
-                                case 2:
-                                  await controller
-                                      .getActivity(parentId.toString() ?? '');
-                                  break;
+                              if (isParent) {
+                                switch (index) {
+                                  case 0:
+                                    await controller.getGiftDetail(
+                                        parentId.toString() ?? '', 'Active');
+                                    break;
+                                  case 1:
+                                    await controller.getGiftDetail(
+                                        parentId.toString() ?? '', 'Expired');
+                                    break;
+                                  case 2:
+                                    await controller
+                                        .getActivity(parentId.toString() ?? '');
+                                    break;
+                                }
+                              } else {
+                                if (index == 0 || index == 1) {
+                                  controller.userParentSelectedIndex = 2;
+                                  return;
+                                }
+                                await controller
+                                    .getActivity(parentId.toString() ?? '');
                               }
                               controller.update();
-                              // if(_scrollController.hasClients){
-                              //   controller.userParentPageController.animateToPage(
-                              //       index,
-                              //       duration: const Duration(seconds: 1),
-                              //       curve: Curves.ease);
-                              // }
                             },
                           ),
                           const VerticalSpacing(20),
@@ -144,25 +149,36 @@ class UserParentDetails extends StatelessWidget {
                             height: context.height / 1.8,
                             child: PageView(
                               controller: controller.userParentPageController,
-                              children: [
-                                controller.isLoading
-                                    ? const CupertinoActivityIndicator()
-                                    : UserParentLiveGiftingWidget(
-                                        isLive: true,
-                                        giftingModel:
-                                            controller.giftDetailList),
-                                controller.isLoading
-                                    ? const CupertinoActivityIndicator()
-                                    : UserParentLiveGiftingWidget(
-                                        isLive: false,
-                                        giftingModel: controller.giftDetailList,
-                                      ),
-                                controller.isLoading
-                                    ? const CupertinoActivityIndicator()
-                                    : UserParentsActivity(
-                                        activityModel: controller.activityModel,
-                                      ),
-                              ],
+                              children: isParent
+                                  ? [
+                                      controller.isLoading
+                                          ? const CupertinoActivityIndicator()
+                                          : UserParentLiveGiftingWidget(
+                                              isLive: true,
+                                              giftingModel:
+                                                  controller.giftDetailList),
+                                      controller.isLoading
+                                          ? const CupertinoActivityIndicator()
+                                          : UserParentLiveGiftingWidget(
+                                              isLive: false,
+                                              giftingModel:
+                                                  controller.giftDetailList,
+                                            ),
+                                      controller.isLoading
+                                          ? const CupertinoActivityIndicator()
+                                          : UserParentsActivity(
+                                              activityModel:
+                                                  controller.activityModel,
+                                            ),
+                                    ]
+                                  : [
+                                      controller.isLoading
+                                          ? const CupertinoActivityIndicator()
+                                          : UserParentsActivity(
+                                              activityModel:
+                                                  controller.activityModel,
+                                            ),
+                                    ],
                             ),
                           ),
                           const VerticalSpacing(10),
@@ -187,52 +203,64 @@ class UserParentDetails extends StatelessWidget {
                             weight: FontWeight.w600,
                           ),
                           const VerticalSpacing(20),
-                          if(!isParent)
-                            const Center(
-                              child: NoDataFound(
-                                  title: 'No beneficiaries yet!'),
+                          if (!isParent)
+                            Container(
+                              width: context.width,
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 97, vertical: 40),
+                              decoration: BoxDecoration(
+                                  color: AppColors.greyish,
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: const CommonText(
+                                text: 'No Benefeciaries to show!',
+                                fontSize: 20,
+                                weight: FontWeight.w600,
+                                color: AppColors.secondaryText,
+                              ),
                             )
                           else
-                          GetBuilder<SideBarController>(builder: (controller) {
-                            return ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return controller
-                                            .benefeciaryData.data?.length ==
-                                        0
-                                    ? const NoDataFound(
-                                        title: 'No beneficiaries yet!')
-                                    : BenefeciaryExpansionTile(
-                                        data: controller
-                                            .benefeciaryData.data![index],
-                                        deleteOnTap: () async {
-                                          await controller.deleteBenefeciary(
-                                              controller.benefeciaryData
-                                                      .data![index].id ??
-                                                  0);
-                                          print(controller
-                                              .giftingDetailData.data?.user?.id
-                                              .toString());
-                                          await controller.getUserBenes(
-                                              controller.giftingDetailData.data
-                                                      ?.user?.id
-                                                      .toString() ??
-                                                  '0');
-                                          controller.update();
-                                        });
-                              },
-                              itemCount:
-                                  controller.benefeciaryData.data?.length == 0
-                                      ? 1
-                                      : controller
-                                              .benefeciaryData.data?.length ??
-                                          0,
-                              separatorBuilder: (context, index) {
-                                return const VerticalSpacing(20);
-                              },
-                            );
-                          })
+                            GetBuilder<SideBarController>(
+                                builder: (controller) {
+                              return ListView.separated(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return controller
+                                              .benefeciaryData.data?.length ==
+                                          0
+                                      ? const NoDataFound(
+                                          title: 'No beneficiaries yet!')
+                                      : BenefeciaryExpansionTile(
+                                          data: controller
+                                              .benefeciaryData.data![index],
+                                          deleteOnTap: () async {
+                                            await controller.deleteBenefeciary(
+                                                controller.benefeciaryData
+                                                        .data![index].id ??
+                                                    0);
+                                            print(controller.giftingDetailData
+                                                .data?.user?.id
+                                                .toString());
+                                            await controller.getUserBenes(
+                                                controller.giftingDetailData
+                                                        .data?.user?.id
+                                                        .toString() ??
+                                                    '0');
+                                            controller.update();
+                                          });
+                                },
+                                itemCount:
+                                    controller.benefeciaryData.data?.length == 0
+                                        ? 1
+                                        : controller
+                                                .benefeciaryData.data?.length ??
+                                            0,
+                                separatorBuilder: (context, index) {
+                                  return const VerticalSpacing(20);
+                                },
+                              );
+                            })
                         ],
                       ),
                     ),

@@ -70,8 +70,7 @@ class PayoutPage extends StatelessWidget {
                           await controller.getUserBenes(
                               controller.payoutModelList[index].id.toString());
 
-                          globalContext?.push(PagePath.payouts +
-                              PagePath.parentDetails.toRoute);
+                          globalContext?.push("${PagePath.payouts}${PagePath.parentDetails.toRoute}?isParent=${true}");
                           // controller.selectedItemIndex = 1;
                           // controller.sideBarList[1].isSelected = true;
                           // controller.sideBarList[5].isSelected = false;

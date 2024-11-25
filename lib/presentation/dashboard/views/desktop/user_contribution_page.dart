@@ -35,6 +35,9 @@ class UserContributionPage extends StatelessWidget {
                   controller.update();
                 });
               },
+              exportOnTap: () async {
+                await controller.exportTable('Contributor');
+              },
             ),
             const VerticalSpacing(30),
             const ParentTableHeader(

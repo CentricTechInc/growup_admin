@@ -38,6 +38,9 @@ class GiftingsPage extends StatelessWidget {
                 });
               },
               label: 'Giftings',
+              exportOnTap: () async {
+                await controller.exportGiftTable();
+              },
             ),
             const VerticalSpacing(30),
             const GiftingTableHeader(

@@ -145,6 +145,43 @@ class SideBarController extends GetxController {
     }
   }
 
+  exportTable(String role) async {
+    try {
+      Loader.showLoader();
+      final res = await userParentRepository.exportTable(role);
+      Loader.hideLoading();
+      CommonSnackBar.message(message: res, type: SnackBarType.success);
+    } catch (e) {
+      print(e);
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
+  exportContributionsTable() async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.exportContributionExcel();
+      Loader.hideLoading();
+      CommonSnackBar.message(message: res, type: SnackBarType.success);
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
+  exportGiftTable() async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.exportGiftTable();
+      Loader.hideLoading();
+      CommonSnackBar.message(message: res, type: SnackBarType.success);
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
   getContributorsTable() async {
     try {
       Loader.showLoader();

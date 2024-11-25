@@ -46,6 +46,8 @@ dependencies:
   pager: ^0.0.6
   pin_code_fields: ^8.0.1
   syncfusion_flutter_charts: ^27.1.57
+  url_launcher: ^6.3.1
+  flutter_neat_and_clean_calendar: ^0.4.15
 
 dev_dependencies:
   flutter_test:

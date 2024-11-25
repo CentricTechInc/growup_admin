@@ -6,5 +6,7 @@ abstract class ModuleRepository {
   Future<PaginationModel> getPayoutTable(int pageNo, String? search);
 
   Future<PaginationModel> getContributionTable(int pageNo, String? search);
+  Future<String> exportContributionExcel();
+  Future<String> exportGiftTable();
 
 }

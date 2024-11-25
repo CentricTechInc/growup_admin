@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:grow_up_admin_panel/data/dto/gift_payout_model.dart';
 import 'package:grow_up_admin_panel/data/dto/user_bene_dto.dart';
+import 'package:grow_up_admin_panel/data/provider/network/api_endpoints.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/pagination_model.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/user_parent_api.dart';
 import 'package:grow_up_admin_panel/data/repositories/activity_model.dart';
@@ -9,6 +10,7 @@ import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
 import 'package:grow_up_admin_panel/domain/repository/user_parent_repository.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserParentRepositoryImpl extends UserParentRepository {
   @override
@@ -21,6 +23,15 @@ class UserParentRepositoryImpl extends UserParentRepository {
     final model = PaginationModel(
         data: data, count: jsonDecode(response)['data']['count']);
     return model;
+  }
+
+  @override
+  Future<String> exportTable(String role) async {
+    final url = Uri.http(
+        APIEndpoint.baseUrl, APIEndpoint.exportExcelUrl, {'role': role});
+
+    await launchUrl(url);
+    return 'File has been downloaded!';
   }
 
   @override

@@ -153,7 +153,7 @@ class CommonTextField extends StatelessWidget {
           fillColor: fillColor ?? Colors.white,
           filled: isFilledColor,
           hintText: hintText,
-          suffixIcon: GestureDetector(
+          suffixIcon: InkWell(
             onTap: suffixIconOnTap,
             child: Padding(
               padding: const EdgeInsets.only(right: 10, left: 5),

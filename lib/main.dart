@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/app/config/app.dart';
 
-void main() {
+Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
 
   LocalStorageService.instance.init();
   WidgetsFlutterBinding.ensureInitialized();
-
   runApp(const GrowUpAdminPanel());
 }
 
