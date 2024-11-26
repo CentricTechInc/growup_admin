@@ -61,6 +61,11 @@ class LoginDesktop extends StatelessWidget with FieldsValidation {
                     suffixIconOnTap: () {
                       controller.showPassword.toggle();
                     },
+                    onFieldSubmitted: (_) async {
+                      if (formKey.currentState!.validate()) {
+                        await controller.login();
+                      }
+                    },
                   );
                 }),
                 const SizedBox(

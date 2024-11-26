@@ -50,6 +50,7 @@ class CommonTextField extends StatelessWidget {
     this.textAlign,
     this.inputFormatter,
     this.suffixIcon,
+    this.onFieldSubmitted,
   });
 
   final double suffixPadding;
@@ -75,6 +76,7 @@ class CommonTextField extends StatelessWidget {
   final bool isFilledColor;
   final Function()? textOnTap;
   final Function(String)? onChanged;
+  final Function(String)? onFieldSubmitted;
   final String? Function(String?)? validator;
   final TextInputType inputType;
   final int minLines;
@@ -102,6 +104,7 @@ class CommonTextField extends StatelessWidget {
     return Padding(
       padding: padding,
       child: TextFormField(
+        onFieldSubmitted: onFieldSubmitted,
         textAlign: textAlign ?? TextAlign.start,
         focusNode: focusNode,
         controller: controller,

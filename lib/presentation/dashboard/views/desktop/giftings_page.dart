@@ -78,8 +78,8 @@ class GiftingsPage extends StatelessWidget {
                                 controller.giftingModelList[index].userId
                                     .toString(),
                               );
-                              controller.liveGiftingSelectedIndex = 0;
-                              controller.userParentSelectedIndex = 0;
+                              // controller.liveGiftingSelectedIndex = 02;
+                              controller.userParentSelectedIndex = 2;
                               globalContext?.push(
                                   '${PagePath.giftings}${PagePath.parentDetails.toRoute}?isParent=${false}');
                               controller.update();

@@ -65,19 +65,19 @@ class SideBarWidget extends StatelessWidget {
                       case 1:
                         context.go(PagePath.userParents);
                         controller.parentTableSearchController.clear();
+                        controller.parentPageNo = 1;
                         await controller.getParentTable();
                         controller.liveGiftingSelectedIndex = 0;
                         controller.userParentSelectedIndex = 0;
                         controller.update();
-                        // controller.resetPaging();
                         break;
                       case 2:
                         context.go(PagePath.userContributor);
                         controller.contributorTableSearchController.clear();
+                        controller.contributorPageNo = 1;
                         await controller.getContributorsTable();
-                        // controller.resetPaging();
                         controller.liveGiftingSelectedIndex = 0;
-                        controller.userParentSelectedIndex = 0;
+                        controller.userParentSelectedIndex = 2;
                         controller.update();
                         // controller.userParentPageController.dispose();
 
@@ -85,17 +85,19 @@ class SideBarWidget extends StatelessWidget {
                       case 3:
                         context.go(PagePath.giftings);
                         controller.giftingSearchController.clear();
-
+                        controller.giftingsPageNo = 1;
                         await controller.getGiftingTable();
                         break;
                       case 4:
                         context.go(PagePath.contrbutions);
                         controller.contributionsSearchController.clear();
+                        controller.contributonModulePageNo = 1;
                         await controller.getContributionTable();
                         break;
                       case 5:
                         context.go(PagePath.payouts);
                         controller.payoutSearchController.clear();
+                        controller.payoutPageNo = 1;
                         await controller.getPayoutTable();
                         break;
                       case 6:

@@ -30,17 +30,17 @@ class GiftingsTableBody extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                  SizedBox(
-                    height: 35,
-                    width: 35,
-                    child: Checkbox(
-                      value: false,
-                      activeColor: AppColors.primary,
-                      splashRadius: 10,
-                      onChanged: (p0) {},
-                      side: const BorderSide(color: AppColors.grey, width: 1),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: 35,
+                  //   width: 35,
+                  //   child: Checkbox(
+                  //     value: false,
+                  //     activeColor: AppColors.primary,
+                  //     splashRadius: 10,
+                  //     onChanged: (p0) {},
+                  //     side: const BorderSide(color: AppColors.grey, width: 1),
+                  //   ),
+                  // ),
                   const HorizontalSpacing(30),
                   CommonText(
                     text: model.id?.toString() ?? '',

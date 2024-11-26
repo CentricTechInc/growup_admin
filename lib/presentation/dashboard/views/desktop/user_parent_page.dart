@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neat_and_clean_calendar/date_picker_config.dart';
 import 'package:flutter_neat_and_clean_calendar/flutter_neat_and_clean_calendar.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -10,7 +11,6 @@ import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/components/adjust_tax_dialog_box.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_widget.dart';
@@ -40,15 +40,45 @@ class UserParentPage extends StatelessWidget {
                   controller.update();
                 });
               },
-              taxBtnOnTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => const Dialog(
-                    backgroundColor: AppColors.greyish,
-                    child: AdjustTaxDialogBox(),
-                  ),
-                );
+              calendarselectedIndex: controller.calendarSelectedIndex,
+              // calendarOnTap: (index) {
+              //   controller.calendarSelectedIndex = index;
+              //   controller.update();
+              // },
+              calendarOnTap: () {
+                showGeneralDialog(
+                    context: context,
+                    barrierLabel: 'label',
+                    barrierDismissible: true,
+                    transitionBuilder: (context, anim1, anim2, child) {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0, -1),
+                          end: const Offset(0, 0),
+                        ).animate(anim1),
+                        child: child,
+                      );
+                    },
+                    // builder: (context) => const CommonCalendarWidget(),
+                    pageBuilder: (BuildContext context,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation) =>
+                        CommonCalendarWidget(
+                          onTap: (index) {
+                            controller.calendarSelectedIndex = index;
+                            controller.update();
+                          },
+                        ));
               },
+              // taxBtnOnTap: () {
+              //   showDialog(
+              //     context: context,
+              //     builder: (context) => const Dialog(
+              //       backgroundColor: AppColors.greyish,
+              //       child: AdjustTaxDialogBox(),
+              //     ),
+              //   );
+              // },
               exportOnTap: () async {
                 await controller.exportTable('Parent');
               },
@@ -122,6 +152,8 @@ class PageHeader extends StatelessWidget {
     this.searchCancelOnTap,
     this.hintText,
     this.exportOnTap,
+    this.calendarOnTap,
+    this.calendarselectedIndex,
   });
 
   final String label;
@@ -133,6 +165,8 @@ class PageHeader extends StatelessWidget {
   final TextEditingController? searchController;
   dynamic Function(String)? searchOnChanged;
   final String? hintText;
+  final VoidCallback? calendarOnTap;
+  final int? calendarselectedIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -192,11 +226,7 @@ class PageHeader extends StatelessWidget {
               ),
               const Spacer(),
               InkWell(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => const CommonCalendarWidget());
-                  },
+                  onTap: calendarOnTap,
                   child: const Icon(Icons.keyboard_arrow_down_outlined))
             ],
           ),
@@ -246,123 +276,171 @@ class PageHeader extends StatelessWidget {
 }
 
 class CommonCalendarWidget extends StatelessWidget {
-  const CommonCalendarWidget({super.key});
+  const CommonCalendarWidget({super.key, required this.onTap});
+
+  final Function(int)? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: AppColors.transparent,
-      content: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 420,
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(10)),
-            child: const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CalendarSelectionCard(
-                  title: 'Today',
-                  isSelected: true,
+    return GetBuilder<SideBarController>(builder: (controller) {
+      return AlertDialog(
+        backgroundColor: AppColors.transparent,
+        content: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 500,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: List.generate(
+                  5,
+                  (index) => CalendarSelectionCard(
+                    title: [
+                      'Today',
+                      'Last week',
+                      'Last month',
+                      'Last 90 days',
+                      'Custom date'
+                    ][index],
+                    isSelected: index == controller.calendarSelectedIndex,
+                    onTap: () {
+                      if (onTap != null) {
+                        onTap!(index);
+                        controller.update();
+                      }
+                    },
+                  ),
                 ),
-                VerticalSpacing(20),
-                CalendarSelectionCard(
-                  title: 'Last Week',
-                  isSelected: false,
-                ),
-                VerticalSpacing(20),
-                CalendarSelectionCard(
-                  title: 'Last Month',
-                  isSelected: false,
-                ),
-                VerticalSpacing(20),
-                CalendarSelectionCard(
-                  title: 'Last 90 days',
-                  isSelected: false,
-                ),
-                VerticalSpacing(20),
-                CalendarSelectionCard(
-                  title: 'Custom Date',
-                  isSelected: false,
-                ),
-              ],
+              ),
             ),
-          ),
-          const HorizontalSpacing(20),
-          Container(
-            width: 600,
-            height: 420,
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(10)),
-            child: Calendar(
-              weekDays: const [
-                'Su',
-                'Mo',
-                'Tu',
-                'We',
-                'Thu',
-                'Fr',
-                'Sa',
-              ],
-              topRowIconColor: AppColors.primaryText,
-              eventsList: [
-                NeatCleanCalendarEvent(
-                  'summary',
-                  startTime: DateTime(2020),
-                  endTime: DateTime(2020),
-                )
-              ],
-              eventDoneColor: Colors.green,
-              selectedColor: AppColors.primaryText,
-              selectedTodayColor: AppColors.primaryText,
-              todayColor: AppColors.primary,
-              eventColor: null,
-              locale: 'en_us',
-              isExpanded: true,
-              datePickerType: DatePickerType.hidden,
-              dayOfWeekStyle: const TextStyle(
-                  color: AppColors.primaryText,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14),
+            const HorizontalSpacing(20),
+            Container(
+              width: 600,
+              height: 500,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: IgnorePointer(
+                      ignoring: controller.isCalendarSelectable,
+                      child: Calendar(
+                        weekDays: const [
+                          'Su',
+                          'Mo',
+                          'Tu',
+                          'We',
+                          'Thu',
+                          'Fr',
+                          'Sa',
+                        ],
+                        datePickerConfig: DatePickerConfig(
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now(),
+                        ),
+                        hideTodayIcon: true,
+                        topRowIconColor: AppColors.secondaryText,
+                        showEventListViewIcon: false,
+                        selectedColor: AppColors.primaryText,
+                        selectedTodayColor: AppColors.primaryText,
+                        todayColor: AppColors.primary,
+                        eventColor: null,
+                        locale: 'en_us',
+                        isExpanded: true,
+                        datePickerType: DatePickerType.hidden,
+                        dayOfWeekStyle: const TextStyle(
+                          color: AppColors.primaryText,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                        onRangeSelected: (range) {
+                          final Range ran = range;
+                          print(ran.to);
+                          // print(DateTime.parse(range.toString()));
+                        },
+                        onDateSelected: (dateTime) {
+
+                          if(controller.calendarSelectedIndex == 4){
+                            controller.isCalendarSelectable = true;
+                          }else{
+                            controller.isCalendarSelectable = false;
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  const Divider(
+                    color: AppColors.grey,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Row(
+                      children: [
+                        CommonText(
+                          text: 'Today',
+                          fontSize: 14,
+                          weight: FontWeight.w700,
+                        ),
+                        Spacer(),
+                        CommonText(
+                          text: 'Clear',
+                          fontSize: 14,
+                          weight: FontWeight.w700,
+                        )
+                      ],
+                    ),
+                  ),
+                  const VerticalSpacing(15),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }
 
 class CalendarSelectionCard extends StatelessWidget {
   const CalendarSelectionCard(
-      {super.key, required this.title, required this.isSelected});
+      {super.key,
+      required this.title,
+      required this.isSelected,
+      required this.onTap});
 
   final String title;
   final bool isSelected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 160,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-      decoration: BoxDecoration(
-        color: isSelected ? AppColors.greyish : AppColors.transparent,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Row(
-        children: [
-          CommonText(
-            text: title,
-            fontSize: 16,
-            weight: FontWeight.w500,
-          ),
-          const Spacer(),
-          if (isSelected) const Icon(Icons.check),
-        ],
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 160,
+        margin: const EdgeInsets.only(bottom: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.greyish : AppColors.transparent,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Row(
+          children: [
+            CommonText(
+              text: title,
+              fontSize: 16,
+              weight: FontWeight.w500,
+            ),
+            const Spacer(),
+            if (isSelected) const Icon(Icons.check),
+          ],
+        ),
       ),
     );
   }

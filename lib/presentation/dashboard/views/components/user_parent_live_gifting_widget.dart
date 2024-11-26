@@ -41,24 +41,6 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                       // controller: ExpansionTileController(),
                       shape: const Border(),
                       onExpansionChanged: (collapse) {
-                        // giftingModel.every((e) => e.isCollapsed = true);
-                        // if(giftingModel.any((e)=>e.isCollapsed == false)){
-                        //   giftingModel.forEach((e)=> e.isCollapsed ? print('ALL COLLAPSED') :  print('ALL Expanded'));
-                        //   giftingModel.forEach((e)=> e.isCollapsed ? null : expansionController.collapse);
-                        // for(int i = 0; i<giftingModel.length; i++){
-                        //   if(giftingModel[i].isCollapsed == false )
-                        //     {
-                        //       expansionController.collapse();
-                        //     }
-                        // }
-                        // controller.update();
-                        // expansionController.collapse();
-                        // }
-                        // if(giftingModel.every((e)=>e.isCollapsed == true)){
-                        //   expansionController.collapse();
-                        // }
-                        // collapse = true;
-                        // expansionController.collapse();
                         giftingModel[listIndex].isCollapsed = !collapse;
                         if (collapse == false) {
                           controller.liveGiftingSelectedIndex = 0;
@@ -90,25 +72,21 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                                     giftingModel[listIndex].id ?? 0;
                                 switch (index) {
                                   case 0:
-                                    await controller.getGiftDetail(
-                                        userId.toString(),
-                                        isLive ? 'Active' : 'Expired');
+                                    // await controller.getGiftDetail(
+                                    //     userId.toString(),
+                                    //     isLive ? 'Active' : 'Expired');
+                                    break;
                                   case 1:
                                     await controller
                                         .getGiftContributions(giftId);
+                                    break;
                                   case 2:
                                     await controller
                                         .getGiftPayoutDetail(giftId.toString());
+                                    break;
                                 }
                                 print(userId);
-                                // controller.liveGiftingPageController.animateToPage(
-                                //     index,
-                                //     duration: const Duration(seconds: 1),
-                                //     curve: Curves.ease);
-                                // controller.liveGiftingSelectedIndex = controller
-                                //         .liveGiftingPageController.page
-                                //         ?.toInt() ??
-                                //     0;
+
                                 controller.update();
                               },
                             ),
@@ -134,8 +112,10 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                           onDelete: () async {
                             await controller
                                 .deleteGift(giftingModel[listIndex].id ?? 0);
+                            await controller.getParentDetail(
+                                controller.parentDetailData.id ?? 0);
                             await controller.getGiftDetail(
-                                controller.giftingDetailData.data?.user?.id
+                                controller.parentDetailData.id
                                         .toString() ??
                                     '',
                                 isLive ? 'Active' : 'Expired');

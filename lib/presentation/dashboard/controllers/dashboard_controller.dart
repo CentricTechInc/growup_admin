@@ -40,7 +40,7 @@ class DashboardController extends GetxController {
   TotalUsersChartDto? totalUsersChartDto;
   ContributionFrequencyChartDto? contributionFrequencyChartDto;
 
-  String selectedUserFilter = '06 Months';
+  String selectedUserFilter = 'Last Week';
   String selectedGiftFilter = 'This Week';
   String selectedContributorFilter = '03 Months';
   String selectedTotalUsersFilter = 'This Week';

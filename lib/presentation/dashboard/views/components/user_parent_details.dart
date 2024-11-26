@@ -152,20 +152,20 @@ class UserParentDetails extends StatelessWidget {
                               children: isParent
                                   ? [
                                       controller.isLoading
-                                          ? const CupertinoActivityIndicator()
+                                          ? const SizedBox()
                                           : UserParentLiveGiftingWidget(
                                               isLive: true,
                                               giftingModel:
                                                   controller.giftDetailList),
                                       controller.isLoading
-                                          ? const CupertinoActivityIndicator()
+                                          ? const SizedBox()
                                           : UserParentLiveGiftingWidget(
                                               isLive: false,
                                               giftingModel:
                                                   controller.giftDetailList,
                                             ),
                                       controller.isLoading
-                                          ? const CupertinoActivityIndicator()
+                                          ? const SizedBox()
                                           : UserParentsActivity(
                                               activityModel:
                                                   controller.activityModel,
@@ -173,7 +173,7 @@ class UserParentDetails extends StatelessWidget {
                                     ]
                                   : [
                                       controller.isLoading
-                                          ? const CupertinoActivityIndicator()
+                                          ? const SizedBox()
                                           : UserParentsActivity(
                                               activityModel:
                                                   controller.activityModel,
@@ -239,14 +239,10 @@ class UserParentDetails extends StatelessWidget {
                                                 controller.benefeciaryData
                                                         .data![index].id ??
                                                     0);
-                                            print(controller.giftingDetailData
-                                                .data?.user?.id
-                                                .toString());
+
                                             await controller.getUserBenes(
-                                                controller.giftingDetailData
-                                                        .data?.user?.id
-                                                        .toString() ??
-                                                    '0');
+                                                controller.parentDetailData.id
+                                                    .toString());
                                             controller.update();
                                           });
                                 },

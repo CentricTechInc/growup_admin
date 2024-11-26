@@ -83,7 +83,7 @@ class PaymentDetailsDialogBox extends StatelessWidget {
                     const VerticalSpacing(20),
                     TitleWithValueWidget(
                       title: 'Amount',
-                      value: model?.amount ?? '',
+                      value: '\$ ${model?.amount}' ?? '',
                     ),
                   ],
                 ),
@@ -102,7 +102,8 @@ class PaymentDetailsDialogBox extends StatelessWidget {
                     const VerticalSpacing(20),
                     TitleWithValueWidget(
                       title: 'Status',
-                      value: model?.status?.name ?? '',
+                      value: model?.status?.name ?? 'Successful',
+                      txtColor: AppColors.primary,
                     ),
                   ],
                 ),
@@ -136,9 +137,10 @@ class PaymentDetailsDialogBox extends StatelessWidget {
 
 class TitleWithValueWidget extends StatelessWidget {
   const TitleWithValueWidget(
-      {super.key, required this.title, required this.value});
+      {super.key, required this.title, required this.value, this.txtColor});
 
   final String title, value;
+  final Color? txtColor;
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +157,7 @@ class TitleWithValueWidget extends StatelessWidget {
           text: value,
           fontSize: 16,
           weight: FontWeight.w600,
-          color: AppColors.secondaryText,
+          color: txtColor ?? AppColors.secondaryText,
         ),
       ],
     );

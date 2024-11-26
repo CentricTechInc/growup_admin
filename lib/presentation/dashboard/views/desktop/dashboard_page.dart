@@ -67,7 +67,7 @@ class DashboardPage extends StatelessWidget {
                     ),
                   )),
               SizedBox(
-                  width: 750,
+                  width: 770,
                   height: 350,
                   child: CommonListWidget(
                     onTap: () async {
@@ -89,7 +89,7 @@ class DashboardPage extends StatelessWidget {
                     title: "Recent Contributions",
                     onTap: () async {
                       await sidebarcontroller.getContributorsTable();
-                      sidebarcontroller.toRoute(2);
+                      sidebarcontroller.toRoute(4);
                       context.go(PagePath.userContributor);
                     },
                     header: const RecentContributionHeaderWidget(),

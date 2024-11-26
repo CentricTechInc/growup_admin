@@ -46,6 +46,9 @@ class SideBarController extends GetxController {
     SideBarItemModel(
         itemName: 'Analytics & Reports', imageUrl: Assets.analyticsIcon),
   ];
+  int calendarSelectedIndex = 0;
+  DateTime selectedDate = DateTime.now();
+  bool isCalendarSelectable = false;
 
   ///PAGINATION+++++++++++++++++++++_---------
   int elementCount = 1;
@@ -72,21 +75,7 @@ class SideBarController extends GetxController {
   int userParentSelectedIndex = 0;
   int userContributerSelectedIndex = 0;
 
-  void resetPaging() {
-    print('userParentSelectedIndex before reset: $userParentSelectedIndex');
-    userParentSelectedIndex = 0; // Reset the index
-    userParentPageController.jumpToPage(0); // Reset the page
-    update(); // Notify listeners
-  }
-
-  //
-  // @override
-  // void onInit() {
-  //   userParentPageController.attach(scrollController.position);
-  //   super.onInit();
-  // }
-  //
-  // final ScrollController scrollController = ScrollController();
+  ///==============================
   bool isCollapsedIssue = true;
   final liveGiftingPageController = PageController();
   final userParentPageController = PageController();
@@ -293,17 +282,17 @@ class SideBarController extends GetxController {
 
   Future<void> getGiftDetail(String id, String status) async {
     try {
-      // Loader.showLoader();
+      Loader.showLoader();
       isLoading = true;
       final res = await userParentRepository.getGiftDetail(id, status);
       giftDetailList.clear();
       giftDetailList.addAll(res);
       await Future.delayed(Duration(seconds: 1));
       isLoading = false;
-      // Loader.hideLoading();
+      Loader.hideLoading();
     } catch (e) {
       isLoading = false;
-      // Loader.hideLoading();
+      Loader.hideLoading();
       CommonSnackBar.message(message: e.toString());
     }
   }
@@ -320,17 +309,17 @@ class SideBarController extends GetxController {
 
   Future<void> getActivity(String id) async {
     try {
-      // Loader.showLoader();
+      Loader.showLoader();
       isLoading = true;
       final res = await userParentRepository.getActivity(id, '1');
       activityModel.clear();
       activityModel.addAll(res);
       await Future.delayed(Duration(seconds: 1));
       isLoading = false;
-      // Loader.hideLoading();
+      Loader.hideLoading();
     } catch (e) {
       isLoading = false;
-      // Loader.hideLoading();
+      Loader.hideLoading();
       CommonSnackBar.message(message: e.toString());
     }
   }

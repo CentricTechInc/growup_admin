@@ -58,11 +58,12 @@ class UserContributionPage extends StatelessWidget {
                               await controller.getParentDetail(controller
                                       .userContributorModelList[index].id ??
                                   0);
-                              await controller.getGiftDetail(
-                                  controller.userContributorModelList[index].id
-                                          .toString() ??
-                                      '',
-                                  'Active');
+                              await controller.getActivity(controller.userContributorModelList[index].id.toString());
+                              // await controller.getGiftDetail(
+                              //     controller.userContributorModelList[index].id
+                              //             .toString() ??
+                              //         '',
+                              //     'Active');
                               context.push(
                                   '${PagePath.userParents}${PagePath.parentDetails.toRoute}?isParent=${false}');
                             },
