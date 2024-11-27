@@ -7,6 +7,7 @@ import 'package:grow_up_admin_panel/data/provider/network/apis/pagination_model.
 import 'package:grow_up_admin_panel/data/provider/network/apis/user_parent_api.dart';
 import 'package:grow_up_admin_panel/data/repositories/activity_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/date_range_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
 import 'package:grow_up_admin_panel/domain/repository/user_parent_repository.dart';
@@ -38,6 +39,19 @@ class UserParentRepositoryImpl extends UserParentRepository {
   Future<PaginationModel> searchParentTable(String search, int pageNo) async {
     final response =
         await UserParentApi.searchParentTable(search, pageNo).request();
+    final List<dynamic> json = jsonDecode(response)['data']['data'];
+
+    final List<ParentModel> data =
+        json.map((e) => ParentModel.fromJson(e)).toList();
+    final model = PaginationModel(
+        data: data, count: jsonDecode(response)['data']['count']);
+    return model;
+  }
+
+  @override
+  Future<PaginationModel> dateFilterParentTable(DateRangeModel? dateTime, CalendarPeriod? period, int pageNo) async {
+    final response =
+        await UserParentApi.dateFilterParentTable(dateTime, period, pageNo).request();
     final List<dynamic> json = jsonDecode(response)['data']['data'];
 
     final List<ParentModel> data =

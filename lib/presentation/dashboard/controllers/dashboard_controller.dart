@@ -44,14 +44,14 @@ class DashboardController extends GetxController {
   String selectedGiftFilter = 'This Week';
   String selectedContributorFilter = '03 Months';
   String selectedTotalUsersFilter = 'This Week';
-  String selectedContributionFrequencyFilter = '06 Months';
+  String selectedContributionFrequencyFilter = 'This Week';
 
   List<String> userFilters = ['Last Week', '06 Months'];
   List<String> giftFilters = [
     'This Week',
-    'Quarterly',
     'Last Week',
-    'Last Month'
+    'Last Month',
+    'Quarterly',
   ];
   List<String> contributorFilters = ['03 Months'];
   List<String> totalUsersFilters = [

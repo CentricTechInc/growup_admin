@@ -52,6 +52,7 @@ class CommonChartWidget extends StatelessWidget {
                   ? SizedBox(
                       width: 150,
                       child: CommonDropDownWidget<String>(
+
                         selectedItem: selectedItem ?? 'This Week',
                         onChanged: onChanged,
                         arryList: arryList ?? [],

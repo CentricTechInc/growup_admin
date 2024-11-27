@@ -10,6 +10,7 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/comm
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/contribution_frequency_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/contributions_chart_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/dashboard_stats_bar_widget.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/page_header.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/payout_body_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/payout_header_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/recent_contribution_body_widget.dart';
@@ -42,9 +43,9 @@ class AnalyticsPage extends StatelessWidget {
             const VerticalSpacing(20),
             Wrap(spacing: 20, runSpacing: 10, children: [
               const SizedBox(
-                  width: 600, height: 350, child: ActiveUserChartWidget()),
+                  width: 580, height: 350, child: ActiveUserChartWidget()),
               const SizedBox(
-                  width: 450, height: 350, child: TopGiftingChartWidget()),
+                  width: 470, height: 350, child: TopGiftingChartWidget()),
               const SizedBox(
                   width: 450, height: 350, child: ContributionsChartWidget()),
               // const SizedBox(
@@ -68,10 +69,10 @@ class AnalyticsPage extends StatelessWidget {
                     ),
                   )),
               SizedBox(
-                  width: 750,
+                  width: 770,
                   height: 350,
                   child: CommonListWidget(
-                    title: "Recent Users",
+                    title: "Recent Parents",
                     onTap: () async {
                       await sidebarcontroller.getParentTable();
                       sidebarcontroller.toRoute(1);
@@ -89,13 +90,13 @@ class AnalyticsPage extends StatelessWidget {
                   height: 350,
                   child: ContributionFrequencyWidget()),
               SizedBox(
-                  width: 580,
+                  width: 600,
                   height: 350,
                   child: CommonListWidget(
                     title: "Recent Contributions",
                     onTap: () async {
                       await sidebarcontroller.getContributorsTable();
-                      sidebarcontroller.toRoute(2);
+                      sidebarcontroller.toRoute(4);
                       context.go(PagePath.userContributor);
                     },
                     header: const RecentContributionHeaderWidget(),

@@ -8,6 +8,7 @@ import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/gifting_details_expansion_collapsed.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/icon_button.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/no_data_found_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_live_gifting_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/tab_bar_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_payout.dart';
@@ -23,7 +24,6 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SideBarController>(builder: (controller) {
-      // final expansionController = ExpansionTileController();
       return SizedBox(
         height: 50,
         child: ListView.separated(
@@ -179,27 +179,3 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
   }
 }
 
-class NoDataFound extends StatelessWidget {
-  const NoDataFound({super.key, required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset(
-          Assets.noGiftIconIcon,
-          scale: 2,
-        ),
-        const VerticalSpacing(10),
-        CommonText(
-          text: title,
-          fontSize: 16,
-          weight: FontWeight.w600,
-          color: AppColors.secondaryText,
-        ),
-      ],
-    );
-  }
-}

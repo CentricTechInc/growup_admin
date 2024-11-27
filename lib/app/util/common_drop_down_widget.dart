@@ -18,7 +18,7 @@ class CommonDropDownWidget<T> extends StatelessWidget {
       this.selectedItemColor,
       this.validator,
       this.borderEnable = false,
-      this.iconColor = AppColors.grey,
+      this.iconColor = AppColors.black,
       this.iconSize = 20,
       this.borderSize = 0,
       this.itemAsString,
@@ -35,7 +35,7 @@ class CommonDropDownWidget<T> extends StatelessWidget {
       this.prefixIcon,
       this.prefixIconColor,
       this.prefixIconSized = 10,
-      this.fillColor = AppColors.white,
+      this.fillColor = AppColors.greyish,
       this.dropDownHeight,
       this.selectedItemHeight,
       this.hintColor = AppColors.grey,
@@ -178,6 +178,15 @@ class CommonDropDownWidget<T> extends StatelessWidget {
                 elevation: 2,
                 borderRadius: BorderRadius.circular(10),
               ),
+              itemBuilder: (context, item, isSelected) {
+                return ListTile(
+                  title: CommonText(
+                    text: item.toString(),
+                    fontSize: 12,
+                    weight: FontWeight.w500,
+                  ),
+                );
+              },
             ),
             itemAsString: itemAsString,
             items: arryList.isNotEmpty ? arryList : [],
@@ -186,9 +195,10 @@ class CommonDropDownWidget<T> extends StatelessWidget {
             onChanged: onChanged,
             dropdownDecoratorProps: DropDownDecoratorProps(
               baseStyle: TextStyle(
-                  fontFamily: Strings.fontFamily,
-                  fontSize: selectedFontSize ?? 12,
-              color: selectedItemColor
+                fontFamily: Strings.fontFamily,
+                fontSize: selectedFontSize ?? 12,
+                fontWeight: FontWeight.w500,
+                color: AppColors.primaryText,
               ),
               dropdownSearchDecoration: InputDecoration(
                 fillColor: fillColor,
@@ -205,16 +215,20 @@ class CommonDropDownWidget<T> extends StatelessWidget {
                     fontWeight: hintweight),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: borderColor, width: 1)),
+                    borderSide: const BorderSide(
+                        color: AppColors.transparent, width: 1)),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: borderColor, width: 1)),
+                    borderSide: const BorderSide(
+                        color: AppColors.transparent, width: 1)),
                 disabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: borderColor, width: 1)),
+                    borderSide: const BorderSide(
+                        color: AppColors.transparent, width: 1)),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: borderColor, width: 1)),
+                    borderSide: const BorderSide(
+                        color: AppColors.transparent, width: 1)),
                 errorBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.red, width: 1)),
                 alignLabelWithHint: true,

@@ -1,13 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grow_up_admin_panel/app/util/common_pager_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
+import 'package:grow_up_admin_panel/domain/entities/date_range_model.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_calendar_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/contributions_table_body.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/no_data_found_widget.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/page_header.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class ContributionPage extends StatelessWidget {
   const ContributionPage({super.key});
@@ -39,6 +45,55 @@ class ContributionPage extends StatelessWidget {
               },
               exportOnTap: () async {
                 await controller.exportContributionsTable();
+              },
+              calendarselectedIndex: controller.calendarSelectedIndex,
+              calendarlabel: controller.period?.name ?? 'Select',
+              calendarOnTap: () {
+                controller.calendarSelectedIndex = 0;
+                controller.dateRangeController = DateRangePickerController();
+                controller.isCalendarSelectable = false;
+                showGeneralDialog(
+                  context: context,
+                  barrierLabel: 'label',
+                  barrierDismissible: true,
+                  transitionBuilder: (context, anim1, anim2, child) {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(0, -1),
+                        end: const Offset(0, 0),
+                      ).animate(anim1),
+                      child: child,
+                    );
+                  },
+                  pageBuilder: (BuildContext context,
+                      Animation<double> animation,
+                      Animation<double> secondaryAnimation) =>
+                      CommonCalendarWidget(
+                        onTap: (index) async {
+                          controller.calendarSelectedIndex = index;
+                          if (controller.period == CalendarPeriod.customdate) {
+                            return;
+                          }
+                          await controller.parentDatefilter(
+                              period: controller.period);
+
+                          context.pop();
+                        },
+                        dateSelectionOnTap: (_) async {
+                          controller.period = null;
+                          await controller.parentDatefilter(
+                            dateTime: DateRangeModel(
+                              from: controller
+                                  .dateRangeController.selectedRange?.startDate,
+                              to: controller
+                                  .dateRangeController.selectedRange?.endDate,
+                            ),
+                          );
+                          context.pop();
+                          controller.dateRangeController.dispose();
+                        },
+                      ),
+                );
               },
             ),
             const VerticalSpacing(30),

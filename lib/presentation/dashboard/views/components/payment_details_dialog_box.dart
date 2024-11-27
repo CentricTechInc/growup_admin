@@ -6,6 +6,7 @@ import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/icon_button.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/title_with_value_widget.dart';
 
 class PaymentDetailsDialogBox extends StatelessWidget {
   const PaymentDetailsDialogBox({
@@ -109,25 +110,6 @@ class PaymentDetailsDialogBox extends StatelessWidget {
                 ),
               ],
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   // crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //
-            //     // const HorizontalSpacing(10),
-            //
-            //     // const HorizontalSpacing(10),
-            //
-            //   ],
-            // ),
-            // const VerticalSpacing(10),
-            // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            //
-            //   // const HorizontalSpacing(10),
-            //
-            //   // const HorizontalSpacing(10),
-            //
-            // ]),
           ],
         ),
       ),
@@ -135,31 +117,3 @@ class PaymentDetailsDialogBox extends StatelessWidget {
   }
 }
 
-class TitleWithValueWidget extends StatelessWidget {
-  const TitleWithValueWidget(
-      {super.key, required this.title, required this.value, this.txtColor});
-
-  final String title, value;
-  final Color? txtColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CommonText(
-          text: title,
-          fontSize: 16,
-          weight: FontWeight.w700,
-        ),
-        const VerticalSpacing(10),
-        CommonText(
-          text: value,
-          fontSize: 16,
-          weight: FontWeight.w600,
-          color: txtColor ?? AppColors.secondaryText,
-        ),
-      ],
-    );
-  }
-}

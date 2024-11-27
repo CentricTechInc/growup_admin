@@ -5,6 +5,7 @@ import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/payment_details_dialog_box.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/status_card_widget.dart';
 
 class ContributionsTableBody extends StatelessWidget {
   const ContributionsTableBody(
@@ -97,6 +98,24 @@ class ContributionsTableBody extends StatelessWidget {
                 ),
               ),
             ),
+
+            const CommonVerticalDivider(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              color: AppColors.grey,
+              thickness: 2,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 30.0,
+                ),
+                child:  CommonText(
+                  text: '\$${model.amount}',
+                  fontSize: 12,
+                  weight: FontWeight.w500,
+                ),
+              ),
+            ),
             const CommonVerticalDivider(
               padding: EdgeInsets.symmetric(vertical: 10),
               color: AppColors.grey,
@@ -107,11 +126,7 @@ class ContributionsTableBody extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 30.0),
                 child: Row(
                   children: [
-                    CommonText(
-                      text: '\$${model.amount}',
-                      fontSize: 12,
-                      weight: FontWeight.w500,
-                    ),
+                    StatusCardWidget(title: model.gift?.status?.name ??''),
                     const Spacer(),
                     InkWell(
                       onTap: () {

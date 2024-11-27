@@ -69,6 +69,7 @@ class SideBarWidget extends StatelessWidget {
                         await controller.getParentTable();
                         controller.liveGiftingSelectedIndex = 0;
                         controller.userParentSelectedIndex = 0;
+                        controller.period = null;
                         controller.update();
                         break;
                       case 2:
@@ -101,6 +102,7 @@ class SideBarWidget extends StatelessWidget {
                         await controller.getPayoutTable();
                         break;
                       case 6:
+                        await Get.find<DashboardController>().init();
                         context.go(PagePath.analytics);
                         break;
                       default:

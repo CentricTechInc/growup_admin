@@ -48,6 +48,7 @@ dependencies:
   syncfusion_flutter_charts: ^27.1.57
   url_launcher: ^6.3.1
   flutter_neat_and_clean_calendar: ^0.4.15
+  syncfusion_flutter_datepicker: ^27.2.4
 
 dev_dependencies:
   flutter_test:

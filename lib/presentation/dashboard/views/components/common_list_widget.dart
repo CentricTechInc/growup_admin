@@ -55,7 +55,7 @@ class CommonListWidget extends StatelessWidget {
               child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                      color: AppColors.greyish,
+                      color: AppColors.grey.withOpacity(0.4),
                       borderRadius: BorderRadius.circular(5)),
                   child: header)),
           const SizedBox(

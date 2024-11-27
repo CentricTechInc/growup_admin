@@ -2,6 +2,8 @@ import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_endpoints.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_provider.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_request_representable.dart';
+import 'package:grow_up_admin_panel/domain/entities/date_range_model.dart';
+import 'package:intl/intl.dart';
 
 enum UserParentApiType {
   getParentTable,
@@ -16,6 +18,7 @@ enum UserParentApiType {
   deleteBenefeciary,
   changeGiftStatus,
   exportParentTable,
+  dateFilterTable,
 }
 
 class UserParentApi implements APIRequestRepresentable {
@@ -23,6 +26,8 @@ class UserParentApi implements APIRequestRepresentable {
   String? search;
   String? userId, pageId, status, role;
   int? pageNo, id, giftId;
+  DateRangeModel? dateTime;
+  CalendarPeriod? calendarPeriod;
 
   UserParentApi._({
     required this.type,
@@ -34,6 +39,8 @@ class UserParentApi implements APIRequestRepresentable {
     this.id,
     this.giftId,
     this.role,
+    this.dateTime,
+    this.calendarPeriod,
   });
 
   UserParentApi.getParentTable(int pageNo)
@@ -46,6 +53,15 @@ class UserParentApi implements APIRequestRepresentable {
       : this._(
           type: UserParentApiType.searchParentTable,
           search: search,
+          pageNo: pageNo,
+        );
+
+  UserParentApi.dateFilterParentTable(
+      DateRangeModel? dateTime, CalendarPeriod? period, int pageNo)
+      : this._(
+          type: UserParentApiType.dateFilterTable,
+          dateTime: dateTime,
+          calendarPeriod: period,
           pageNo: pageNo,
         );
 
@@ -131,6 +147,7 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.deleteGift:
       case UserParentApiType.deleteBenefeciary:
       case UserParentApiType.exportParentTable:
+      case UserParentApiType.dateFilterTable:
         return {};
       case UserParentApiType.changeGiftStatus:
         return {
@@ -145,6 +162,7 @@ class UserParentApi implements APIRequestRepresentable {
     switch (type) {
       case UserParentApiType.getParentTable:
       case UserParentApiType.searchParentTable:
+      case UserParentApiType.dateFilterTable:
         return '${APIEndpoint.userParentTableUrl}/$pageNo';
       case UserParentApiType.getDetail:
         return APIEndpoint.userParentDetailsUrl;
@@ -190,6 +208,7 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getGiftsContributions:
       case UserParentApiType.getParentDetail:
       case UserParentApiType.exportParentTable:
+      case UserParentApiType.dateFilterTable:
         return HTTPMethod.get;
       case UserParentApiType.deleteGift:
       case UserParentApiType.deleteBenefeciary:
@@ -223,7 +242,16 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.getUserBeneficiary:
         return {'userId': userId ?? '', 'pageNumber': pageId ?? ''};
       case UserParentApiType.exportParentTable:
-        return {'role': role ?? '',};
+        return {
+          'role': role ?? '',
+        };
+      case UserParentApiType.dateFilterTable:
+        return {
+          'date': dateTime != null
+              ? '${DateFormat('yyyy-MM-dd').format(dateTime?.from ?? DateTime.now())}/${DateFormat('yyyy-MM-dd').format(dateTime?.to ?? DateTime.now())}'
+              : '',
+          'period': calendarPeriod?.name ?? '',
+        };
 
       default:
         return {};

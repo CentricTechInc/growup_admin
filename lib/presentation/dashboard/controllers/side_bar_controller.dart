@@ -12,12 +12,14 @@ import 'package:grow_up_admin_panel/data/repositories/module_repo_impl.dart';
 import 'package:grow_up_admin_panel/data/repositories/user_contributer_repo_impl.dart';
 import 'package:grow_up_admin_panel/data/repositories/user_parent_repo_impl.dart';
 import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/date_range_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/parent_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/payout_model.dart';
 import 'package:grow_up_admin_panel/domain/repository/module_repository.dart';
 import 'package:grow_up_admin_panel/domain/repository/user_contributor_repository.dart';
 import 'package:grow_up_admin_panel/domain/repository/user_parent_repository.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class SideBarController extends GetxController {
   int selectedItemIndex = 0;
@@ -49,6 +51,8 @@ class SideBarController extends GetxController {
   int calendarSelectedIndex = 0;
   DateTime selectedDate = DateTime.now();
   bool isCalendarSelectable = false;
+  CalendarPeriod? period;
+  DateRangePickerController dateRangeController = DateRangePickerController();
 
   ///PAGINATION+++++++++++++++++++++_---------
   int elementCount = 1;
@@ -114,6 +118,21 @@ class SideBarController extends GetxController {
       elementCount = res.count ?? 1;
 
       Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
+  parentDatefilter({DateRangeModel? dateTime, CalendarPeriod? period}) async {
+    try {
+      Loader.showLoader();
+      final res =
+          await userParentRepository.dateFilterParentTable(dateTime, period,1);
+      userParentModelList.clear();
+      userParentModelList.addAll(res.data);
+      Loader.hideLoading();
+      update();
     } catch (e) {
       Loader.hideLoading();
       CommonSnackBar.message(message: e.toString());

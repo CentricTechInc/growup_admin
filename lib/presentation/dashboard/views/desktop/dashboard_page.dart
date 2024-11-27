@@ -42,9 +42,9 @@ class DashboardPage extends StatelessWidget {
             const VerticalSpacing(20),
             Wrap(spacing: 20, runSpacing: 10, children: [
               const SizedBox(
-                  width: 600, height: 350, child: ActiveUserChartWidget()),
+                  width: 580, height: 350, child: ActiveUserChartWidget()),
               const SizedBox(
-                  width: 450, height: 350, child: TopGiftingChartWidget()),
+                  width: 470, height: 350, child: TopGiftingChartWidget()),
               const SizedBox(
                   width: 450, height: 350, child: ContributionsChartWidget()),
               // const SizedBox(
@@ -76,7 +76,7 @@ class DashboardPage extends StatelessWidget {
 
                       context.go(PagePath.userParents);
                     },
-                    title: "Recent Users",
+                    title: "Recent Parents",
                     header: const RecentUsersHeaderWidget(),
                     body: RecentUsersBodyWidget(
                       recentUsersObject: controller.recentUsersObject,
