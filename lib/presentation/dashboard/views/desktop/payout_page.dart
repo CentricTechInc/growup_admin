@@ -10,11 +10,8 @@ import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_calendar_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/no_data_found_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/page_header.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/payout_table_body.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_widget.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PayoutPage extends StatelessWidget {
@@ -64,33 +61,33 @@ class PayoutPage extends StatelessWidget {
                     );
                   },
                   pageBuilder: (BuildContext context,
-                      Animation<double> animation,
-                      Animation<double> secondaryAnimation) =>
+                          Animation<double> animation,
+                          Animation<double> secondaryAnimation) =>
                       CommonCalendarWidget(
-                        onTap: (index) async {
-                          controller.calendarSelectedIndex = index;
-                          if (controller.period == CalendarPeriod.customdate) {
-                            return;
-                          }
-                          await controller.parentDatefilter(
-                              period: controller.period);
+                    onTap: (index) async {
+                      controller.calendarSelectedIndex = index;
+                      if (controller.period == CalendarPeriod.customdate) {
+                        return;
+                      }
+                      await controller.parentDatefilter(
+                          period: controller.period);
 
-                          context.pop();
-                        },
-                        dateSelectionOnTap: (_) async {
-                          controller.period = null;
-                          await controller.parentDatefilter(
-                            dateTime: DateRangeModel(
-                              from: controller
-                                  .dateRangeController.selectedRange?.startDate,
-                              to: controller
-                                  .dateRangeController.selectedRange?.endDate,
-                            ),
-                          );
-                          context.pop();
-                          controller.dateRangeController.dispose();
-                        },
-                      ),
+                      context.pop();
+                    },
+                    dateSelectionOnTap: (_) async {
+                      controller.period = null;
+                      await controller.parentDatefilter(
+                        dateTime: DateRangeModel(
+                          from: controller
+                              .dateRangeController.selectedRange?.startDate,
+                          to: controller
+                              .dateRangeController.selectedRange?.endDate,
+                        ),
+                      );
+                      context.pop();
+                      controller.dateRangeController.dispose();
+                    },
+                  ),
                 );
               },
             ),
@@ -112,43 +109,46 @@ class PayoutPage extends StatelessWidget {
                 itemCount: controller.payoutModelList.isEmpty
                     ? 1
                     : controller.payoutModelList.length,
-                itemBuilder: (context, index) => controller
-                        .payoutModelList.isEmpty
-                    ? const NoDataFound(title: 'No record found!')
-                    : PayoutTableBody(
-                        model: controller.payoutModelList[index],
-                        onTap: () async {
-                          await controller.getGiftDetail(
-                              controller.payoutModelList[index].id.toString(),
-                              'Active');
-                          await controller.getUserBenes(
-                              controller.payoutModelList[index].id.toString());
+                itemBuilder: (context, index) =>
+                    controller.payoutModelList.isEmpty
+                        ? const NoDataFound(title: 'No record found!')
+                        : PayoutTableBody(
+                            model: controller.payoutModelList[index],
+                            onTap: () async {
+                              final int userId =
+                                  controller.payoutModelList[index].id ?? -1;
+                              await controller.getParentDetail(userId);
+                              await controller.getGiftDetail(
+                                  userId.toString(), 'Active');
+                              await controller.getUserBenes(userId.toString());
 
-                          globalContext?.push("${PagePath.payouts}${PagePath.parentDetails.toRoute}?isParent=${true}");
-                          // controller.selectedItemIndex = 1;
-                          // controller.sideBarList[1].isSelected = true;
-                          // controller.sideBarList[5].isSelected = false;
-                          // controller.liveGiftingSelectedIndex = 2;
-                          controller.update();
-                        },
-                      ),
+                              globalContext?.push(
+                                  "${PagePath.payouts}${PagePath.parentDetails.toRoute}?isParent=${true}");
+                              controller.userParentSelectedIndex = 0;
+                              if(controller.giftDetailList.isNotEmpty) {
+                                controller.liveGiftingSelectedIndex = 2;
+                                controller.liveGiftingPageController.jumpToPage(
+                                    2);
+                              }controller.update();
+                            },
+                          ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
-            if(controller.payoutSearchController.text.isEmpty)
-            CommonPagerWidget(
-              currentPage: controller.payoutPageNo,
-              totalPage: ((controller.elementCount == 0
-                          ? 1
-                          : controller.elementCount) /
-                      10)
-                  .ceil(),
-              onPageChanged: (page) async {
-                controller.payoutPageNo = page;
-                await controller.getPayoutTable();
-                controller.update();
-              },
-            ),
+            if (controller.payoutSearchController.text.isEmpty)
+              CommonPagerWidget(
+                currentPage: controller.payoutPageNo,
+                totalPage: ((controller.elementCount == 0
+                            ? 1
+                            : controller.elementCount) /
+                        10)
+                    .ceil(),
+                onPageChanged: (page) async {
+                  controller.payoutPageNo = page;
+                  await controller.getPayoutTable();
+                  controller.update();
+                },
+              ),
           ],
         ),
       );

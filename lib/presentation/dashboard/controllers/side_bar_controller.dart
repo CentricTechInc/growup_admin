@@ -26,8 +26,8 @@ class SideBarController extends GetxController {
   final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
 
   toRoute(int index) {
+    sideBarList.forEach((e) => e.isSelected = false);
     selectedItemIndex = index;
-    sideBarList.every((e) => e.isSelected = false);
     sideBarList[index].isSelected = true;
     update();
   }
@@ -128,9 +128,25 @@ class SideBarController extends GetxController {
     try {
       Loader.showLoader();
       final res =
-          await userParentRepository.dateFilterParentTable(dateTime, period,1);
+          await userParentRepository.dateFilterParentTable(dateTime, period, parentPageNo);
       userParentModelList.clear();
       userParentModelList.addAll(res.data);
+      elementCount = res.count ?? 1;
+      Loader.hideLoading();
+      update();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+  contributorsDatefilter({DateRangeModel? dateTime, CalendarPeriod? period}) async {
+    try {
+      Loader.showLoader();
+      final res =
+          await userContributorRepository.dateFilterContributorTable(dateTime, period, contributorPageNo);
+      userContributorModelList.clear();
+      userContributorModelList.addAll(res.data);
+      elementCount = res.count ?? 1;
       Loader.hideLoading();
       update();
     } catch (e) {
@@ -160,7 +176,6 @@ class SideBarController extends GetxController {
       Loader.hideLoading();
       CommonSnackBar.message(message: res, type: SnackBarType.success);
     } catch (e) {
-      print(e);
       Loader.hideLoading();
       CommonSnackBar.message(message: e.toString());
     }
@@ -256,7 +271,7 @@ class SideBarController extends GetxController {
   changeGiftStatus(String status, int giftId) async {
     try {
       Loader.showLoader();
-      final res = await userParentRepository.changeGiftStatus(status, giftId);
+      await userParentRepository.changeGiftStatus(status, giftId);
       update();
       Loader.hideLoading();
     } catch (e) {
@@ -285,7 +300,6 @@ class SideBarController extends GetxController {
 
   getParentDetail(int id) async {
     try {
-      print(id);
       Loader.showLoader();
       final res = await userParentRepository.getParentDetail(id);
       parentDetailData = res;
@@ -306,7 +320,7 @@ class SideBarController extends GetxController {
       final res = await userParentRepository.getGiftDetail(id, status);
       giftDetailList.clear();
       giftDetailList.addAll(res);
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       isLoading = false;
       Loader.hideLoading();
     } catch (e) {
@@ -333,7 +347,7 @@ class SideBarController extends GetxController {
       final res = await userParentRepository.getActivity(id, '1');
       activityModel.clear();
       activityModel.addAll(res);
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       isLoading = false;
       Loader.hideLoading();
     } catch (e) {
@@ -348,6 +362,20 @@ class SideBarController extends GetxController {
       final res = await userParentRepository.parentDetailPayoutTable(userId, 1);
       giftPayoutData = res;
     } catch (e) {
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
+  final TextEditingController payoutAmountController = TextEditingController();
+
+  Future<void> postGiftPayout(
+      String amount, int benefeciaryId, int giftId) async {
+    try {
+      Loader.showLoader();
+      await userParentRepository.postGiftPayout(amount, benefeciaryId, giftId);
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
       CommonSnackBar.message(message: e.toString());
     }
   }

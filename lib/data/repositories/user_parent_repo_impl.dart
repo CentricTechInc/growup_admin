@@ -49,9 +49,11 @@ class UserParentRepositoryImpl extends UserParentRepository {
   }
 
   @override
-  Future<PaginationModel> dateFilterParentTable(DateRangeModel? dateTime, CalendarPeriod? period, int pageNo) async {
+  Future<PaginationModel> dateFilterParentTable(
+      DateRangeModel? dateTime, CalendarPeriod? period, int pageNo) async {
     final response =
-        await UserParentApi.dateFilterParentTable(dateTime, period, pageNo).request();
+        await UserParentApi.dateFilterParentTable(dateTime, period, pageNo)
+            .request();
     final List<dynamic> json = jsonDecode(response)['data']['data'];
 
     final List<ParentModel> data =
@@ -107,6 +109,20 @@ class UserParentRepositoryImpl extends UserParentRepository {
       final json = jsonDecode(response)['data'];
       final GiftPayoutModel data = GiftPayoutModel.fromJson(json);
       return data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> postGiftPayout(
+      String amount, int benefeciaryId, int giftId) async {
+    try {
+      final response =
+          await UserParentApi.postGiftPayout(amount, benefeciaryId, giftId)
+              .request();
+      final json = jsonDecode(response)['message'];
+      return json;
     } catch (e) {
       rethrow;
     }

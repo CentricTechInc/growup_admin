@@ -19,13 +19,14 @@ enum UserParentApiType {
   changeGiftStatus,
   exportParentTable,
   dateFilterTable,
+  postGiftPayout,
 }
 
 class UserParentApi implements APIRequestRepresentable {
   UserParentApiType type;
   String? search;
-  String? userId, pageId, status, role;
-  int? pageNo, id, giftId;
+  String? userId, pageId, status, role, amount;
+  int? pageNo, id, giftId, benefeciaryId;
   DateRangeModel? dateTime;
   CalendarPeriod? calendarPeriod;
 
@@ -41,6 +42,8 @@ class UserParentApi implements APIRequestRepresentable {
     this.role,
     this.dateTime,
     this.calendarPeriod,
+    this.benefeciaryId,
+    this.amount,
   });
 
   UserParentApi.getParentTable(int pageNo)
@@ -70,6 +73,14 @@ class UserParentApi implements APIRequestRepresentable {
           type: UserParentApiType.getGiftsPayout,
           pageNo: pageNo,
           userId: userId,
+        );
+
+  UserParentApi.postGiftPayout(String amount, int benefeciaryId, int giftId)
+      : this._(
+          type: UserParentApiType.postGiftPayout,
+          amount: amount,
+          benefeciaryId: benefeciaryId,
+          giftId: giftId,
         );
 
   UserParentApi.getDetail(
@@ -149,6 +160,12 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.exportParentTable:
       case UserParentApiType.dateFilterTable:
         return {};
+      case UserParentApiType.postGiftPayout:
+        return {
+          'amount': amount?.toString() ?? '',
+          'BeneficiaryId': benefeciaryId?.toString() ?? '',
+          'GiftId': giftId?.toString() ?? '',
+        };
       case UserParentApiType.changeGiftStatus:
         return {
           'status': status,
@@ -172,6 +189,8 @@ class UserParentApi implements APIRequestRepresentable {
         return '${APIEndpoint.getActivityUrl}/$userId/$pageId';
       case UserParentApiType.getGiftsPayout:
         return '${APIEndpoint.giftDetailsPayoutUrl}/$userId/$pageNo';
+      case UserParentApiType.postGiftPayout:
+        return APIEndpoint.giftDetailsPayoutUrl;
       case UserParentApiType.getGiftsContributions:
         return '${APIEndpoint.getGiftContributorUrl}/$giftId/$pageNo';
       case UserParentApiType.deleteGift:
@@ -189,11 +208,21 @@ class UserParentApi implements APIRequestRepresentable {
 
   @override
   Map<String, String>? get headers {
-    return {
-      'Content-Type': 'application/json; charset=utf-8',
-      'accept': '*/*',
-      'Authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
-    };
+    switch(type){
+      case UserParentApiType.postGiftPayout:
+        return {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+          'accept': '*/*',
+          'Authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
+        };
+      default:
+        return {
+          'Content-Type': 'application/json; charset=utf-8',
+          'accept': '*/*',
+          'Authorization': 'Bearer ${LocalStorageService.instance.user?.token}',
+        };
+    }
+
   }
 
   @override
@@ -215,6 +244,8 @@ class UserParentApi implements APIRequestRepresentable {
         return HTTPMethod.delete;
       case UserParentApiType.changeGiftStatus:
         return HTTPMethod.put;
+      case UserParentApiType.postGiftPayout:
+        return HTTPMethod.post;
     }
   }
 

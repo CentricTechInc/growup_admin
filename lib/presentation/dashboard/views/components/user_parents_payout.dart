@@ -5,14 +5,19 @@ import 'package:grow_up_admin_panel/app/util/common_text_button.dart';
 import 'package:grow_up_admin_panel/app/util/common_text_field.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/data/dto/gift_payout_model.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_payout_table.dart';
 
 class UserParentsPayout extends StatelessWidget {
-  const UserParentsPayout({super.key, required this.model});
+  const UserParentsPayout(
+      {super.key,
+      required this.model,
+      required this.payOnTap,
+      required this.controller});
 
   final GiftPayoutModel model;
+  final VoidCallback payOnTap;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -127,20 +132,20 @@ class UserParentsPayout extends StatelessWidget {
                 weight: FontWeight.w500,
               ),
               const Spacer(),
-              const CommonText(
-                text: 'Payment ID',
-                fontSize: 16,
-                weight: FontWeight.w500,
-              ),
-              const HorizontalSpacing(10),
-              SizedBox(
-                width: 160,
-                child: CommonTextField(
-                  controller: TextEditingController(),
-                  hintText: '#PID78956',
-                ),
-              ),
-              const HorizontalSpacing(30),
+              // const CommonText(
+              //   text: 'Payment ID',
+              //   fontSize: 16,
+              //   weight: FontWeight.w500,
+              // ),
+              // const HorizontalSpacing(10),
+              // SizedBox(
+              //   width: 160,
+              //   child: CommonTextField(
+              //     controller: TextEditingController(),
+              //     hintText: '#PID78956',
+              //   ),
+              // ),
+              // const HorizontalSpacing(30),
               const CommonText(
                 text: 'Amount',
                 fontSize: 16,
@@ -150,7 +155,7 @@ class UserParentsPayout extends StatelessWidget {
               SizedBox(
                 width: 160,
                 child: CommonTextField(
-                  controller: TextEditingController(),
+                  controller: controller,
                   hintText: '\$ 1300.00',
                 ),
               ),
@@ -160,7 +165,7 @@ class UserParentsPayout extends StatelessWidget {
                   width: 63,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  onPressed: () {},
+                  onPressed: payOnTap,
                   text: 'Pay'),
             ],
           ),
@@ -170,7 +175,7 @@ class UserParentsPayout extends StatelessWidget {
         ),
         const VerticalSpacing(20),
         const UserParentLiveGfitingPayoutTableHeader(
-            titleList: ['Payment ID', 'Date & Time', 'Amount', 'Status']),
+            titleList: ['Transfer ID', 'Date & Time', 'Amount', 'Status']),
         const VerticalSpacing(10),
         Expanded(
           child: UserParentLiveGfitingPayoutTableBody(

@@ -34,7 +34,7 @@ class PayoutModel {
   factory PayoutModel.fromJson(Map<String, dynamic> json) => PayoutModel(
         createdAt: json["createdAt"],
         id: json["id"],
-        transactionId: json["TransactionId"],
+        transactionId: json["transferId"],
         amount: json["amount"],
         giftId: json["GiftId"],
         gift: json["Gift"] == null ? null : GiftingModel.fromJson(json["Gift"]),

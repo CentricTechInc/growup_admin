@@ -36,8 +36,9 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     // user = json['user'] != null ? UserModelDto.fromJson(json['user']) : null;
-    giftingModel = List<GiftingModel>.from(json['gifts'].map((e) => GiftingModel.fromJson(e)));
-        // json['gifts'] != null ? GiftingModel.fromJson(json['gifts']) : null;
+    giftingModel = List<GiftingModel>.from(
+        json['gifts'].map((e) => GiftingModel.fromJson(e)));
+    // json['gifts'] != null ? GiftingModel.fromJson(json['gifts']) : null;
     // contributed = json['contributed'];
     // recieved = json['received'];
     // totalGifts = json['totalGiftings'];
@@ -59,6 +60,7 @@ class Data {
 }
 
 class Beneficiary {
+  int? id;
   String? name;
   String? bank;
   String? accountType;
@@ -70,7 +72,9 @@ class Beneficiary {
   String? zip;
 
   Beneficiary(
-      {this.name,
+      {
+        this.id,
+        this.name,
       this.bank,
       this.accountType,
       this.accountOwnerName,
@@ -80,6 +84,7 @@ class Beneficiary {
       this.zip});
 
   Beneficiary.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
     bank = json['bank'];
     accountType = json['account_type'];
@@ -93,6 +98,7 @@ class Beneficiary {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
+    data['id'] = id;
     data['name'] = name;
     data['bank'] = bank;
     data['account_type'] = accountType;

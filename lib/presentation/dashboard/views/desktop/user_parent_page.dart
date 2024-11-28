@@ -72,7 +72,6 @@ class UserParentPage extends StatelessWidget {
                       context.pop();
                     },
                     dateSelectionOnTap: (_) async {
-                      controller.period = null;
                       await controller.parentDatefilter(
                         dateTime: DateRangeModel(
                           from: controller
@@ -81,8 +80,8 @@ class UserParentPage extends StatelessWidget {
                               .dateRangeController.selectedRange?.endDate,
                         ),
                       );
-                      context.pop();
                       controller.dateRangeController.dispose();
+                      context.pop();
                     },
                   ),
                 );
@@ -126,8 +125,7 @@ class UserParentPage extends StatelessWidget {
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
-            if (controller.parentTableSearchController.text.isEmpty &&
-                controller.period == null)
+            if (controller.parentTableSearchController.text.isEmpty)
               CommonPagerWidget(
                 currentPage: controller.parentPageNo,
                 totalPage: ((controller.elementCount == 0
@@ -137,7 +135,23 @@ class UserParentPage extends StatelessWidget {
                     .ceil(),
                 onPageChanged: (page) async {
                   controller.parentPageNo = page;
-                  await controller.getParentTable();
+                  if (controller.period != null) {
+                    if (controller.period == CalendarPeriod.customdate) {
+                      await controller.parentDatefilter(
+                        dateTime: DateRangeModel(
+                          from: controller
+                              .dateRangeController.selectedRange?.startDate,
+                          to: controller
+                              .dateRangeController.selectedRange?.endDate,
+                        ),
+                      );
+                    } else {
+                      await controller.parentDatefilter(
+                          period: controller.period);
+                    }
+                  } else {
+                    await controller.getParentTable();
+                  }
                   controller.update();
                 },
               ),

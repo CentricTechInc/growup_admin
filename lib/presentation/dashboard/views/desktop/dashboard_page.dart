@@ -90,7 +90,7 @@ class DashboardPage extends StatelessWidget {
                     onTap: () async {
                       await sidebarcontroller.getContributorsTable();
                       sidebarcontroller.toRoute(4);
-                      context.go(PagePath.userContributor);
+                      context.go(PagePath.contrbutions);
                     },
                     header: const RecentContributionHeaderWidget(),
                     body: RecentContributionBodyWidget(

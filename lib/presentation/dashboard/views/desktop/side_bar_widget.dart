@@ -53,8 +53,9 @@ class SideBarWidget extends StatelessWidget {
                     for (var element in controller.sideBarList) {
                       element.isSelected = false;
                     }
+                    controller.calendarSelectedIndex = 0;
+                    controller.period = null;
                     controller.update();
-
                     controller.selectedItemIndex = index;
                     controller.sideBarList[index].isSelected = true;
                     switch (index) {
@@ -69,7 +70,6 @@ class SideBarWidget extends StatelessWidget {
                         await controller.getParentTable();
                         controller.liveGiftingSelectedIndex = 0;
                         controller.userParentSelectedIndex = 0;
-                        controller.period = null;
                         controller.update();
                         break;
                       case 2:

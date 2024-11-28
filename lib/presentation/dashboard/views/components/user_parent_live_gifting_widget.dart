@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
-import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
@@ -83,6 +82,7 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                                   case 2:
                                     await controller
                                         .getGiftPayoutDetail(giftId.toString());
+                                    controller.payoutAmountController.clear();
                                     break;
                                 }
                                 print(userId);
@@ -115,9 +115,7 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                             await controller.getParentDetail(
                                 controller.parentDetailData.id ?? 0);
                             await controller.getGiftDetail(
-                                controller.parentDetailData.id
-                                        .toString() ??
-                                    '',
+                                controller.parentDetailData.id.toString() ?? '',
                                 isLive ? 'Active' : 'Expired');
                             controller.update();
                           },
@@ -136,7 +134,21 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                                 model: controller.giftContributionList,
                               ),
                               UserParentsPayout(
+                                controller: controller.payoutAmountController,
                                 model: controller.giftPayoutData,
+                                payOnTap: () async {
+                                  await controller.postGiftPayout(
+                                      controller.payoutAmountController.text,
+                                      giftingModel[listIndex].beneficiaryId ??
+                                          -1,
+                                      giftingModel[listIndex].id ?? -1);
+
+                                  await controller.getGiftPayoutDetail(
+                                      giftingModel[listIndex].id?.toString() ??
+                                          '');
+                                  controller.payoutAmountController.clear();
+                                  controller.update();
+                                },
                               ),
                             ],
                           ),
@@ -178,4 +190,3 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
     // });
   }
 }
-

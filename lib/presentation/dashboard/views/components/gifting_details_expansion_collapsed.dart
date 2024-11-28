@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:grow_up_admin_panel/app/util/common_drop_down_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
@@ -27,78 +26,82 @@ class GiftingDeatilsExpansionCollapsed extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        Container(
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 5.5,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                Assets.calendarIcon,
-                scale: 1.7,
-                color: AppColors.secondary,
-              ),
-              const HorizontalSpacing(10),
-              CommonText(
-                text: giftingModel.frequency ?? '',
-                fontSize: 16,
-                weight: FontWeight.w700,
-              ),
-            ],
-          ),
-        ),
-        const HorizontalSpacing(30),
-        Container(
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 5.5,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                Assets.dollorIcon,
-                scale: 2,
-                color: AppColors.primary,
-              ),
-              const HorizontalSpacing(10),
-              CommonText(
-                text: '\$ ${giftingModel.contributionTotal}',
-                fontSize: 16,
-                weight: FontWeight.w700,
-              ),
-              const HorizontalSpacing(5),
-              const CommonText(
-                text: 'Giftings Total',
-                fontSize: 12,
-                weight: FontWeight.w700,
-                color: AppColors.secondaryText,
-              ),
-            ],
+        Tooltip(
+          message: giftingModel.frequency ?? '',
+          child: Container(
+            width: 110,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 5.5,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  Assets.calendarIcon,
+                  scale: 1.7,
+                  color: AppColors.secondary,
+                ),
+                const HorizontalSpacing(10),
+                Expanded(
+                  child: CommonText(
+                    text: giftingModel.frequency ?? '',
+                    fontSize: 16,
+                    weight: FontWeight.w700,
+                    textOverflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         const HorizontalSpacing(30),
-        // SizedBox(
-        //   width: 131,
-        //   child: CommonDropDownWidget(
-        //     onChanged: (p0) {},
-        //     arryList: const ['Paid', 'Un-Paid'],
-        //     borderColor: AppColors.transparent,
-        //     selectedItem: 'Paid',
-        //   ),
-        // ),
-        // const HorizontalSpacing(40),
+        Tooltip(
+          message: '\$${giftingModel.contributionTotal}',
+          child: Container(
+            width: 190,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 5.5,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  Assets.dollorIcon,
+                  scale: 2,
+                  color: AppColors.primary,
+                ),
+                const HorizontalSpacing(10),
+                Expanded(
+                  child: CommonText(
+                    text: '\$ ${giftingModel.contributionTotal}',
+                    fontSize: 16,
+                    weight: FontWeight.w700,
+                    textOverflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                const HorizontalSpacing(5),
+                const CommonText(
+                  text: 'Giftings Total',
+                  fontSize: 12,
+                  weight: FontWeight.w700,
+                  color: AppColors.secondaryText,
+                ),
+              ],
+            ),
+          ),
+        ),
+        const HorizontalSpacing(30),
         CommonIconButton(
           icon: Assets.deleteIcon,
           onTap: onDelete,
