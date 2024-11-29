@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
+import 'package:grow_up_admin_panel/app/util/responsive_builder.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
@@ -49,66 +50,117 @@ class PaymentDetailsDialogBox extends StatelessWidget {
             const VerticalSpacing(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TitleWithValueWidget(
-                      title: 'Payment ID',
-                      value: model?.transactionId ?? '',
-                    ),
-                    const VerticalSpacing(20),
-                    TitleWithValueWidget(
-                      title: 'Benefeciary Name',
-                      value: model?.beneficiary ?? '',
-                    ),
-                    const VerticalSpacing(20),
-                    TitleWithValueWidget(
-                      title: 'Frequency',
-                      value: model?.frequency?.name ?? '',
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TitleWithValueWidget(
-                      title: 'Gifting Title',
-                      value: model?.gift?.title ?? '',
-                    ),
-                    const VerticalSpacing(20),
-                    const TitleWithValueWidget(
-                      title: 'Payment Gateway',
-                      value: 'Stripe',
-                    ),
-                    const VerticalSpacing(20),
-                    TitleWithValueWidget(
-                      title: 'Amount',
-                      value: '\$ ${model?.amount}' ?? '',
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TitleWithValueWidget(
-                      title: 'Parent Name',
-                      value: model?.user?.name ?? '',
-                    ),
-                    const VerticalSpacing(20),
-                    TitleWithValueWidget(
-                      title: 'Date & Time',
-                      value: model?.createdAt ?? '',
-                    ),
-                    const VerticalSpacing(20),
-                    TitleWithValueWidget(
-                      title: 'Status',
-                      value: model?.status?.name ?? 'Successful',
-                      txtColor: AppColors.primary,
-                    ),
-                  ],
-                ),
-              ],
+              children: Responsive.isDesktop(context)
+                  ? [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TitleWithValueWidget(
+                            title: 'Payment ID',
+                            value: model?.transactionId ?? '',
+                          ),
+                          const VerticalSpacing(20),
+                          TitleWithValueWidget(
+                            title: 'Benefeciary Name',
+                            value: model?.beneficiary ?? '',
+                          ),
+                          const VerticalSpacing(20),
+                          TitleWithValueWidget(
+                            title: 'Frequency',
+                            value: model?.frequency?.name ?? '',
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TitleWithValueWidget(
+                            title: 'Gifting Title',
+                            value: model?.gift?.title ?? '',
+                          ),
+                          const VerticalSpacing(20),
+                          const TitleWithValueWidget(
+                            title: 'Payment Gateway',
+                            value: 'Stripe',
+                          ),
+                          const VerticalSpacing(20),
+                          TitleWithValueWidget(
+                            title: 'Amount',
+                            value: '\$ ${model?.amount}' ?? '',
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TitleWithValueWidget(
+                            title: 'Parent Name',
+                            value: model?.user?.name ?? '',
+                          ),
+                          const VerticalSpacing(20),
+                          TitleWithValueWidget(
+                            title: 'Date & Time',
+                            value: model?.createdAt ?? '',
+                          ),
+                          const VerticalSpacing(20),
+                          TitleWithValueWidget(
+                            title: 'Status',
+                            value: model?.status?.name ?? 'Successful',
+                            txtColor: AppColors.primary,
+                          ),
+                        ],
+                      ),
+                    ]
+                  : [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TitleWithValueWidget(
+                            title: 'Payment ID',
+                            value: model?.transactionId ?? '',
+                          ),
+                          const VerticalSpacing(20),
+                          TitleWithValueWidget(
+                            title: 'Benefeciary Name',
+                            value: model?.beneficiary ?? '',
+                          ),
+                          const VerticalSpacing(20),
+                          TitleWithValueWidget(
+                            title: 'Frequency',
+                            value: model?.frequency?.name ?? '',
+                          ),
+                          TitleWithValueWidget(
+                            title: 'Gifting Title',
+                            value: model?.gift?.title ?? '',
+                          ),
+                          const VerticalSpacing(20),
+                          const TitleWithValueWidget(
+                            title: 'Payment Gateway',
+                            value: 'Stripe',
+                          ),
+                          const VerticalSpacing(20),
+                          TitleWithValueWidget(
+                            title: 'Amount',
+                            value: '\$ ${model?.amount}' ?? '',
+                          ),
+                          TitleWithValueWidget(
+                            title: 'Parent Name',
+                            value: model?.user?.name ?? '',
+                          ),
+                          const VerticalSpacing(20),
+                          TitleWithValueWidget(
+                            title: 'Date & Time',
+                            value: model?.createdAt ?? '',
+                          ),
+                          const VerticalSpacing(20),
+                          TitleWithValueWidget(
+                            title: 'Status',
+                            value: model?.status?.name ?? 'Successful',
+                            txtColor: AppColors.primary,
+                          ),
+                        ],
+                      ),
+                    ],
             ),
           ],
         ),
@@ -116,4 +168,3 @@ class PaymentDetailsDialogBox extends StatelessWidget {
     );
   }
 }
-

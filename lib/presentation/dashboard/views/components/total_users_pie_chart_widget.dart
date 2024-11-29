@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/dashboard_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/common_chart_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -41,6 +42,8 @@ class TotalUsersPieChartWidget extends StatelessWidget {
                               '${controller.totalUsersChartDto?.data?.parents ?? '0'}',
                             )),
                       ],
+                      pointColorMapper: (ChartData data, index) =>
+                          [AppColors.secondary, AppColors.primary][index],
                       xValueMapper: (ChartData data, _) => data.month,
                       yValueMapper: (ChartData data, _) => data.value,
                       dataLabelSettings: const DataLabelSettings(

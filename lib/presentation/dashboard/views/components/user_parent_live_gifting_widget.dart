@@ -23,142 +23,147 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SideBarController>(builder: (controller) {
-      return SizedBox(
-        height: 50,
-        child: ListView.separated(
-          itemCount: giftingModel.isEmpty ? 1 : giftingModel.length,
-          itemBuilder: (context, listIndex) {
-            return giftingModel.isEmpty
-                ? const NoDataFound(title: 'No gifts found!')
-                : Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: AppColors.cardGrey,
+      return ListView.separated(
+        itemCount: giftingModel.isEmpty ? 1 : giftingModel.length,
+        itemBuilder: (context, listIndex) {
+          return giftingModel.isEmpty
+              ? const NoDataFound(title: 'No gifts found!')
+              : Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: AppColors.cardGrey,
+                  ),
+                  child: ExpansionTile(
+                    childrenPadding: EdgeInsets.zero,
+                    tilePadding: EdgeInsets.zero,
+                    shape: const Border(),
+                    onExpansionChanged: (collapse) {
+                      giftingModel[listIndex].isCollapsed = !collapse;
+                      if (collapse == false) {
+                        controller.liveGiftingSelectedIndex = 0;
+                      }
+                      controller.update();
+                    },
+                    title: Visibility(
+                      visible: giftingModel[listIndex].isCollapsed ?? false,
+                      replacement: Row(
+                        children: [
+                          TabBarWidget(
+                            selectedIndex:
+                                controller.liveGiftingSelectedIndex,
+                            controller: controller.liveGiftingPageController,
+                            selectedColor: AppColors.white,
+                            title: const [
+                              'Gifting Details',
+                              'Contributions',
+                              'Payout'
+                            ],
+                            onTap: (index) async {
+                              controller.liveGiftingSelectedIndex = index;
+
+                              final String userId = giftingModel[listIndex]
+                                      .userId
+                                      ?.toString() ??
+                                  '0';
+                              final int giftId =
+                                  giftingModel[listIndex].id ?? 0;
+                              switch (index) {
+                                case 0:
+                                  // await controller.getGiftDetail(
+                                  //     userId.toString(),
+                                  //     isLive ? 'Active' : 'Expired');
+                                  break;
+                                case 1:
+                                  await controller
+                                      .getGiftContributions(giftId);
+                                  break;
+                                case 2:
+                                  await controller
+                                      .getGiftPayoutDetail(giftId.toString());
+                                  controller.payoutAmountController.clear();
+                                  break;
+                              }
+                              print(userId);
+
+                              controller.update();
+                            },
+                          ),
+                          const Spacer(),
+                          CommonIconButton(
+                            icon: Assets.deleteIcon,
+                            onTap: () async {
+                              await controller.deleteGift(
+                                  giftingModel[listIndex].id ?? 0);
+                              await controller.getGiftDetail(
+                                  controller.giftingDetailData.data?.user?.id
+                                          .toString() ??
+                                      '',
+                                  isLive ? 'Active' : 'Expired');
+                              controller.update();
+                            },
+                            color: AppColors.red,
+                          ),
+                        ],
+                      ),
+                      child: GiftingDeatilsExpansionCollapsed(
+                        giftingModel: giftingModel[listIndex],
+                        onDelete: () async {
+                          await controller
+                              .deleteGift(giftingModel[listIndex].id ?? 0);
+                          await controller.getParentDetail(
+                              controller.parentDetailData.id ?? 0);
+                          await controller.getGiftDetail(
+                              controller.parentDetailData.id.toString() ?? '',
+                              isLive ? 'Active' : 'Expired');
+                          controller.update();
+                        },
+                      ),
                     ),
-                    child: ExpansionTile(
-                      // controller: ExpansionTileController(),
-                      shape: const Border(),
-                      onExpansionChanged: (collapse) {
-                        giftingModel[listIndex].isCollapsed = !collapse;
-                        if (collapse == false) {
-                          controller.liveGiftingSelectedIndex = 0;
-                        }
-                        controller.update();
-                      },
-                      title: Visibility(
-                        visible: giftingModel[listIndex].isCollapsed ?? false,
-                        replacement: Row(
+                    children: [
+                      SizedBox(
+                        height: context.height / 1.8,
+                        child: PageView(
+                          controller:
+                              controller.liveGiftingPageController,
                           children: [
-                            TabBarWidget(
-                              selectedIndex:
-                                  controller.liveGiftingSelectedIndex,
-                              controller: controller.liveGiftingPageController,
-                              selectedColor: AppColors.white,
-                              title: const [
-                                'Gifting Details',
-                                'Contributions',
-                                'Payout'
-                              ],
-                              onTap: (index) async {
-                                controller.liveGiftingSelectedIndex = index;
-
-                                final String userId = giftingModel[listIndex]
-                                        .userId
-                                        ?.toString() ??
-                                    '0';
-                                final int giftId =
-                                    giftingModel[listIndex].id ?? 0;
-                                switch (index) {
-                                  case 0:
-                                    // await controller.getGiftDetail(
-                                    //     userId.toString(),
-                                    //     isLive ? 'Active' : 'Expired');
-                                    break;
-                                  case 1:
-                                    await controller
-                                        .getGiftContributions(giftId);
-                                    break;
-                                  case 2:
-                                    await controller
-                                        .getGiftPayoutDetail(giftId.toString());
-                                    controller.payoutAmountController.clear();
-                                    break;
-                                }
-                                print(userId);
-
-                                controller.update();
-                              },
+                            ParentLiveGiftingsWidget(
+                              giftingModel: giftingModel[listIndex],
                             ),
-                            const Spacer(),
-                            CommonIconButton(
-                              icon: Assets.deleteIcon,
-                              onTap: () async {
-                                await controller.deleteGift(
-                                    giftingModel[listIndex].id ?? 0);
-                                await controller.getGiftDetail(
-                                    controller.giftingDetailData.data?.user?.id
-                                            .toString() ??
-                                        '',
-                                    isLive ? 'Active' : 'Expired');
+                            UserParentsLiveGiftingPayout(
+                              model: controller.giftContributionList,
+                            ),
+                            UserParentsPayout(
+                              controller:
+                                  controller.payoutAmountController,
+                              model: controller.giftPayoutData,
+                              payOnTap: () async {
+                                await controller.postGiftPayout(
+                                    controller
+                                        .payoutAmountController.text,
+                                    giftingModel[listIndex]
+                                            .beneficiaryId ??
+                                        -1,
+                                    giftingModel[listIndex].id ?? -1);
+
+                                await controller.getGiftPayoutDetail(
+                                    giftingModel[listIndex]
+                                            .id
+                                            ?.toString() ??
+                                        '');
+                                controller.payoutAmountController
+                                    .clear();
                                 controller.update();
                               },
-                              color: AppColors.red,
                             ),
                           ],
                         ),
-                        child: GiftingDeatilsExpansionCollapsed(
-                          giftingModel: giftingModel[listIndex],
-                          onDelete: () async {
-                            await controller
-                                .deleteGift(giftingModel[listIndex].id ?? 0);
-                            await controller.getParentDetail(
-                                controller.parentDetailData.id ?? 0);
-                            await controller.getGiftDetail(
-                                controller.parentDetailData.id.toString() ?? '',
-                                isLive ? 'Active' : 'Expired');
-                            controller.update();
-                          },
-                        ),
                       ),
-                      children: [
-                        SizedBox(
-                          height: context.height / 1.8,
-                          child: PageView(
-                            controller: controller.liveGiftingPageController,
-                            children: [
-                              ParentLiveGiftingsWidget(
-                                giftingModel: giftingModel[listIndex],
-                              ),
-                              UserParentsLiveGiftingPayout(
-                                model: controller.giftContributionList,
-                              ),
-                              UserParentsPayout(
-                                controller: controller.payoutAmountController,
-                                model: controller.giftPayoutData,
-                                payOnTap: () async {
-                                  await controller.postGiftPayout(
-                                      controller.payoutAmountController.text,
-                                      giftingModel[listIndex].beneficiaryId ??
-                                          -1,
-                                      giftingModel[listIndex].id ?? -1);
-
-                                  await controller.getGiftPayoutDetail(
-                                      giftingModel[listIndex].id?.toString() ??
-                                          '');
-                                  controller.payoutAmountController.clear();
-                                  controller.update();
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-          },
-          separatorBuilder: (context, index) => const VerticalSpacing(10),
-        ),
+                    ],
+                  ),
+                );
+        },
+        separatorBuilder: (context, index) => const VerticalSpacing(10),
       );
     });
 

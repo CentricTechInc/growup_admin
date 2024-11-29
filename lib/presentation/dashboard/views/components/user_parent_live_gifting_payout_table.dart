@@ -17,6 +17,7 @@ class UserParentLiveGfitingPayoutTableBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      shrinkWrap: true,
         itemBuilder: (context, index) => model.isEmpty
             ? const NoDataFound(title: 'No record Found!')
             : InkWell(

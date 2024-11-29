@@ -61,7 +61,7 @@ class PayoutBodyWidget extends StatelessWidget {
                   child: CommonText(
                       weight: FontWeight.bold,
                       textAlign: TextAlign.center,
-                      text: payoutList?[index].amount ?? '',
+                      text: '\$ ${payoutList?[index].amount}' ?? '',
                       fontSize: 10),
                 )
               ],

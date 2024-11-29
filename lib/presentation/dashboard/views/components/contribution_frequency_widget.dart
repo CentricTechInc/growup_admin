@@ -46,7 +46,7 @@ class ContributionFrequencyWidget extends StatelessWidget {
                       dataSource: controller.onceContributionFrequencyList,
                       xValueMapper: (ChartData data, _) => data.month,
                       yValueMapper: (ChartData data, _) => data.value,
-                      color: Colors.red,
+                      color: Colors.red[900],
                       name: 'Once',
                     ),
                     StackedBarSeries<ChartData, String>(

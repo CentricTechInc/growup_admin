@@ -63,6 +63,8 @@ class APIEndpoint {
 
   static String get exportGiftExcelUrl => '/api/gifts/excel-listing';
 
+  static String get exportPayoutExcelUrl => '/api/payouts/excel-listing';
+
   static String get exportContributionExcelUrl =>
       '/api/contributions/excel-listing';
 }

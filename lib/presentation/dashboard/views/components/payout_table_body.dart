@@ -26,17 +26,17 @@ class PayoutTableBody extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                SizedBox(
-                  height: 35,
-                  width: 35,
-                  child: Checkbox(
-                    value: false,
-                    activeColor: AppColors.primary,
-                    splashRadius: 10,
-                    onChanged: (p0) {},
-                    side: const BorderSide(color: AppColors.grey, width: 1),
-                  ),
-                ),
+                // SizedBox(
+                //   height: 35,
+                //   width: 35,
+                //   child: Checkbox(
+                //     value: false,
+                //     activeColor: AppColors.primary,
+                //     splashRadius: 10,
+                //     onChanged: (p0) {},
+                //     side: const BorderSide(color: AppColors.grey, width: 1),
+                //   ),
+                // ),
                 const HorizontalSpacing(30),
                 CommonText(
                   text: model.id?.toString() ?? '',
@@ -70,7 +70,7 @@ class PayoutTableBody extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 30.0),
               child: CommonText(
-                text: model.postedBy ?? '',
+                text: model.user?.name ?? '',
                 fontSize: 12,
                 weight: FontWeight.w500,
               ),

@@ -72,29 +72,6 @@ class UserParentDetails extends StatelessWidget {
                                   color: AppColors.primary,
                                   weight: FontWeight.w700,
                                 ),
-                                const Spacer(),
-                                // const CommonText(
-                                //   text: 'Status',
-                                //   fontSize: 16,
-                                //   weight: FontWeight.w700,
-                                // ),
-                                const HorizontalSpacing(20),
-                                // SizedBox(
-                                //   width: 160,
-                                //   child: CommonDropDownWidget(
-                                //     fillColor:
-                                //         AppColors.primary.withOpacity(0.2),
-                                //     selectedItem: 'Active',
-                                //     selectedItemColor: AppColors.primary,
-                                //     borderColor: AppColors.transparent,
-                                //     iconColor: AppColors.primary,
-                                //     onChanged: (p0) async {
-                                //       // await controller
-                                //       //     .changeGiftStatus(p0 ?? '', controller.giftingDetailData.data.giftingModel[index]);
-                                //     },
-                                //     arryList: const ['Active', 'Expired'],
-                                //   ),
-                                // ),
                               ],
                             ),
                           ),
@@ -147,40 +124,40 @@ class UserParentDetails extends StatelessWidget {
                           ),
                           const VerticalSpacing(20),
                           SizedBox(
-                            height: context.height / 1.8,
+                            height: context.height / 2.5,
                             child: PageView(
-                              controller: controller.userParentPageController,
-                              children: isParent
-                                  ? [
-                                      controller.isLoading
-                                          ? const SizedBox()
-                                          : UserParentLiveGiftingWidget(
-                                              isLive: true,
-                                              giftingModel:
-                                                  controller.giftDetailList),
-                                      controller.isLoading
-                                          ? const SizedBox()
-                                          : UserParentLiveGiftingWidget(
-                                              isLive: false,
-                                              giftingModel:
-                                                  controller.giftDetailList,
-                                            ),
-                                      controller.isLoading
-                                          ? const SizedBox()
-                                          : UserParentsActivity(
-                                              activityModel:
-                                                  controller.activityModel,
-                                            ),
-                                    ]
-                                  : [
-                                      controller.isLoading
-                                          ? const SizedBox()
-                                          : UserParentsActivity(
-                                              activityModel:
-                                                  controller.activityModel,
-                                            ),
-                                    ],
-                            ),
+                                controller: controller.userParentPageController,
+                                children: isParent
+                                    ? [
+                                        controller.isLoading
+                                            ? const SizedBox()
+                                            : UserParentLiveGiftingWidget(
+                                                isLive: true,
+                                                giftingModel:
+                                                    controller.giftDetailList),
+                                        controller.isLoading
+                                            ? const SizedBox()
+                                            : UserParentLiveGiftingWidget(
+                                                isLive: false,
+                                                giftingModel:
+                                                    controller.giftDetailList,
+                                              ),
+                                        controller.isLoading
+                                            ? const SizedBox()
+                                            : UserParentsActivity(
+                                                activityModel:
+                                                    controller.activityModel,
+                                              ),
+                                      ]
+                                    : [
+                                        controller.isLoading
+                                            ? const SizedBox()
+                                            : UserParentsActivity(
+                                                activityModel:
+                                                    controller.activityModel,
+                                              ),
+                                      ],
+                                ),
                           ),
                           const VerticalSpacing(10),
                         ],

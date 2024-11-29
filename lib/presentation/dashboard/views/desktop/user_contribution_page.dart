@@ -41,7 +41,6 @@ class UserContributionPage extends StatelessWidget {
               calendarselectedIndex: controller.calendarSelectedIndex,
               calendarlabel: controller.period?.name ?? 'Select',
               calendarOnTap: () {
-                // controller.calendarSelectedIndex = 0;
                 controller.dateRangeController = DateRangePickerController();
                 controller.isCalendarSelectable = false;
                 showGeneralDialog(
@@ -63,6 +62,7 @@ class UserContributionPage extends StatelessWidget {
                       CommonCalendarWidget(
                     onTap: (index) async {
                       controller.calendarSelectedIndex = index;
+                      controller.contributorPageNo = 1;
                       if (controller.period == CalendarPeriod.customdate) {
                         return;
                       }
@@ -73,6 +73,7 @@ class UserContributionPage extends StatelessWidget {
                     },
                     dateSelectionOnTap: (_) async {
                       controller.period = null;
+                      controller.contributorPageNo = 1;
                       await controller.contributorsDatefilter(
                         dateTime: DateRangeModel(
                           from: controller

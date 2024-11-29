@@ -47,7 +47,6 @@ class GiftingsPage extends StatelessWidget {
               calendarselectedIndex: controller.calendarSelectedIndex,
               calendarlabel: controller.period?.name ?? 'Select',
               calendarOnTap: () {
-                controller.calendarSelectedIndex = 0;
                 controller.dateRangeController = DateRangePickerController();
                 controller.isCalendarSelectable = false;
                 showGeneralDialog(
@@ -64,33 +63,35 @@ class GiftingsPage extends StatelessWidget {
                     );
                   },
                   pageBuilder: (BuildContext context,
-                      Animation<double> animation,
-                      Animation<double> secondaryAnimation) =>
+                          Animation<double> animation,
+                          Animation<double> secondaryAnimation) =>
                       CommonCalendarWidget(
-                        onTap: (index) async {
-                          controller.calendarSelectedIndex = index;
-                          if (controller.period == CalendarPeriod.customdate) {
-                            return;
-                          }
-                          await controller.parentDatefilter(
-                              period: controller.period);
+                    onTap: (index) async {
+                      controller.giftingsPageNo =1;
+                      controller.calendarSelectedIndex = index;
+                      if (controller.period == CalendarPeriod.customdate) {
+                        return;
+                      }
+                      await controller.giftingDatefilter(
+                          period: controller.period);
 
-                          context.pop();
-                        },
-                        dateSelectionOnTap: (_) async {
-                          controller.period = null;
-                          await controller.parentDatefilter(
-                            dateTime: DateRangeModel(
-                              from: controller
-                                  .dateRangeController.selectedRange?.startDate,
-                              to: controller
-                                  .dateRangeController.selectedRange?.endDate,
-                            ),
-                          );
-                          context.pop();
-                          controller.dateRangeController.dispose();
-                        },
-                      ),
+                      context.pop();
+                    },
+                    dateSelectionOnTap: (_) async {
+                      controller.period = null;
+                      controller.giftingsPageNo =1;
+                      await controller.giftingDatefilter(
+                        dateTime: DateRangeModel(
+                          from: controller
+                              .dateRangeController.selectedRange?.startDate,
+                          to: controller
+                              .dateRangeController.selectedRange?.endDate,
+                        ),
+                      );
+                      context.pop();
+                      controller.dateRangeController.dispose();
+                    },
+                  ),
                 );
               },
             ),
@@ -149,7 +150,23 @@ class GiftingsPage extends StatelessWidget {
                     .ceil(),
                 onPageChanged: (page) async {
                   controller.giftingsPageNo = page;
-                  await controller.getGiftingTable();
+                  if (controller.period != null) {
+                    if (controller.period == CalendarPeriod.customdate) {
+                      await controller.giftingDatefilter(
+                        dateTime: DateRangeModel(
+                          from: controller
+                              .dateRangeController.selectedRange?.startDate,
+                          to: controller
+                              .dateRangeController.selectedRange?.endDate,
+                        ),
+                      );
+                    } else {
+                      await controller.giftingDatefilter(
+                          period: controller.period);
+                    }
+                  } else {
+                    await controller.getGiftingTable();
+                  }
                   controller.update();
                 },
               ),

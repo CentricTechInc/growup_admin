@@ -20,11 +20,11 @@ class AdminDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: controller.drawerKey,
-      // drawer: !Responsive.isDesktop(context)
-      //     ? const Drawer(
-      //         child: SideBarWidget(),
-      //       )
-      //     : const SizedBox(),
+      drawer: !Responsive.isDesktop(context)
+          ? const Drawer(
+              child: SideBarWidget(),
+            )
+          : const SizedBox(),
       body: Container(
         color: AppColors.white,
         child: Row(

@@ -9,10 +9,7 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/comm
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/contributions_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/no_data_found_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/page_header.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_body.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_widget.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class ContributionPage extends StatelessWidget {
@@ -49,7 +46,6 @@ class ContributionPage extends StatelessWidget {
               calendarselectedIndex: controller.calendarSelectedIndex,
               calendarlabel: controller.period?.name ?? 'Select',
               calendarOnTap: () {
-                controller.calendarSelectedIndex = 0;
                 controller.dateRangeController = DateRangePickerController();
                 controller.isCalendarSelectable = false;
                 showGeneralDialog(
@@ -66,33 +62,35 @@ class ContributionPage extends StatelessWidget {
                     );
                   },
                   pageBuilder: (BuildContext context,
-                      Animation<double> animation,
-                      Animation<double> secondaryAnimation) =>
+                          Animation<double> animation,
+                          Animation<double> secondaryAnimation) =>
                       CommonCalendarWidget(
-                        onTap: (index) async {
-                          controller.calendarSelectedIndex = index;
-                          if (controller.period == CalendarPeriod.customdate) {
-                            return;
-                          }
-                          await controller.parentDatefilter(
-                              period: controller.period);
+                    onTap: (index) async {
+                      controller.contributonModulePageNo = 1;
+                      controller.calendarSelectedIndex = index;
+                      if (controller.period == CalendarPeriod.customdate) {
+                        return;
+                      }
+                      await controller.parentDatefilter(
+                          period: controller.period);
 
-                          context.pop();
-                        },
-                        dateSelectionOnTap: (_) async {
-                          controller.period = null;
-                          await controller.parentDatefilter(
-                            dateTime: DateRangeModel(
-                              from: controller
-                                  .dateRangeController.selectedRange?.startDate,
-                              to: controller
-                                  .dateRangeController.selectedRange?.endDate,
-                            ),
-                          );
-                          context.pop();
-                          controller.dateRangeController.dispose();
-                        },
-                      ),
+                      context.pop();
+                    },
+                    dateSelectionOnTap: (_) async {
+                      controller.period = null;
+                      controller.contributonModulePageNo = 1;
+                      await controller.parentDatefilter(
+                        dateTime: DateRangeModel(
+                          from: controller
+                              .dateRangeController.selectedRange?.startDate,
+                          to: controller
+                              .dateRangeController.selectedRange?.endDate,
+                        ),
+                      );
+                      context.pop();
+                      controller.dateRangeController.dispose();
+                    },
+                  ),
                 );
               },
             ),
@@ -127,20 +125,36 @@ class ContributionPage extends StatelessWidget {
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
-            if(controller.contributionsSearchController.text.isEmpty)
-            CommonPagerWidget(
-              currentPage: controller.contributonModulePageNo,
-              totalPage: ((controller.elementCount == 0
-                          ? 1
-                          : controller.elementCount) /
-                      10)
-                  .ceil(),
-              onPageChanged: (page) async {
-                controller.contributonModulePageNo = page;
-                await controller.getContributionTable();
-                controller.update();
-              },
-            ),
+            if (controller.contributionsSearchController.text.isEmpty)
+              CommonPagerWidget(
+                currentPage: controller.contributonModulePageNo,
+                totalPage: ((controller.elementCount == 0
+                            ? 1
+                            : controller.elementCount) /
+                        10)
+                    .ceil(),
+                onPageChanged: (page) async {
+                  controller.contributonModulePageNo = page;
+                  if (controller.period != null) {
+                    if (controller.period == CalendarPeriod.customdate) {
+                      await controller.contributionsDatefilter(
+                        dateTime: DateRangeModel(
+                          from: controller
+                              .dateRangeController.selectedRange?.startDate,
+                          to: controller
+                              .dateRangeController.selectedRange?.endDate,
+                        ),
+                      );
+                    } else {
+                      await controller.contributionsDatefilter(
+                          period: controller.period);
+                    }
+                  } else {
+                    await controller.getContributionTable();
+                  }
+                  controller.update();
+                },
+              ),
           ],
         ),
       );

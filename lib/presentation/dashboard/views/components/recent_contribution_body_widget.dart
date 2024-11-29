@@ -60,7 +60,7 @@ class RecentContributionBodyWidget extends StatelessWidget {
                   child: CommonText(
                       weight: FontWeight.bold,
                       textAlign: TextAlign.center,
-                      text: recentContributions?[index].amount ?? '',
+                      text: '\$ ${recentContributions?[index].amount}' ?? '',
                       fontSize: 10),
                 )
               ],

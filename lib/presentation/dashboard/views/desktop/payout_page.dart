@@ -41,10 +41,12 @@ class PayoutPage extends StatelessWidget {
                   controller.update();
                 });
               },
+              exportOnTap: () async {
+                await controller.payoutExcelExport();
+              },
               calendarselectedIndex: controller.calendarSelectedIndex,
               calendarlabel: controller.period?.name ?? 'Select',
               calendarOnTap: () {
-                controller.calendarSelectedIndex = 0;
                 controller.dateRangeController = DateRangePickerController();
                 controller.isCalendarSelectable = false;
                 showGeneralDialog(
@@ -65,18 +67,20 @@ class PayoutPage extends StatelessWidget {
                           Animation<double> secondaryAnimation) =>
                       CommonCalendarWidget(
                     onTap: (index) async {
+                      controller.payoutPageNo = 1;
                       controller.calendarSelectedIndex = index;
                       if (controller.period == CalendarPeriod.customdate) {
                         return;
                       }
-                      await controller.parentDatefilter(
+                      await controller.payoutDatefilter(
                           period: controller.period);
 
                       context.pop();
                     },
                     dateSelectionOnTap: (_) async {
                       controller.period = null;
-                      await controller.parentDatefilter(
+                      controller.payoutPageNo = 1;
+                      await controller.payoutDatefilter(
                         dateTime: DateRangeModel(
                           from: controller
                               .dateRangeController.selectedRange?.startDate,
@@ -109,29 +113,29 @@ class PayoutPage extends StatelessWidget {
                 itemCount: controller.payoutModelList.isEmpty
                     ? 1
                     : controller.payoutModelList.length,
-                itemBuilder: (context, index) =>
-                    controller.payoutModelList.isEmpty
-                        ? const NoDataFound(title: 'No record found!')
-                        : PayoutTableBody(
-                            model: controller.payoutModelList[index],
-                            onTap: () async {
-                              final int userId =
-                                  controller.payoutModelList[index].id ?? -1;
-                              await controller.getParentDetail(userId);
-                              await controller.getGiftDetail(
-                                  userId.toString(), 'Active');
-                              await controller.getUserBenes(userId.toString());
+                itemBuilder: (context, index) => controller
+                        .payoutModelList.isEmpty
+                    ? const NoDataFound(title: 'No record found!')
+                    : PayoutTableBody(
+                        model: controller.payoutModelList[index],
+                        onTap: () async {
+                          final int userId =
+                              controller.payoutModelList[index].user?.id ?? -1;
+                          await controller.getParentDetail(userId);
+                          await controller.getGiftDetail(
+                              userId.toString(), 'Active');
+                          await controller.getUserBenes(userId.toString());
 
-                              globalContext?.push(
-                                  "${PagePath.payouts}${PagePath.parentDetails.toRoute}?isParent=${true}");
-                              controller.userParentSelectedIndex = 0;
-                              if(controller.giftDetailList.isNotEmpty) {
-                                controller.liveGiftingSelectedIndex = 2;
-                                controller.liveGiftingPageController.jumpToPage(
-                                    2);
-                              }controller.update();
-                            },
-                          ),
+                          globalContext?.push(
+                              "${PagePath.payouts}${PagePath.parentDetails.toRoute}?isParent=${true}");
+                          controller.userParentSelectedIndex = 0;
+                          if (controller.giftDetailList.isNotEmpty) {
+                            controller.liveGiftingSelectedIndex = 2;
+                            controller.liveGiftingPageController.jumpToPage(2);
+                          }
+                          controller.update();
+                        },
+                      ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
@@ -145,7 +149,23 @@ class PayoutPage extends StatelessWidget {
                     .ceil(),
                 onPageChanged: (page) async {
                   controller.payoutPageNo = page;
-                  await controller.getPayoutTable();
+                  if (controller.period != null) {
+                    if (controller.period == CalendarPeriod.customdate) {
+                      await controller.payoutDatefilter(
+                        dateTime: DateRangeModel(
+                          from: controller
+                              .dateRangeController.selectedRange?.startDate,
+                          to: controller
+                              .dateRangeController.selectedRange?.endDate,
+                        ),
+                      );
+                    } else {
+                      await controller.payoutDatefilter(
+                          period: controller.period);
+                    }
+                  } else {
+                    await controller.getPayoutTable();
+                  }
                   controller.update();
                 },
               ),

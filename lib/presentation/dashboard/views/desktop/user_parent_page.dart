@@ -41,7 +41,6 @@ class UserParentPage extends StatelessWidget {
               calendarselectedIndex: controller.calendarSelectedIndex,
               calendarlabel: controller.period?.name ?? 'Select',
               calendarOnTap: () {
-                controller.calendarSelectedIndex = 0;
                 controller.dateRangeController = DateRangePickerController();
                 controller.isCalendarSelectable = false;
                 showGeneralDialog(
@@ -66,12 +65,14 @@ class UserParentPage extends StatelessWidget {
                       if (controller.period == CalendarPeriod.customdate) {
                         return;
                       }
+                      controller.parentPageNo = 1;
                       await controller.parentDatefilter(
                           period: controller.period);
 
                       context.pop();
                     },
                     dateSelectionOnTap: (_) async {
+                      controller.parentPageNo = 1;
                       await controller.parentDatefilter(
                         dateTime: DateRangeModel(
                           from: controller

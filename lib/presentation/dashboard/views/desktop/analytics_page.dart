@@ -19,7 +19,6 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/rece
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/recent_user_header_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/top_gifting_chart_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/total_users_pie_chart_widget.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/user_parent_page.dart';
 
 class AnalyticsPage extends StatelessWidget {
   AnalyticsPage({super.key});

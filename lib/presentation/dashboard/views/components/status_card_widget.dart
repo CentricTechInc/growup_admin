@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
+import 'package:grow_up_admin_panel/app/util/responsive_builder.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 
 class StatusCardWidget extends StatelessWidget {
@@ -16,20 +17,36 @@ class StatusCardWidget extends StatelessWidget {
         color: title == 'Deleted'
             ? AppColors.red.withOpacity(0.2)
             : title != 'Expired'
-            ? AppColors.primary.withOpacity(0.2)
-            : AppColors.grey,
+                ? AppColors.primary.withOpacity(0.2)
+                : AppColors.grey,
       ),
-      child: CommonText(
-        textAlign: TextAlign.center,
-        text: title,
-        color: title == 'Deleted'
-            ? AppColors.red
-            : title != 'Expired'
-            ? AppColors.primary
-            : AppColors.primaryText,
-        fontSize: 12,
-        weight: FontWeight.w400,
-      ),
+      child: Responsive.isDesktop(context)
+          ? CommonText(
+              textAlign: TextAlign.center,
+              text: title,
+              color: title == 'Deleted'
+                  ? AppColors.red
+                  : title != 'Expired'
+                      ? AppColors.primary
+                      : AppColors.primaryText,
+              fontSize: 12,
+              weight: FontWeight.w400,
+            )
+          : CommonText(
+              textAlign: TextAlign.center,
+              text: title == 'Deleted'
+                  ? 'D'
+                  : title != 'Expired'
+                  ? 'A'
+                  : 'E',
+              color: title == 'Deleted'
+                  ? AppColors.red
+                  : title != 'Expired'
+                      ? AppColors.primary
+                      : AppColors.primaryText,
+              fontSize: 12,
+              weight: FontWeight.w400,
+            ),
     );
   }
 }

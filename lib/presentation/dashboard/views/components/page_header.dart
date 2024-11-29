@@ -75,6 +75,7 @@ class PageHeader extends StatelessWidget {
             ),
           ),
         const HorizontalSpacing(10),
+        if(calendarOnTap != null)
         Container(
           width: Responsive.isDesktop(context) ? 240 : 70,
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),

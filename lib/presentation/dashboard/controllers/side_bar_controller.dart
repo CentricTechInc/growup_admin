@@ -127,8 +127,8 @@ class SideBarController extends GetxController {
   parentDatefilter({DateRangeModel? dateTime, CalendarPeriod? period}) async {
     try {
       Loader.showLoader();
-      final res =
-          await userParentRepository.dateFilterParentTable(dateTime, period, parentPageNo);
+      final res = await userParentRepository.dateFilterParentTable(
+          dateTime, period, parentPageNo);
       userParentModelList.clear();
       userParentModelList.addAll(res.data);
       elementCount = res.count ?? 1;
@@ -139,13 +139,64 @@ class SideBarController extends GetxController {
       CommonSnackBar.message(message: e.toString());
     }
   }
-  contributorsDatefilter({DateRangeModel? dateTime, CalendarPeriod? period}) async {
+
+  contributorsDatefilter(
+      {DateRangeModel? dateTime, CalendarPeriod? period}) async {
     try {
       Loader.showLoader();
-      final res =
-          await userContributorRepository.dateFilterContributorTable(dateTime, period, contributorPageNo);
+      final res = await userContributorRepository.dateFilterContributorTable(
+          dateTime, period, contributorPageNo);
       userContributorModelList.clear();
       userContributorModelList.addAll(res.data);
+      elementCount = res.count ?? 1;
+      Loader.hideLoading();
+      update();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
+  giftingDatefilter({DateRangeModel? dateTime, CalendarPeriod? period}) async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.dateFilterGiftingTable(
+          dateTime, period, giftingsPageNo);
+      giftingModelList.clear();
+      giftingModelList.addAll(res.data);
+      elementCount = res.count ?? 1;
+      Loader.hideLoading();
+      update();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
+  payoutDatefilter({DateRangeModel? dateTime, CalendarPeriod? period}) async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.dateFilterPayoutTable(
+          dateTime, period, payoutPageNo);
+      payoutModelList.clear();
+      payoutModelList.addAll(res.data);
+      elementCount = res.count ?? 1;
+      Loader.hideLoading();
+      update();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
+  contributionsDatefilter(
+      {DateRangeModel? dateTime, CalendarPeriod? period}) async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.dateFilterContributionsTable(
+          dateTime, period, contributonModulePageNo);
+      contributionModelList.clear();
+      contributionModelList.addAll(res.data);
       elementCount = res.count ?? 1;
       Loader.hideLoading();
       update();
@@ -261,6 +312,17 @@ class SideBarController extends GetxController {
       payoutModelList.addAll(res.data);
       elementCount = res.count ?? 1;
       update();
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
+  payoutExcelExport() async {
+    try {
+      Loader.showLoader();
+      await moduleRepository.exportPayoutTable();
       Loader.hideLoading();
     } catch (e) {
       Loader.hideLoading();

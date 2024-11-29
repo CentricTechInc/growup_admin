@@ -88,13 +88,15 @@ class CommonCalendarWidget extends StatelessWidget {
                         rangeSelectionColor: AppColors.black.withOpacity(0.1),
                         headerStyle: const DateRangePickerHeaderStyle(
                             backgroundColor: AppColors.white),
-                        todayHighlightColor:AppColors.secondaryText,
+                        todayHighlightColor: AppColors.secondaryText,
                         selectionColor: AppColors.black,
                         backgroundColor: AppColors.white,
                         selectionMode: DateRangePickerSelectionMode.range,
                         startRangeSelectionColor: AppColors.black,
                         endRangeSelectionColor: AppColors.black,
-                        showActionButtons: true,
+                        showActionButtons: controller.calendarSelectedIndex == 4
+                            ? true
+                            : false,
                         onSubmit: dateSelectionOnTap,
                         onCancel: () {
                           controller.period = null;

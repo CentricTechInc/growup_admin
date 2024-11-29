@@ -65,7 +65,7 @@ class BenefeciaryExpansionTile extends StatelessWidget {
           const VerticalSpacing(10),
           CommonTile(
               title: 'Received Contributions',
-              subTitle: '\$ ${data.contributionCount}'),
+              subTitle: '\$ ${data.contributionTotal}'),
           const VerticalSpacing(20),
           const CommonText(
             text: 'Bank Details',
