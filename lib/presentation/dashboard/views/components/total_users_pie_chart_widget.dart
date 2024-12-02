@@ -21,7 +21,7 @@ class TotalUsersPieChartWidget extends StatelessWidget {
           controller.update();
         },
         totalStats:
-            controller.totalUsersChartDto!.data!.totalUsers!.toInt().toString(),
+            controller.totalUsersChartDto?.data?.totalUsers?.toInt().toString() ?? '',
         child: Expanded(
           child: controller.totalUsersLoading
               ? const Center(child: CircularProgressIndicator())

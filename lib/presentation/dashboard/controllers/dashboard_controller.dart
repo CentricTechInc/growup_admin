@@ -46,7 +46,7 @@ class DashboardController extends GetxController {
   String selectedTotalUsersFilter = 'This Week';
   String selectedContributionFrequencyFilter = 'This Week';
 
-  List<String> userFilters = ['Last Week', '06 Months'];
+  List<String> userFilters = ['Last Week','Last Month'];
   List<String> giftFilters = [
     'This Week',
     'Last Week',
@@ -177,6 +177,7 @@ class DashboardController extends GetxController {
       await Future.delayed(const Duration(milliseconds: 500));
 
       String filter = getDropdownString(selectedTotalUsersFilter);
+      print('THIS is Filter $filter');
       totalUsersChartDto = await dashboardRepository.totalUsersChart(filter);
       print('totalUsersChartDto: ${totalUsersChartDto?.toJson()}');
       totalUsersLoading = false;

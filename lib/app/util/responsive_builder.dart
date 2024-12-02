@@ -16,7 +16,7 @@ class Responsive extends StatelessWidget {
   static isTablet(BuildContext context) =>
       context.width < 1024 && context.width > 600;
 
-  static isDesktop(BuildContext context) => context.width >= 1024;
+  static isDesktop(BuildContext context) => context.width >= 1280;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class Responsive extends StatelessWidget {
       if (constraints.maxWidth >= 1400) {
         print('desktop ${constraints.maxWidth}');
         return desktop ?? mobile;
-      } else if (constraints.maxWidth >= 600) {
+      } else if (constraints.maxWidth >= 800) {
         print('tablet ${constraints.maxWidth}');
         return tablet ?? mobile;
       } else {

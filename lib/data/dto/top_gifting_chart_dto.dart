@@ -29,7 +29,8 @@ class Data {
   Data({this.totalContributions, this.records});
 
   Data.fromJson(Map<String, dynamic> json) {
-    totalContributions = double.parse(json['totalContributions'].toString());
+    print('THIS IS IN TOTAL CONTRIBUTIONS: ${double.parse(json['totalContributions'].toString())}');
+    totalContributions = double.parse(json['totalContributions'].toString() =='0' ? '0.0' : json['totalContributions'].toString()).toDouble();
     if (json['records'] != null) {
       records = <Records>[];
       json['records'].forEach((v) {

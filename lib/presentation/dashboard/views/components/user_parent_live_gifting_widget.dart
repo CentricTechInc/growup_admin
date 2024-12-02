@@ -49,45 +49,48 @@ class UserParentLiveGiftingWidget extends StatelessWidget {
                       visible: giftingModel[listIndex].isCollapsed ?? false,
                       replacement: Row(
                         children: [
-                          TabBarWidget(
-                            selectedIndex:
-                                controller.liveGiftingSelectedIndex,
-                            controller: controller.liveGiftingPageController,
-                            selectedColor: AppColors.white,
-                            title: const [
-                              'Gifting Details',
-                              'Contributions',
-                              'Payout'
-                            ],
-                            onTap: (index) async {
-                              controller.liveGiftingSelectedIndex = index;
+                          Expanded(
+                            flex: 20,
+                            child: TabBarWidget(
+                              selectedIndex:
+                                  controller.liveGiftingSelectedIndex,
+                              controller: controller.liveGiftingPageController,
+                              selectedColor: AppColors.white,
+                              title: const [
+                                'Gifting Details',
+                                'Contributions',
+                                'Payout'
+                              ],
+                              onTap: (index) async {
+                                controller.liveGiftingSelectedIndex = index;
 
-                              final String userId = giftingModel[listIndex]
-                                      .userId
-                                      ?.toString() ??
-                                  '0';
-                              final int giftId =
-                                  giftingModel[listIndex].id ?? 0;
-                              switch (index) {
-                                case 0:
-                                  // await controller.getGiftDetail(
-                                  //     userId.toString(),
-                                  //     isLive ? 'Active' : 'Expired');
-                                  break;
-                                case 1:
-                                  await controller
-                                      .getGiftContributions(giftId);
-                                  break;
-                                case 2:
-                                  await controller
-                                      .getGiftPayoutDetail(giftId.toString());
-                                  controller.payoutAmountController.clear();
-                                  break;
-                              }
-                              print(userId);
+                                final String userId = giftingModel[listIndex]
+                                        .userId
+                                        ?.toString() ??
+                                    '0';
+                                final int giftId =
+                                    giftingModel[listIndex].id ?? 0;
+                                switch (index) {
+                                  case 0:
+                                    // await controller.getGiftDetail(
+                                    //     userId.toString(),
+                                    //     isLive ? 'Active' : 'Expired');
+                                    break;
+                                  case 1:
+                                    await controller
+                                        .getGiftContributions(giftId);
+                                    break;
+                                  case 2:
+                                    await controller
+                                        .getGiftPayoutDetail(giftId.toString());
+                                    controller.payoutAmountController.clear();
+                                    break;
+                                }
+                                print(userId);
 
-                              controller.update();
-                            },
+                                controller.update();
+                              },
+                            ),
                           ),
                           const Spacer(),
                           CommonIconButton(

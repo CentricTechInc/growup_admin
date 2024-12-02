@@ -51,3 +51,19 @@ String getDropdownString(String value) {
       return '';
   }
 }
+
+String? getCalendarLabel(String val) {
+  switch (val) {
+    case 'today':
+      return 'Today';
+    case 'lastweek':
+      return 'Last Week';
+    case 'lastmonth':
+      return 'Last Month';
+    case 'last90days':
+      return 'Last 90 Days';
+    case 'customdate':
+      return 'Custom Date';
+  }
+  return null;
+}

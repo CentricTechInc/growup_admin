@@ -56,7 +56,7 @@ class SideBarController extends GetxController {
 
   ///PAGINATION+++++++++++++++++++++_---------
   int elementCount = 1;
-  int pageSize = 10;
+  int pageSize = 15;
 
   ///Parent Table------
   int parentPageNo = 1;
@@ -349,6 +349,7 @@ class SideBarController extends GetxController {
           contributonModulePageNo, contributionsSearchController.text);
       contributionModelList.clear();
       contributionModelList.addAll(res.data);
+      print(res.count);
       elementCount = res.count ?? 1;
       update();
       Loader.hideLoading();

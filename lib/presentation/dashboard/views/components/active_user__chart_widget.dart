@@ -55,7 +55,7 @@ class ActiveUserChartWidget extends StatelessWidget {
           child: controller.isUserLoading
               ? const Center(child: CircularProgressIndicator())
               : SfCartesianChart(
-                  primaryXAxis: const CategoryAxis(),
+                  primaryXAxis: const CategoryAxis(initialZoomFactor: 1,),
                   primaryYAxis: const NumericAxis(),
                   trackballBehavior: TrackballBehavior(
                     enable: true, // Enable the trackball

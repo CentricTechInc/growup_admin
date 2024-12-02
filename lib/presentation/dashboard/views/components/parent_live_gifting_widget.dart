@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
+import 'package:grow_up_admin_panel/app/util/responsive_builder.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
 
@@ -20,7 +21,7 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
             children: [
               SizedBox(
                 height: 140,
-                width: 210,
+                width: Responsive.isDesktop(context) ? 210 : 140,
                 child: Stack(
                   alignment: AlignmentDirectional.bottomEnd,
                   children: [
@@ -73,91 +74,205 @@ class ParentLiveGiftingsWidget extends StatelessWidget {
                 ),
               ),
               const HorizontalSpacing(20),
-              Expanded(
-                child: Column(
-                  children: [
-                    const VerticalSpacing(20),
-                    const Row(
-                      children: [
-                        Expanded(
-                          child: CommonText(
-                            text: 'Gifting Purpose',
-                            fontSize: 16,
-                            weight: FontWeight.w700,
+              Responsive.isDesktop(context)
+                  ? Expanded(
+                      child: Column(
+                        children: [
+                          const VerticalSpacing(20),
+                          const Row(
+                            children: [
+                              Expanded(
+                                child: CommonText(
+                                  text: 'Gifting Purpose',
+                                  fontSize: 16,
+                                  weight: FontWeight.w700,
+                                ),
+                              ),
+                              Expanded(
+                                child: CommonText(
+                                  text: 'Date & Time',
+                                  fontSize: 16,
+                                  weight: FontWeight.w700,
+                                ),
+                              ),
+                              Expanded(
+                                child: CommonText(
+                                  text: 'Gifting Status',
+                                  fontSize: 16,
+                                  weight: FontWeight.w700,
+                                ),
+                              )
+                            ],
                           ),
-                        ),
-                        Expanded(
-                          child: CommonText(
-                            text: 'Date & Time',
-                            fontSize: 16,
-                            weight: FontWeight.w700,
+                          const VerticalSpacing(10),
+                          Row(
+                            children: List.generate(
+                              3,
+                              (index) => Expanded(
+                                child: CommonText(
+                                  text: [
+                                    giftingModel.purpose ?? '',
+                                    giftingModel.createdAt ?? '',
+                                    giftingModel.status?.name ?? ''
+                                  ][index],
+                                  fontSize: 16,
+                                  weight: FontWeight.w400,
+                                  color: index == 2
+                                      ? AppColors.primary
+                                      : AppColors.secondaryText,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: CommonText(
-                            text: 'Gifting Status',
-                            fontSize: 16,
-                            weight: FontWeight.w700,
+                          const VerticalSpacing(20),
+                          Row(
+                            children: List.generate(
+                              3,
+                              (index) => Expanded(
+                                child: CommonText(
+                                  text: [
+                                    'Gifting Frequency',
+                                    'Gifting Total',
+                                    'Benefeciary Name',
+                                  ][index],
+                                  fontSize: 16,
+                                  weight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
                           ),
-                        )
-                      ],
-                    ),
-                    const VerticalSpacing(10),
-                    Row(
-                      children: List.generate(
-                        3,
-                        (index) => Expanded(
-                          child: CommonText(
-                            text: [
-                              giftingModel.purpose ?? '',
-                              giftingModel.createdAt ?? '',
-                              giftingModel.status?.name ?? ''
-                            ][index],
-                            fontSize: 16,
-                            weight: FontWeight.w400,
-                            color: AppColors.secondaryText,
+                          const VerticalSpacing(10),
+                          Row(
+                            children: List.generate(
+                              3,
+                              (index) => Expanded(
+                                child: CommonText(
+                                  text: [
+                                    giftingModel.frequency ?? '',
+                                    '\$ ${giftingModel.contributionTotal}' ??
+                                        '',
+                                    giftingModel.beneficiary?.name ?? '',
+                                  ][index],
+                                  fontSize: 16,
+                                  weight: FontWeight.w400,
+                                  color: AppColors.secondaryText,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
+                      ),
+                    )
+                  : Expanded(
+                      child: Column(
+                        children: [
+                          const Row(
+                            children: [
+                              Expanded(
+                                child: CommonText(
+                                  text: 'Gifting Purpose',
+                                  fontSize: 16,
+                                  weight: FontWeight.w700,
+                                ),
+                              ),
+                              Expanded(
+                                child: CommonText(
+                                  text: 'Date & Time',
+                                  fontSize: 16,
+                                  weight: FontWeight.w700,
+                                ),
+                              ),
+                              VerticalSpacing(10),
+                            ],
+                          ),
+                          Row(
+                            children: List.generate(
+                              2,
+                              (index) => Expanded(
+                                child: CommonText(
+                                  text: [
+                                    giftingModel.purpose ?? '',
+                                    giftingModel.createdAt ?? '',
+                                  ][index],
+                                  fontSize: 16,
+                                  weight: FontWeight.w400,
+                                  color: AppColors.secondaryText,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const VerticalSpacing(20),
+                          Row(
+                            children: List.generate(
+                              2,
+                              (index) => Expanded(
+                                child: CommonText(
+                                  text: [
+                                    'Gifting Status',
+                                    'Gifting Frequency',
+                                  ][index],
+                                  fontSize: 16,
+                                  weight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const VerticalSpacing(10),
+                          Row(
+                            children: List.generate(
+                              2,
+                              (index) => Expanded(
+                                child: CommonText(
+                                  text: [
+                                    giftingModel.status?.name ?? '',
+                                    giftingModel.frequency ?? '',
+                                  ][index],
+                                  fontSize: 16,
+                                  weight: FontWeight.w400,
+                                  color: index == 0
+                                      ? AppColors.primary
+                                      : AppColors.secondaryText,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const VerticalSpacing(20),
+                          Row(
+                            children: List.generate(
+                              2,
+                              (index) => Expanded(
+                                child: CommonText(
+                                  text: [
+                                    'Gifting Total',
+                                    'benefeciary Name',
+                                  ][index],
+                                  fontSize: 16,
+                                  weight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const VerticalSpacing(10),
+                          Row(
+                            children: List.generate(
+                              2,
+                              (index) => Expanded(
+                                child: CommonText(
+                                  text: [
+                                    '\$ ${giftingModel.contributionTotal}' ??
+                                        '',
+                                    giftingModel.beneficiary?.name ?? '',
+                                  ][index],
+                                  fontSize: 16,
+                                  weight: FontWeight.w400,
+                                  color: AppColors.secondaryText,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const VerticalSpacing(20),
-                    Row(
-                      children: List.generate(
-                        3,
-                        (index) => Expanded(
-                          child: CommonText(
-                            text: [
-                              'Gifting Frequency',
-                              'Gifting Total',
-                              'Benefeciary Name',
-                            ][index],
-                            fontSize: 16,
-                            weight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const VerticalSpacing(10),
-                    Row(
-                      children: List.generate(
-                        3,
-                        (index) => Expanded(
-                          child: CommonText(
-                            text: [
-                              giftingModel.frequency ?? '',
-                              '\$ ${giftingModel.contributionTotal}' ?? '',
-                              giftingModel.beneficiary?.name ?? '',
-                            ][index],
-                            fontSize: 16,
-                            weight: FontWeight.w400,
-                            color: AppColors.secondaryText,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
           const VerticalSpacing(20),

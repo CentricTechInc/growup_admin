@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/common_text_field.dart';
 import 'package:grow_up_admin_panel/app/util/responsive_builder.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
+import 'package:grow_up_admin_panel/common/resources/strings.dart';
 
 // ignore: must_be_immutable
 class PageHeader extends StatelessWidget {
@@ -75,35 +77,35 @@ class PageHeader extends StatelessWidget {
             ),
           ),
         const HorizontalSpacing(10),
-        if(calendarOnTap != null)
-        Container(
-          width: Responsive.isDesktop(context) ? 240 : 70,
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.primary, width: 0.5),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Row(
-            children: [
-              Image.asset(
-                Assets.calendarIcon,
-                color: AppColors.primary,
-                scale: 2,
-              ),
-              if (Responsive.isDesktop(context)) const HorizontalSpacing(10),
-              if (Responsive.isDesktop(context))
-                CommonText(
-                  text: calendarlabel ?? 'Select',
-                  fontSize: 16,
-                  weight: FontWeight.w500,
+        if (calendarOnTap != null)
+          Container(
+            width: Responsive.isDesktop(context) ? 240 : 70,
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.primary, width: 0.5),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Row(
+              children: [
+                Image.asset(
+                  Assets.calendarIcon,
+                  color: AppColors.primary,
+                  scale: 2,
                 ),
-              const Spacer(),
-              InkWell(
-                  onTap: calendarOnTap,
-                  child: const Icon(Icons.keyboard_arrow_down_outlined))
-            ],
+                if (Responsive.isDesktop(context)) const HorizontalSpacing(10),
+                if (Responsive.isDesktop(context))
+                  CommonText(
+                    text: getCalendarLabel(calendarlabel ?? '') ?? 'Select',
+                    fontSize: 16,
+                    weight: FontWeight.w500,
+                  ),
+                const Spacer(),
+                InkWell(
+                    onTap: calendarOnTap,
+                    child: const Icon(Icons.keyboard_arrow_down_outlined))
+              ],
+            ),
           ),
-        ),
         if (showTaxBtn) const HorizontalSpacing(10),
         if (showTaxBtn)
           InkWell(
@@ -125,7 +127,13 @@ class PageHeader extends StatelessWidget {
         if (showSearch)
           SizedBox(
             height: 40,
-            width: 300,
+            width: Responsive.isDesktop(context)
+                ? context.width * 0.2
+                : context.width * 0.25,
+            // constraints: BoxConstraints(
+            //   maxWidth: 300,
+            //   minWidth: 100,
+            // ),
             child: CommonTextField(
               prefix: Image.asset(
                 Assets.searchIcon,

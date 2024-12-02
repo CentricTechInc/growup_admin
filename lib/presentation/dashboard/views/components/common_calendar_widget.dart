@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
+import 'package:grow_up_admin_panel/app/util/responsive_builder.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/domain/entities/date_range_model.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
@@ -72,7 +74,7 @@ class CommonCalendarWidget extends StatelessWidget {
             ),
             const HorizontalSpacing(20),
             Container(
-              width: 600,
+              width: Responsive.isDesktop(context) ?  context.width * 0.3 : context.width * 0.5,
               height: 500,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(

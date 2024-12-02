@@ -67,7 +67,7 @@ class GiftingsPage extends StatelessWidget {
                           Animation<double> secondaryAnimation) =>
                       CommonCalendarWidget(
                     onTap: (index) async {
-                      controller.giftingsPageNo =1;
+                      controller.giftingsPageNo = 1;
                       controller.calendarSelectedIndex = index;
                       if (controller.period == CalendarPeriod.customdate) {
                         return;
@@ -79,7 +79,7 @@ class GiftingsPage extends StatelessWidget {
                     },
                     dateSelectionOnTap: (_) async {
                       controller.period = null;
-                      controller.giftingsPageNo =1;
+                      controller.giftingsPageNo = 1;
                       await controller.giftingDatefilter(
                         dateTime: DateRangeModel(
                           from: controller
@@ -146,7 +146,7 @@ class GiftingsPage extends StatelessWidget {
                 totalPage: ((controller.elementCount == 0
                             ? 1
                             : controller.elementCount) /
-                        10)
+                        controller.pageSize)
                     .ceil(),
                 onPageChanged: (page) async {
                   controller.giftingsPageNo = page;

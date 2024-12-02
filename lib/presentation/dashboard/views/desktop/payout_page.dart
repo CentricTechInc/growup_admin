@@ -145,7 +145,7 @@ class PayoutPage extends StatelessWidget {
                 totalPage: ((controller.elementCount == 0
                             ? 1
                             : controller.elementCount) /
-                        10)
+                        controller.pageSize)
                     .ceil(),
                 onPageChanged: (page) async {
                   controller.payoutPageNo = page;

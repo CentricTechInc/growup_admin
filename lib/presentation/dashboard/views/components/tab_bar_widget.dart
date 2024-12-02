@@ -5,7 +5,7 @@ import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 
 class TabBarWidget extends StatelessWidget {
-  const TabBarWidget(
+   TabBarWidget(
       {super.key,
       required this.title,
       this.selectedColor,
@@ -23,9 +23,11 @@ class TabBarWidget extends StatelessWidget {
   final int selectedIndex;
   final Color? txtColor;
 
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SideBarController>(builder: (ctrl) {
+
       return Row(
         children: List.generate(
           title.length,

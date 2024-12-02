@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grow_up_admin_panel/app/util/common_pager_widget.dart';
@@ -10,6 +11,7 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/cont
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/no_data_found_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/page_header.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/payment_details_dialog_box.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class ContributionPage extends StatelessWidget {
@@ -71,7 +73,7 @@ class ContributionPage extends StatelessWidget {
                       if (controller.period == CalendarPeriod.customdate) {
                         return;
                       }
-                      await controller.parentDatefilter(
+                      await controller.contributionsDatefilter(
                           period: controller.period);
 
                       context.pop();
@@ -79,7 +81,7 @@ class ContributionPage extends StatelessWidget {
                     dateSelectionOnTap: (_) async {
                       controller.period = null;
                       controller.contributonModulePageNo = 1;
-                      await controller.parentDatefilter(
+                      await controller.contributionsDatefilter(
                         dateTime: DateRangeModel(
                           from: controller
                               .dateRangeController.selectedRange?.startDate,
@@ -120,7 +122,16 @@ class ContributionPage extends StatelessWidget {
                         ? const NoDataFound(title: 'No record found!')
                         : ContributionsTableBody(
                             model: controller.contributionModelList[index],
-                            onTap: () {},
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                  child: PaymentDetailsDialogBox(
+                                    model: controller.contributionModelList[index],
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
@@ -131,7 +142,7 @@ class ContributionPage extends StatelessWidget {
                 totalPage: ((controller.elementCount == 0
                             ? 1
                             : controller.elementCount) /
-                        10)
+                    controller.pageSize)
                     .ceil(),
                 onPageChanged: (page) async {
                   controller.contributonModulePageNo = page;

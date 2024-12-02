@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_common/get_reset.dart';
+import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/common_vertical_divider_widget.dart';
+import 'package:grow_up_admin_panel/app/util/responsive_builder.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
@@ -129,23 +132,14 @@ class ContributionsTableBody extends StatelessWidget {
                     StatusCardWidget(title: model.gift?.status?.name ??''),
                     const Spacer(),
                     InkWell(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => Dialog(
-                            child: PaymentDetailsDialogBox(
-                              model: model,
-                            ),
-                          ),
-                        );
-                      },
-                      child: SizedBox(
+                      onTap: onTap,
+                      child: Responsive.isDesktop(context) ?  SizedBox(
                         width: 50,
                         child: Padding(
                           padding: const EdgeInsets.only(right: 20.0),
                           child: Image.asset(Assets.shareIcon, scale: 2),
                         ),
-                      ),
+                      ) : const SizedBox.shrink(),
                     ),
                   ],
                 ),
