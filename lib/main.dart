@@ -4,10 +4,11 @@ import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/app/config/app.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   HttpOverrides.global = MyHttpOverrides();
 
   LocalStorageService.instance.init();
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(const GrowUpAdminPanel());
 }
 
