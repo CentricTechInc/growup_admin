@@ -43,7 +43,7 @@ class DashboardPage extends StatelessWidget {
             Wrap(spacing: 20, runSpacing: 10, children: [
               const SizedBox(
                   width: 580, height: 350, child: ActiveUserChartWidget()),
-              const SizedBox(
+              SizedBox(
                   width: 470, height: 350, child: TopGiftingChartWidget()),
               const SizedBox(
                   width: 450, height: 350, child: ContributionsChartWidget()),

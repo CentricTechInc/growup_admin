@@ -6,7 +6,12 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/comm
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class TopGiftingChartWidget extends StatelessWidget {
-  const TopGiftingChartWidget({super.key});
+   TopGiftingChartWidget({super.key});
+  List<Color> colors = [
+    AppColors.primaryLight,
+    AppColors.secondary,
+    AppColors.pinkFlesh,
+  ];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(builder: (controller) {
@@ -36,11 +41,7 @@ class TopGiftingChartWidget extends StatelessWidget {
                         xValueMapper: (ChartData data, _) => data.month,
                         yValueMapper: (ChartData data, _) => data.value,
                         pointColorMapper: (ChartData data, index) {
-                          return [
-                            AppColors.primaryLight,
-                            AppColors.secondary,
-                            AppColors.pinkFlesh,
-                          ][index];
+                          return colors[index % colors.length];
                         },
                         name: 'Parent',
                         dataLabelSettings: const DataLabelSettings(

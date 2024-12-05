@@ -24,7 +24,7 @@ class AdminDashboard extends StatelessWidget {
           ? const Drawer(
               child: SideBarWidget(),
             )
-          : const SizedBox(),
+          : Container(color: AppColors.red,),
       body: Container(
         color: AppColors.white,
         child: Row(

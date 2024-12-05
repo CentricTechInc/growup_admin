@@ -29,7 +29,7 @@ class CommonAppBar extends StatelessWidget {
           const SizedBox(
             width: 20,
           ),
-          Responsive.isTablet(context)
+          !Responsive.isDesktop(context)
               ? InkWell(
                   onTap: () {
                     controller.drawerKey.currentState?.openDrawer();
@@ -37,7 +37,7 @@ class CommonAppBar extends StatelessWidget {
                     controller.update();
                     print('here');
                   },
-                  child: const Icon(Icons.drag_handle),
+                  child: const Icon(Icons.menu_rounded),
                 )
               : const SizedBox(),
           if (showSearchBar ?? false)
