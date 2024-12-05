@@ -11,9 +11,9 @@ import 'package:grow_up_admin_panel/domain/repository/auth_repo.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController =
-      TextEditingController(text: 'deepak.kumar@centrictech.co');
+      TextEditingController(text: 'jeanluc.dupont@example.com');
   TextEditingController passwordController =
-      TextEditingController(text: '123456');
+      TextEditingController(text: 'Saad@321');
   // TextEditingController emailController = TextEditingController();
   // TextEditingController passwordController = TextEditingController();
 

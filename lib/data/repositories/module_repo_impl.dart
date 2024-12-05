@@ -91,7 +91,7 @@ class ModuleRepositoryImpl extends ModuleRepository {
   @override
   Future<String> exportContributionExcel() async {
     final url =
-        Uri.http(APIEndpoint.baseUrl, APIEndpoint.exportContributionExcelUrl);
+        Uri.https(APIEndpoint.baseUrl, APIEndpoint.exportContributionExcelUrl);
 
     await launchUrl(url);
     return 'File has been downloaded!';
@@ -99,14 +99,14 @@ class ModuleRepositoryImpl extends ModuleRepository {
 
   @override
   Future<String> exportGiftTable() async {
-    final url = Uri.http(APIEndpoint.baseUrl, APIEndpoint.exportGiftExcelUrl);
+    final url = Uri.https(APIEndpoint.baseUrl, APIEndpoint.exportGiftExcelUrl);
 
     await launchUrl(url);
     return 'File has been downloaded!';
   }
   @override
   Future<String> exportPayoutTable() async {
-    final url = Uri.http(APIEndpoint.baseUrl, APIEndpoint.exportPayoutExcelUrl);
+    final url = Uri.https(APIEndpoint.baseUrl, APIEndpoint.exportPayoutExcelUrl);
 
     await launchUrl(url);
     return 'File has been downloaded!';

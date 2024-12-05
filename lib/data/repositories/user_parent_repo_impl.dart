@@ -5,7 +5,7 @@ import 'package:grow_up_admin_panel/data/dto/user_bene_dto.dart';
 import 'package:grow_up_admin_panel/data/provider/network/api_endpoints.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/pagination_model.dart';
 import 'package:grow_up_admin_panel/data/provider/network/apis/user_parent_api.dart';
-import 'package:grow_up_admin_panel/data/repositories/activity_model.dart';
+import 'package:grow_up_admin_panel/domain/entities/activity_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/contribution_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/date_range_model.dart';
 import 'package:grow_up_admin_panel/domain/entities/gifting_model.dart';
@@ -28,7 +28,7 @@ class UserParentRepositoryImpl extends UserParentRepository {
 
   @override
   Future<String> exportTable(String role) async {
-    final url = Uri.http(
+    final url = Uri.https(
         APIEndpoint.baseUrl, APIEndpoint.exportExcelUrl, {'role': role});
 
     await launchUrl(url);
