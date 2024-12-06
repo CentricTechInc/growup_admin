@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 enum ModuleApiType {
   getGiftingTable,
+  getGiftDetails,
   getPayoutTable,
   getContributionTable,
   dateFilterGiftings,
@@ -36,6 +37,12 @@ class ModuleApi implements APIRequestRepresentable {
           type: ModuleApiType.getGiftingTable,
           pageNo: pageNo,
           search: search,
+        );
+
+  ModuleApi.getGiftDetails(int giftId)
+      : this._(
+          type: ModuleApiType.getGiftDetails,
+          id: giftId,
         );
 
   ModuleApi.getPayoutTable(int pageNo, String? search)
@@ -93,6 +100,8 @@ class ModuleApi implements APIRequestRepresentable {
       case ModuleApiType.getGiftingTable:
       case ModuleApiType.dateFilterGiftings:
         return APIEndpoint.giftingTableUrl;
+      case ModuleApiType.getGiftDetails:
+        return '${APIEndpoint.giftDetailUrl}/$id';
       case ModuleApiType.getPayoutTable:
       case ModuleApiType.dateFilterPayout:
         return APIEndpoint.payoutTableUrl;
@@ -123,6 +132,7 @@ class ModuleApi implements APIRequestRepresentable {
       case ModuleApiType.dateFilterGiftings:
       case ModuleApiType.dateFilterContributions:
       case ModuleApiType.dateFilterPayout:
+      case ModuleApiType.getGiftDetails:
         return HTTPMethod.get;
     }
   }
@@ -158,6 +168,8 @@ class ModuleApi implements APIRequestRepresentable {
               : '',
           'period': calendarPeriod?.name ?? '',
         };
+      case ModuleApiType.getGiftDetails:
+        return {};
     }
   }
 }

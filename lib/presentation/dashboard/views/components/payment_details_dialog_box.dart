@@ -57,7 +57,7 @@ class PaymentDetailsDialogBox extends StatelessWidget {
                         children: [
                           TitleWithValueWidget(
                             title: 'Payment ID',
-                            value: model?.transactionId ?? '',
+                            value: model?.transactionId.toString() ?? '',
                           ),
                           const VerticalSpacing(20),
                           TitleWithValueWidget(
@@ -117,7 +117,7 @@ class PaymentDetailsDialogBox extends StatelessWidget {
                         children: [
                           TitleWithValueWidget(
                             title: 'Payment ID',
-                            value: model?.transactionId ?? '',
+                            value: model?.transactionId.toString() ?? '',
                           ),
                           const VerticalSpacing(20),
                           TitleWithValueWidget(

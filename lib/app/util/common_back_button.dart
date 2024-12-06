@@ -1,16 +1,19 @@
-import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grow_up_admin_panel/common/resources/drawables.dart';
 
 class CommonBackButton extends StatelessWidget {
   const CommonBackButton({
     super.key,
+    this.onTap,
   });
+
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.pop(),
+      onTap: () => onTap ?? context.pop(),
       borderRadius: BorderRadius.circular(5),
       child: Container(
         height: 25,

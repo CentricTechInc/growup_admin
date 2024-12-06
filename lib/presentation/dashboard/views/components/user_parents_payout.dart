@@ -33,7 +33,7 @@ class UserParentsPayout extends StatelessWidget {
               ),
               const Spacer(),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   color: AppColors.secondary.withOpacity(0.2),
@@ -133,20 +133,6 @@ class UserParentsPayout extends StatelessWidget {
                   weight: FontWeight.w500,
                 ),
                 const Spacer(),
-                // const CommonText(
-                //   text: 'Payment ID',
-                //   fontSize: 16,
-                //   weight: FontWeight.w500,
-                // ),
-                // const HorizontalSpacing(10),
-                // SizedBox(
-                //   width: 160,
-                //   child: CommonTextField(
-                //     controller: TextEditingController(),
-                //     hintText: '#PID78956',
-                //   ),
-                // ),
-                // const HorizontalSpacing(30),
                 const CommonText(
                   text: 'Amount',
                   fontSize: 16,
@@ -158,7 +144,7 @@ class UserParentsPayout extends StatelessWidget {
                   child: CommonTextField(
                     isFilledColor: true,
                     isBorderEnabled: false,
-                    fillColor: AppColors.white,
+                    fillColor: AppColors.cardGrey,
                     controller: controller,
                     hintText: '\$ 1300.00',
                   ),

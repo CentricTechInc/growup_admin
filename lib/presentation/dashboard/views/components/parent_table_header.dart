@@ -224,7 +224,7 @@ class PayoutTableHeader extends StatelessWidget {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30),
+              padding: const EdgeInsets.only(left: 30,right: 30),
               child: CommonText(
                 text: titleList[0],
                 weight: FontWeight.w700,
@@ -238,6 +238,7 @@ class PayoutTableHeader extends StatelessWidget {
             thickness: 2,
           ),
           Expanded(
+            flex: 2,
             child: Padding(
               padding: const EdgeInsets.only(left: 30),
               child: CommonText(
@@ -253,6 +254,7 @@ class PayoutTableHeader extends StatelessWidget {
             thickness: 2,
           ),
           Expanded(
+            flex: 2,
             child: Padding(
               padding: const EdgeInsets.only(left: 30),
               child: CommonText(
@@ -268,6 +270,7 @@ class PayoutTableHeader extends StatelessWidget {
             thickness: 2,
           ),
           Expanded(
+            flex: 2,
             child: Padding(
               padding: const EdgeInsets.only(left: 30),
               child: CommonText(
@@ -283,6 +286,7 @@ class PayoutTableHeader extends StatelessWidget {
             thickness: 2,
           ),
           Expanded(
+            flex: 2,
             child: Padding(
               padding: const EdgeInsets.only(left: 30),
               child: CommonText(

@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
-import 'package:go_router/go_router.dart';
+import 'package:grow_up_admin_panel/app/util/common_back_button.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
-import 'package:grow_up_admin_panel/presentation/dashboard/views/common_back_button.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/benefeciary_expansion_tile.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/no_data_found_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_details_card_widget.dart';
@@ -30,11 +29,7 @@ class UserParentDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CommonBackButton(
-              onTap: () {
-                context.pop();
-              },
-            ),
+            const CommonBackButton(),
             const VerticalSpacing(30),
             GetBuilder<SideBarController>(builder: (controller) {
               return Row(
@@ -49,6 +44,7 @@ class UserParentDetails extends StatelessWidget {
                         color: AppColors.white,
                       ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                             padding: const EdgeInsets.all(20),
@@ -84,80 +80,90 @@ class UserParentDetails extends StatelessWidget {
                             giftModel: controller.giftingDetailData,
                           ),
                           const VerticalSpacing(20),
-                          TabBarWidget(
-                            selectedIndex: controller.userParentSelectedIndex,
-                            controller: controller.userParentPageController,
-                            title: const [
-                              'Live Giftings',
-                              'Previous Giftings',
-                              'Activity'
-                            ],
-                            onTap: (index) async {
-                              controller.userParentSelectedIndex = index;
-                              final int parentId =
-                                  controller.parentDetailData.id ?? -1;
-                              if (isParent) {
-                                switch (index) {
-                                  case 0:
-                                    await controller.getGiftDetail(
-                                        parentId.toString() ?? '', 'Active');
-                                    break;
-                                  case 1:
-                                    await controller.getGiftDetail(
-                                        parentId.toString() ?? '', 'Expired');
-                                    break;
-                                  case 2:
-                                    await controller
-                                        .getActivity(parentId.toString() ?? '');
-                                    break;
-                                }
-                              } else {
-                                if (index == 0 || index == 1) {
-                                  controller.userParentSelectedIndex = 2;
-                                  return;
-                                }
-                                await controller
-                                    .getActivity(parentId.toString() ?? '');
-                              }
-                              controller.update();
-                            },
-                          ),
+                          isParent
+                              ? TabBarWidget(
+                                  selectedIndex:
+                                      controller.userParentSelectedIndex,
+                                  controller:
+                                      controller.userParentPageController,
+                                  title: const [
+                                    'Live Giftings',
+                                    'Previous Giftings',
+                                    'Activity'
+                                  ],
+                                  onTap: (index) async {
+                                    controller.userParentSelectedIndex = index;
+                                    final int parentId =
+                                        controller.parentDetailData.id ?? -1;
+                                    if (isParent) {
+                                      switch (index) {
+                                        case 0:
+                                          await controller.getGiftDetail(
+                                              parentId.toString() ?? '',
+                                              'Active');
+                                          break;
+                                        case 1:
+                                          await controller.getGiftDetail(
+                                              parentId.toString() ?? '',
+                                              'Expired');
+                                          break;
+                                        case 2:
+                                          await controller.getActivity(
+                                              parentId.toString() ?? '');
+                                          break;
+                                      }
+                                    } else {
+                                      if (index == 0 || index == 1) {
+                                        controller.userParentSelectedIndex = 2;
+                                        return;
+                                      }
+                                      await controller.getActivity(
+                                          parentId.toString() ?? '');
+                                    }
+                                    controller.update();
+                                  },
+                                )
+                              : const CommonText(
+                                  text: 'Activity',
+                                  fontSize: 20,
+                                  weight: FontWeight.w700,
+                                ),
                           const VerticalSpacing(20),
                           SizedBox(
                             height: context.height / 2.5,
                             child: PageView(
-                                controller: controller.userParentPageController,
-                                children: isParent
-                                    ? [
-                                        controller.isLoading
-                                            ? const SizedBox()
-                                            : UserParentLiveGiftingWidget(
-                                                isLive: true,
-                                                giftingModel:
-                                                    controller.giftDetailList),
-                                        controller.isLoading
-                                            ? const SizedBox()
-                                            : UserParentLiveGiftingWidget(
-                                                isLive: false,
-                                                giftingModel:
-                                                    controller.giftDetailList,
-                                              ),
-                                        controller.isLoading
-                                            ? const SizedBox()
-                                            : UserParentsActivity(
-                                                activityModel:
-                                                    controller.activityModel,
-                                              ),
-                                      ]
-                                    : [
-                                        controller.isLoading
-                                            ? const SizedBox()
-                                            : UserParentsActivity(
-                                                activityModel:
-                                                    controller.activityModel,
-                                              ),
-                                      ],
-                                ),
+                              controller: controller.userParentPageController,
+                              children: isParent
+                                  ? [
+                                      controller.isLoading
+                                          ? const SizedBox()
+                                          : UserParentLiveGiftingWidget(
+                                              isLive: true,
+                                              giftingModel:
+                                                  controller.giftDetailList),
+                                      controller.isLoading
+                                          ? const SizedBox()
+                                          : UserParentLiveGiftingWidget(
+                                              isLive: false,
+                                              giftingModel:
+                                                  controller.giftDetailList,
+                                            ),
+                                      controller.isLoading
+                                          ? const SizedBox()
+                                          : UserParentsActivity(
+                                              activityModel:
+                                                  controller.activityModel,
+                                            ),
+                                    ]
+                                  : [
+                                      controller.isLoading
+                                          ? const SizedBox()
+                                          : UserParentsActivity(
+                                              activityModel:
+                                                  controller.activityModel,
+                                            ),
+                                    ],
+                            ),
                           ),
                           const VerticalSpacing(10),
                         ],
@@ -165,39 +171,23 @@ class UserParentDetails extends StatelessWidget {
                     ),
                   ),
                   const HorizontalSpacing(30),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: AppColors.white,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const CommonText(
-                            text: 'Beneficiaries',
-                            fontSize: 20,
-                            weight: FontWeight.w600,
-                          ),
-                          const VerticalSpacing(20),
-                          if (!isParent)
-                            Container(
-                              width: context.width,
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 97, vertical: 40),
-                              decoration: BoxDecoration(
-                                  color: AppColors.greyish,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: const CommonText(
-                                text: 'No Benefeciaries to show!',
-                                fontSize: 20,
-                                weight: FontWeight.w600,
-                                color: AppColors.secondaryText,
-                              ),
-                            )
-                          else
+                  if (isParent)
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: AppColors.white,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const CommonText(
+                              text: 'Beneficiaries',
+                              fontSize: 20,
+                              weight: FontWeight.w600,
+                            ),
+                            const VerticalSpacing(20),
                             GetBuilder<SideBarController>(
                                 builder: (controller) {
                               return ListView.separated(
@@ -235,10 +225,10 @@ class UserParentDetails extends StatelessWidget {
                                 },
                               );
                             })
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
                 ],
               );
             }),

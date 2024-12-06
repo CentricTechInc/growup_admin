@@ -67,7 +67,7 @@ class PageHeader extends StatelessWidget {
                     const HorizontalSpacing(10),
                   if (Responsive.isDesktop(context))
                     const CommonText(
-                      text: 'Export Table',
+                      text: 'Export Records',
                       fontSize: 16,
                       weight: FontWeight.w600,
                       color: AppColors.primary,

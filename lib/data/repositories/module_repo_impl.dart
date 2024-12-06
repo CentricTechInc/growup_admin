@@ -18,7 +18,16 @@ class ModuleRepositoryImpl extends ModuleRepository {
     final List<GiftingModel> data =
         json.map((e) => GiftingModel.fromJson(e)).toList();
     return PaginationModel(
-        data: data, count: jsonDecode(response)['data']['count']);
+      data: data,
+      count: jsonDecode(response)['data']['count'],
+      extra: jsonDecode(response)['data']['totalAmount'],
+    );
+  }
+
+  @override
+  Future<GiftingModel> getGiftDetails(int giftId) async {
+    final response = await ModuleApi.getGiftDetails(giftId).request();
+    return GiftingModel.fromJson(jsonDecode(response)['data']);
   }
 
   @override
@@ -30,6 +39,7 @@ class ModuleRepositoryImpl extends ModuleRepository {
     return PaginationModel(
       data: data,
       count: jsonDecode(response)['data']['count'],
+      extra: jsonDecode(response)['data']['totalAmount'],
     );
   }
 
@@ -43,7 +53,10 @@ class ModuleRepositoryImpl extends ModuleRepository {
     final List<GiftingModel> data =
         json.map((e) => GiftingModel.fromJson(e)).toList();
     final model = PaginationModel(
-        data: data, count: jsonDecode(response)['data']['count']);
+      data: data,
+      count: jsonDecode(response)['data']['count'],
+      extra: jsonDecode(response)['data']['totalAmount'],
+    );
     return model;
   }
 
@@ -58,7 +71,10 @@ class ModuleRepositoryImpl extends ModuleRepository {
     final List<ContributionModel> data =
         json.map((e) => ContributionModel.fromJson(e)).toList();
     final model = PaginationModel(
-        data: data, count: jsonDecode(response)['data']['count']);
+      data: data,
+      count: jsonDecode(response)['data']['count'],
+      extra: jsonDecode(response)['data']['totalAmount'],
+    );
     return model;
   }
 
@@ -72,7 +88,10 @@ class ModuleRepositoryImpl extends ModuleRepository {
     final List<PayoutModel> data =
         json.map((e) => PayoutModel.fromJson(e)).toList();
     final model = PaginationModel(
-        data: data, count: jsonDecode(response)['data']['count']);
+      data: data,
+      count: jsonDecode(response)['data']['count'],
+      extra: jsonDecode(response)['data']['totalAmount'],
+    );
     return model;
   }
 
@@ -81,11 +100,14 @@ class ModuleRepositoryImpl extends ModuleRepository {
       int pageNo, String? search) async {
     final response =
         await ModuleApi.getContributionTable(pageNo, search).request();
-    final List<dynamic> json = jsonDecode(response)['data']['data'];
+    final List<dynamic> json = jsonDecode(response)['data']['updatedRecords'];
     final List<ContributionModel> data =
         json.map((e) => ContributionModel.fromJson(e)).toList();
     return PaginationModel(
-        data: data, count: jsonDecode(response)['data']['count']);
+      data: data,
+      count: jsonDecode(response)['data']['count'],
+      extra: jsonDecode(response)['data']['totalAmount'],
+    );
   }
 
   @override
@@ -104,9 +126,11 @@ class ModuleRepositoryImpl extends ModuleRepository {
     await launchUrl(url);
     return 'File has been downloaded!';
   }
+
   @override
   Future<String> exportPayoutTable() async {
-    final url = Uri.https(APIEndpoint.baseUrl, APIEndpoint.exportPayoutExcelUrl);
+    final url =
+        Uri.https(APIEndpoint.baseUrl, APIEndpoint.exportPayoutExcelUrl);
 
     await launchUrl(url);
     return 'File has been downloaded!';

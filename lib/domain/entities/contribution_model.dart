@@ -11,7 +11,7 @@ class ContributionModel {
   final String? amount;
   final Frequency? frequency;
   final String? contributionDate;
-  final String? transactionId;
+  final int? transactionId;
   final int? giftId;
   final int? contributorId;
   final GiftingModel? gift;

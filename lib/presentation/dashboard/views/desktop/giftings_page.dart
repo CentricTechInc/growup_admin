@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:grow_up_admin_panel/app/config/app_router.dart';
 import 'package:grow_up_admin_panel/app/util/common_pager_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
+import 'package:grow_up_admin_panel/app/util/common_text.dart';
+import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/page_path.dart';
 import 'package:grow_up_admin_panel/domain/entities/date_range_model.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
@@ -96,6 +97,10 @@ class GiftingsPage extends StatelessWidget {
               },
             ),
             const VerticalSpacing(30),
+            TotalAmountWidget(
+              amount: controller.totalAmount,
+            ),
+            const VerticalSpacing(20),
             const GiftingTableHeader(
               // value: false,
               titleList: [
@@ -123,18 +128,21 @@ class GiftingsPage extends StatelessWidget {
                         : GiftingsTableBody(
                             model: controller.giftingModelList[index],
                             onTap: () async {
-                              final userId =
-                                  controller.giftingModelList[index].userId;
-                              await controller.getParentDetail(userId ?? -1);
-                              await controller.getGiftDetail(
-                                  userId.toString(), 'Active');
-                              await controller.getUserBenes(
-                                userId.toString(),
-                              );
+                              // final userId =
+                              //     controller.giftingModelList[index].userId;
+                              // await controller.getParentDetail(userId ?? -1);
+                              // await controller.getGiftDetail(
+                              //     userId.toString(), 'Active');
+                              // await controller.getUserBenes(
+                              //   userId.toString(),
+                              // );
                               controller.liveGiftingSelectedIndex = 0;
-                              controller.userParentSelectedIndex = 0;
-                              globalContext?.push(
-                                  '${PagePath.giftings}${PagePath.parentDetails.toRoute}?isParent=${true}');
+                              // controller.userParentSelectedIndex = 0;
+                              // globalContext?.push(
+                              //     '${PagePath.giftings}${PagePath.parentDetails.toRoute}?isParent=${true}');
+                              await controller.getGiftDetails(
+                                  controller.giftingModelList[index].id ?? -1);
+                              context.push(PagePath.giftDetails);
                             },
                           ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
@@ -174,5 +182,33 @@ class GiftingsPage extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class TotalAmountWidget extends StatelessWidget {
+  const TotalAmountWidget({super.key, required this.amount});
+
+  final String amount;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        const CommonText(
+          text: 'Total Amount:',
+          fontSize: 16,
+          weight: FontWeight.w600,
+          color: AppColors.primaryText,
+        ),
+        const HorizontalSpacing(20),
+        CommonText(
+          text: '\$$amount',
+          fontSize: 24,
+          weight: FontWeight.w700,
+          color: AppColors.primaryText,
+        ),
+      ],
+    );
   }
 }

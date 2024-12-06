@@ -12,6 +12,7 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/no_d
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/page_header.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/payout_table_body.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/giftings_page.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PayoutPage extends StatelessWidget {
@@ -96,6 +97,10 @@ class PayoutPage extends StatelessWidget {
               },
             ),
             const VerticalSpacing(30),
+            TotalAmountWidget(
+              amount: controller.totalAmount,
+            ),
+            const VerticalSpacing(20),
             const PayoutTableHeader(
               // value: false,
               titleList: [

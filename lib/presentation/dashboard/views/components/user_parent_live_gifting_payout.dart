@@ -41,7 +41,7 @@ class UserParentsLiveGiftingPayout extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 30.0),
                       child: CommonText(
-                        text: model[index].transactionId ?? '',
+                        text: model[index].transactionId.toString() ?? '',
                         fontSize: 12,
                         weight: FontWeight.w500,
                       ),

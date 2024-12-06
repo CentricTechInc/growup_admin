@@ -9,10 +9,12 @@ class PagePath {
   static const String createNewPassword = 'createNewPassword';
   static const String onboarding = '/onboarding';
   static const String privacyAndPolicy = '/privacyAndPolicy';
+
 //Dashboard Routes
   static const String dashboard = '/dashboard';
   static const String userParents = '/userParents';
   static const String parentDetails = 'parentDetails';
+  static const String giftDetails = '/giftDetails';
   static const String userContributor = '/userContributor';
   static const String contributorDetails = 'contributorDetails';
   static const String giftings = '/giftings';

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +11,7 @@ import 'package:grow_up_admin_panel/presentation/dashboard/views/components/no_d
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/page_header.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/parent_table_header.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/payment_details_dialog_box.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/giftings_page.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class ContributionPage extends StatelessWidget {
@@ -97,6 +97,10 @@ class ContributionPage extends StatelessWidget {
               },
             ),
             const VerticalSpacing(30),
+            TotalAmountWidget(
+              amount: controller.totalAmount,
+            ),
+            const VerticalSpacing(20),
             const ContributionTableHeader(
               // value: false,
               titleList: [
@@ -117,22 +121,22 @@ class ContributionPage extends StatelessWidget {
                 itemCount: controller.contributionModelList.isEmpty
                     ? 1
                     : controller.contributionModelList.length,
-                itemBuilder: (context, index) =>
-                    controller.contributionModelList.isEmpty
-                        ? const NoDataFound(title: 'No record found!')
-                        : ContributionsTableBody(
-                            model: controller.contributionModelList[index],
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => Dialog(
-                                  child: PaymentDetailsDialogBox(
-                                    model: controller.contributionModelList[index],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                itemBuilder: (context, index) => controller
+                        .contributionModelList.isEmpty
+                    ? const NoDataFound(title: 'No record found!')
+                    : ContributionsTableBody(
+                        model: controller.contributionModelList[index],
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                              child: PaymentDetailsDialogBox(
+                                model: controller.contributionModelList[index],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                 separatorBuilder: (context, index) => const VerticalSpacing(5),
               ),
             ),
@@ -142,7 +146,7 @@ class ContributionPage extends StatelessWidget {
                 totalPage: ((controller.elementCount == 0
                             ? 1
                             : controller.elementCount) /
-                    controller.pageSize)
+                        controller.pageSize)
                     .ceil(),
                 onPageChanged: (page) async {
                   controller.contributonModulePageNo = page;

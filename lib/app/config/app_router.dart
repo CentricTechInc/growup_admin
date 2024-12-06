@@ -14,8 +14,10 @@ import 'package:grow_up_admin_panel/presentation/auth/otp/otp_main.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/dashboard_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/user_parent_controller.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/gift_detail_page.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_contributors_details.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_details.dart';
+import 'package:grow_up_admin_panel/presentation/dashboard/views/components/user_parent_live_gifting_widget.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/admin_dashboard_desktop.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/analytics_page.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/desktop/contributions_page.dart';
@@ -153,13 +155,13 @@ class AppRouter {
                 return MaterialPage(child: UserContributionPage());
               },
               routes: [
-                GoRoute(
-                  parentNavigatorKey: _shellNavigatorKey,
-                  path: PagePath.contributorDetails,
-                  pageBuilder: (context, state) {
-                    return MaterialPage(child: UserContributerDetails());
-                  },
-                ),
+                // GoRoute(
+                //   parentNavigatorKey: _shellNavigatorKey,
+                //   path: PagePath.contributorDetails,
+                //   pageBuilder: (context, state) {
+                //     return MaterialPage(child: UserContributerDetails());
+                //   },
+                // ),
               ]),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
@@ -214,6 +216,12 @@ class AppRouter {
               return MaterialPage(
                 child: AnalyticsPage(),
               );
+            },
+          ),
+          GoRoute(
+            path: PagePath.giftDetails,
+            pageBuilder: (context, state) {
+              return MaterialPage(child: GiftDetailPage());
             },
           ),
         ],

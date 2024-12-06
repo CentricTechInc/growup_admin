@@ -108,6 +108,7 @@ class SideBarController extends GetxController {
   final giftingSearchController = TextEditingController();
   final contributionsSearchController = TextEditingController();
   final payoutSearchController = TextEditingController();
+  String totalAmount = '0.00';
 
   getParentTable() async {
     try {
@@ -149,6 +150,7 @@ class SideBarController extends GetxController {
       userContributorModelList.clear();
       userContributorModelList.addAll(res.data);
       elementCount = res.count ?? 1;
+      totalAmount = res.extra ?? '0.00';
       Loader.hideLoading();
       update();
     } catch (e) {
@@ -165,6 +167,7 @@ class SideBarController extends GetxController {
       giftingModelList.clear();
       giftingModelList.addAll(res.data);
       elementCount = res.count ?? 1;
+      totalAmount = res.extra ?? '0.00';
       Loader.hideLoading();
       update();
     } catch (e) {
@@ -181,6 +184,7 @@ class SideBarController extends GetxController {
       payoutModelList.clear();
       payoutModelList.addAll(res.data);
       elementCount = res.count ?? 1;
+      totalAmount = res.extra ?? '0.00';
       Loader.hideLoading();
       update();
     } catch (e) {
@@ -198,6 +202,8 @@ class SideBarController extends GetxController {
       contributionModelList.clear();
       contributionModelList.addAll(res.data);
       elementCount = res.count ?? 1;
+      totalAmount = res.extra ?? '0.00';
+
       Loader.hideLoading();
       update();
     } catch (e) {
@@ -294,7 +300,23 @@ class SideBarController extends GetxController {
       giftingModelList.clear();
       giftingModelList.addAll(res.data);
 
+      totalAmount = res.extra ?? '0.00';
       elementCount = res.count ?? 1;
+      update();
+      Loader.hideLoading();
+    } catch (e) {
+      Loader.hideLoading();
+      CommonSnackBar.message(message: e.toString());
+    }
+  }
+
+  GiftingModel giftDetail = GiftingModel();
+
+  getGiftDetails(int giftId) async {
+    try {
+      Loader.showLoader();
+      final res = await moduleRepository.getGiftDetails(giftId);
+      giftDetail = res;
       update();
       Loader.hideLoading();
     } catch (e) {
@@ -310,6 +332,8 @@ class SideBarController extends GetxController {
           payoutPageNo, payoutSearchController.text);
       payoutModelList.clear();
       payoutModelList.addAll(res.data);
+
+      totalAmount = res.extra ?? '0.00';
       elementCount = res.count ?? 1;
       update();
       Loader.hideLoading();
@@ -349,7 +373,8 @@ class SideBarController extends GetxController {
           contributonModulePageNo, contributionsSearchController.text);
       contributionModelList.clear();
       contributionModelList.addAll(res.data);
-      print(res.count);
+
+      totalAmount = res.extra ?? '0.00';
       elementCount = res.count ?? 1;
       update();
       Loader.hideLoading();
