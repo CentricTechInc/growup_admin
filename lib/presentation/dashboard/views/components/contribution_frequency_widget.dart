@@ -40,7 +40,9 @@ class ContributionFrequencyWidget extends StatelessWidget {
                     majorGridLines: MajorGridLines(width: 0),
                   ),
                   legend: const Legend(
-                      isVisible: true, position: LegendPosition.bottom),
+                      toggleSeriesVisibility: false,
+                      isVisible: true,
+                      position: LegendPosition.bottom),
                   series: [
                     StackedBarSeries<ChartData, String>(
                       dataSource: controller.onceContributionFrequencyList,

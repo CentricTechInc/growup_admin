@@ -1,7 +1,7 @@
 class APIEndpoint {
-  static String get baseUrl => '192.168.0.102:8000';
+  // static String get baseUrl => '192.168.0.103:8000';
 
-  // static String get baseUrl => 'growupadmin.centrictech.net';
+  static String get baseUrl => 'growupadmin.centrictech.net';
   // static String get baseUrl => '3.109.32.169:81';
 
   // ---------------- Dashboard --------------------

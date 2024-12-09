@@ -31,7 +31,7 @@ class TopGiftingChartWidget extends StatelessWidget {
                 ? const Center(child: CircularProgressIndicator())
                 : SfCircularChart(
                     tooltipBehavior: TooltipBehavior(enable: true),
-                    legend: const Legend(isVisible: true),
+                    legend: const Legend(isVisible: true, toggleSeriesVisibility: false),
                     series: <PieSeries<ChartData, String>>[
                       PieSeries<ChartData, String>(
                         enableTooltip: true,

@@ -31,6 +31,7 @@ class ContributionsChartWidget extends StatelessWidget {
             ),
             primaryYAxis: const NumericAxis(),
             legend: const Legend(
+              toggleSeriesVisibility: false,
               isVisible: true,
               position: LegendPosition.bottom,
               overflowMode: LegendItemOverflowMode.wrap,

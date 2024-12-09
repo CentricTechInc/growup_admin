@@ -28,6 +28,7 @@ class TotalUsersPieChartWidget extends StatelessWidget {
               : SfCircularChart(
                   tooltipBehavior: TooltipBehavior(enable: true),
                   legend: const Legend(
+                    toggleSeriesVisibility: false,
                       isVisible: true, position: LegendPosition.bottom),
                   series: <CircularSeries>[
                     PieSeries<ChartData, String>(

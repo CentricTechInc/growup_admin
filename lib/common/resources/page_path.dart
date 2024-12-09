@@ -18,7 +18,7 @@ class PagePath {
   static const String userContributor = '/userContributor';
   static const String contributorDetails = 'contributorDetails';
   static const String giftings = '/giftings';
-  static const String contrbutions = '/contributors';
+  static const String contrbutions = '/contributions';
   static const String payouts = '/payouts';
   static const String analytics = '/analytics';
 }

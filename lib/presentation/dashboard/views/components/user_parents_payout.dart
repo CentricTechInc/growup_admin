@@ -32,19 +32,19 @@ class UserParentsPayout extends StatelessWidget {
                 weight: FontWeight.w700,
               ),
               const Spacer(),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  color: AppColors.secondary.withOpacity(0.2),
-                ),
-                child: const CommonText(
-                  text: 'Pending',
-                  fontSize: 12,
-                  weight: FontWeight.w400,
-                  color: AppColors.secondary,
-                ),
-              ),
+              // Container(
+              //   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(6),
+              //     color: AppColors.secondary.withOpacity(0.2),
+              //   ),
+              //   child: const CommonText(
+              //     text: 'Pending',
+              //     fontSize: 12,
+              //     weight: FontWeight.w400,
+              //     color: AppColors.secondary,
+              //   ),
+              // ),
             ],
           ),
           const VerticalSpacing(20),

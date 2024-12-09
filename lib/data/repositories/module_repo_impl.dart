@@ -66,7 +66,7 @@ class ModuleRepositoryImpl extends ModuleRepository {
     final response =
         await ModuleApi.dateFilterContributions(dateTime, period, pageNo)
             .request();
-    final List<dynamic> json = jsonDecode(response)['data']['data'];
+    final List<dynamic> json = jsonDecode(response)['data']['updatedRecords'];
 
     final List<ContributionModel> data =
         json.map((e) => ContributionModel.fromJson(e)).toList();
@@ -100,6 +100,7 @@ class ModuleRepositoryImpl extends ModuleRepository {
       int pageNo, String? search) async {
     final response =
         await ModuleApi.getContributionTable(pageNo, search).request();
+    print(response);
     final List<dynamic> json = jsonDecode(response)['data']['updatedRecords'];
     final List<ContributionModel> data =
         json.map((e) => ContributionModel.fromJson(e)).toList();
