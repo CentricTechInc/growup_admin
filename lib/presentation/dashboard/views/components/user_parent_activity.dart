@@ -19,7 +19,6 @@ class UserParentsActivity extends StatelessWidget {
       children: [
         const UserParentACtivityTableHeader(
           titleList: [
-            'Payment ID',
             'Gifting Title',
             'Benefeciary Name',
             'Frequency',
@@ -52,24 +51,6 @@ class UserParentsActivity extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 30.0),
-                              child: CommonText(
-                                text: activityModel[index]
-                                        .transactionId
-                                        .toString() ??
-                                    '',
-                                fontSize: 12,
-                                weight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          const CommonVerticalDivider(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            color: AppColors.grey,
-                            thickness: 2,
-                          ),
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(left: 30.0),

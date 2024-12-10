@@ -10,11 +10,11 @@ class DetailsCardWidget extends StatelessWidget {
       {super.key,
       required this.giftModel,
       required this.parentModel,
-      required this.title});
+      required this.isParent});
 
-  final String title;
   GiftDetailDto giftModel;
   ParentModel parentModel;
+  final bool isParent;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,9 @@ class DetailsCardWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CommonText(
-            text: title,
+            text: isParent
+                ? 'Parent Details'
+                : 'Contributor Details',
             fontSize: 20,
             weight: FontWeight.w700,
           ),
@@ -84,22 +86,24 @@ class DetailsCardWidget extends StatelessWidget {
             ),
           ]),
           const VerticalSpacing(20),
-          const Row(children: [
-            Expanded(
+          Row(children: [
+            if (isParent)
+            const Expanded(
               child: CommonText(
                 text: 'Total Giftings',
                 fontSize: 16,
                 weight: FontWeight.w700,
               ),
             ),
-            Expanded(
-              child: CommonText(
-                text: 'Recieved',
-                fontSize: 16,
-                weight: FontWeight.w700,
+            if (isParent)
+              const Expanded(
+                child: CommonText(
+                  text: 'Recieved',
+                  fontSize: 16,
+                  weight: FontWeight.w700,
+                ),
               ),
-            ),
-            Expanded(
+            const Expanded(
               child: CommonText(
                 text: 'Contributed',
                 fontSize: 16,
@@ -109,17 +113,19 @@ class DetailsCardWidget extends StatelessWidget {
           ]),
           const VerticalSpacing(10),
           Row(children: [
+            if (isParent)
             Expanded(
               child: CommonText(
-                text: '${parentModel.totalGifts?? '0'}',
+                text: '${parentModel.totalGifts ?? '0'}',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,
               ),
             ),
+            if (isParent)
             Expanded(
               child: CommonText(
-                text: '\$ ${parentModel.totalReceived?? '0'}' ,
+                text: '\$ ${parentModel.totalReceived ?? '0'}',
                 fontSize: 16,
                 weight: FontWeight.w400,
                 color: AppColors.secondaryText,

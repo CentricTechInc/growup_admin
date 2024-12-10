@@ -73,9 +73,7 @@ class UserParentDetails extends StatelessWidget {
                           ),
                           const VerticalSpacing(20),
                           DetailsCardWidget(
-                            title: isParent
-                                ? 'Parent Details'
-                                : 'Contributor Details',
+                            isParent: isParent,
                             parentModel: controller.parentDetailData,
                             giftModel: controller.giftingDetailData,
                           ),

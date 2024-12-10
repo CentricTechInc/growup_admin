@@ -59,7 +59,7 @@ class GiftDetailPage extends StatelessWidget {
                                 break;
                               case 2:
                                 await controller
-                                    .getGiftPayoutDetail(giftId.toString());
+                                    .getGiftPayoutDetail(controller.giftDetail.userId?.toString() ?? '-1');
                                 controller.payoutAmountController.clear();
                                 break;
                             }
