@@ -1,10 +1,12 @@
+enum Roles { Admin, subAdmin }
+
 class UserModelDto {
   int? id;
   String? name;
   String? email;
   String? phone;
   String? picture;
-  String? role;
+  Roles? role;
   String? token;
 
   UserModelDto(
@@ -22,7 +24,7 @@ class UserModelDto {
     email = json['email'];
     phone = json['phone'];
     picture = json['picture'];
-    role = json['role'];
+    role = Roles.values.byName(json['role']);
     token = json['token'];
   }
 
@@ -33,7 +35,7 @@ class UserModelDto {
     data['email'] = email;
     data['phone'] = phone;
     data['picture'] = picture;
-    data['role'] = role;
+    data['role'] = role?.name;
     data['token'] = token;
     return data;
   }

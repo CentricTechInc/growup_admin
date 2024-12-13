@@ -33,7 +33,6 @@ class LoginController extends GetxController {
       }
       isLoading = false;
       update();
-      print(user.toJson());
     } catch (e) {
       isLoading = false;
       update();

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:grow_up_admin_panel/app/services/local_storage.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/app/util/common_text.dart';
 import 'package:grow_up_admin_panel/app/util/responsive_builder.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/common/resources/drawables.dart';
+import 'package:grow_up_admin_panel/data/dto/user_dto.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/views/components/icon_button.dart';
 
 class ProfileTile extends StatelessWidget {
@@ -77,11 +79,13 @@ class ProfileTile extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              CommonIconButton(
-                icon: Assets.deleteIcon,
-                onTap: deleteOnTap,
-                color: AppColors.red,
-              ),
+              LocalStorageService.instance.user?.role == Roles.Admin
+                  ? CommonIconButton(
+                      icon: Assets.deleteIcon,
+                      onTap: deleteOnTap,
+                      color: AppColors.red,
+                    )
+                  : const SizedBox.shrink(),
             ],
           )
         : Column(
@@ -108,11 +112,13 @@ class ProfileTile extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  CommonIconButton(
-                    icon: Assets.deleteIcon,
-                    onTap: deleteOnTap,
-                    color: AppColors.red,
-                  ),
+                  LocalStorageService.instance.user?.role == Roles.Admin
+                      ? CommonIconButton(
+                          icon: Assets.deleteIcon,
+                          onTap: deleteOnTap,
+                          color: AppColors.red,
+                        )
+                      : const SizedBox.shrink(),
                 ],
               ),
               const VerticalSpacing(10),

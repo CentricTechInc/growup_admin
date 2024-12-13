@@ -614,22 +614,7 @@ class UserParentACtivityTableHeader extends StatelessWidget {
                 fontSize: 12,
               ),
             ),
-          ),
-          const CommonVerticalDivider(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            color: AppColors.primary,
-            thickness: 2,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 30),
-              child: CommonText(
-                text: titleList[6],
-                weight: FontWeight.w700,
-                fontSize: 12,
-              ),
-            ),
-          ),
+          )
         ],
       ),
     );
