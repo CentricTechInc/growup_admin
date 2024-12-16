@@ -24,7 +24,7 @@ class UserModelDto {
     email = json['email'];
     phone = json['phone'];
     picture = json['picture'];
-    role = Roles.values.byName(json['role']);
+    role = json['role'] == null ? null : Roles.values.byName(json['role']);
     token = json['token'];
   }
 

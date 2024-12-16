@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:grow_up_admin_panel/app/util/common_back_button.dart';
+import 'package:grow_up_admin_panel/app/util/common_pager_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
 import 'package:grow_up_admin_panel/common/resources/colors.dart';
 import 'package:grow_up_admin_panel/presentation/dashboard/controllers/side_bar_controller.dart';
@@ -58,8 +59,8 @@ class GiftDetailPage extends StatelessWidget {
                                 await controller.getGiftContributions(giftId);
                                 break;
                               case 2:
-                                await controller
-                                    .getGiftPayoutDetail(controller.giftDetail.userId?.toString() ?? '-1');
+                                await controller.getGiftPayoutDetail(
+                                    giftId.toString());
                                 controller.payoutAmountController.clear();
                                 break;
                             }
@@ -71,7 +72,7 @@ class GiftDetailPage extends StatelessWidget {
                     ]),
                     const VerticalSpacing(30),
                     SizedBox(
-                      height: context.height / 1.8,
+                      height: context.height / 1.5,
                       child: PageView(
                         controller: controller.liveGiftingPageController,
                         children: [
@@ -99,6 +100,22 @@ class GiftDetailPage extends StatelessWidget {
                         ],
                       ),
                     ),
+                    if (controller.liveGiftingSelectedIndex != 0)
+                      CommonPagerWidget(
+                        currentPage: controller.giftContributionPageNo,
+                        totalPage: ((controller.elementCount == 0
+                                    ? 1
+                                    : controller.elementCount) /
+                                controller.pageSize)
+                            .ceil(),
+                        onPageChanged: (page) async {
+                          controller.giftContributionPageNo = page;
+
+                          await controller.getGiftPayoutDetail(
+                              controller.giftDetail.id?.toString() ?? '-1');
+                          controller.update();
+                        },
+                      ),
                   ],
                 ),
               ),

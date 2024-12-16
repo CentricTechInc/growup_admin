@@ -192,6 +192,7 @@ class UserParentApi implements APIRequestRepresentable {
       case UserParentApiType.postGiftPayout:
         return APIEndpoint.giftDetailsPayoutUrl;
       case UserParentApiType.getGiftsContributions:
+        print('THIS IS ID CONT hlelleasd: $giftId');
         return '${APIEndpoint.getGiftContributorUrl}/$giftId/$pageNo';
       case UserParentApiType.deleteGift:
         return '${APIEndpoint.giftsUrl}/$id';

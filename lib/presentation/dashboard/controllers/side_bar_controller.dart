@@ -73,6 +73,9 @@ class SideBarController extends GetxController {
   ///Contributor Table------
   int payoutPageNo = 1;
 
+  ///Gift Contribution List Table------
+  int giftContributionPageNo = 1;
+
   ///++++++++++++++++++++++++++++++++++++++++++++++
 
   int liveGiftingSelectedIndex = 0;
