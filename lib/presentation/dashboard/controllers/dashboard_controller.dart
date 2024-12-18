@@ -85,7 +85,6 @@ class DashboardController extends GetxController {
       recentContributions = dashboardListingDto?.data?.recentContributions;
       update();
     } catch (e) {
-      print(e);
       CommonSnackBar.message(message: e.toString());
     }
   }
@@ -118,7 +117,6 @@ class DashboardController extends GetxController {
     } catch (e) {
       isUserLoading = false;
       update();
-      print(e);
     }
   }
 
@@ -142,7 +140,6 @@ class DashboardController extends GetxController {
     } catch (e) {
       isContributorLoading = false;
       update();
-      print(e);
     }
   }
 
@@ -154,7 +151,6 @@ class DashboardController extends GetxController {
       update();
       String filter = getDropdownString(selectedGiftFilter);
       topGiftingChartDto = await dashboardRepository.topGiftingChart(filter);
-      print(topGiftingChartDto?.toJson());
       topGiftingChartDto?.data?.records?.forEach((element) {
         topGiftingData.add(ChartData(
           element.gift?.title ?? '',
@@ -166,7 +162,6 @@ class DashboardController extends GetxController {
     } catch (e) {
       isGiftLoading = false;
       update();
-      print(e);
     }
   }
 
@@ -177,15 +172,12 @@ class DashboardController extends GetxController {
       await Future.delayed(const Duration(milliseconds: 500));
 
       String filter = getDropdownString(selectedTotalUsersFilter);
-      print('THIS is Filter $filter');
       totalUsersChartDto = await dashboardRepository.totalUsersChart(filter);
-      print('totalUsersChartDto: ${totalUsersChartDto?.toJson()}');
       totalUsersLoading = false;
       update();
     } catch (e) {
       totalUsersLoading = false;
       update();
-      print(e);
     }
   }
 
@@ -225,7 +217,6 @@ class DashboardController extends GetxController {
     } catch (e) {
       contributionFrequencyLoading = false;
       update();
-      print(e);
     }
   }
 }

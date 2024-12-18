@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:grow_up_admin_panel/app/util/common_back_button.dart';
 import 'package:grow_up_admin_panel/app/util/common_pager_widget.dart';
 import 'package:grow_up_admin_panel/app/util/common_spacing.dart';
@@ -18,14 +17,14 @@ class GiftDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: SingleChildScrollView(
-        child: GetBuilder<SideBarController>(builder: (controller) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const CommonBackButton(),
-              const VerticalSpacing(20),
-              Container(
+      child: GetBuilder<SideBarController>(builder: (controller) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const CommonBackButton(),
+            const VerticalSpacing(20),
+            Expanded(
+              child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
@@ -49,6 +48,7 @@ class GiftDetailPage extends StatelessWidget {
                             controller.liveGiftingSelectedIndex = index;
 
                             final int giftId = controller.giftDetail.id ?? 0;
+
                             switch (index) {
                               case 0:
                                 // await controller.getGiftDetail(
@@ -59,8 +59,8 @@ class GiftDetailPage extends StatelessWidget {
                                 await controller.getGiftContributions(giftId);
                                 break;
                               case 2:
-                                await controller.getGiftPayoutDetail(
-                                    giftId.toString());
+                                await controller
+                                    .getGiftPayoutDetail(giftId.toString());
                                 controller.payoutAmountController.clear();
                                 break;
                             }
@@ -71,8 +71,7 @@ class GiftDetailPage extends StatelessWidget {
                       ),
                     ]),
                     const VerticalSpacing(30),
-                    SizedBox(
-                      height: context.height / 1.5,
+                    Expanded(
                       child: PageView(
                         controller: controller.liveGiftingPageController,
                         children: [
@@ -100,29 +99,45 @@ class GiftDetailPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    if (controller.liveGiftingSelectedIndex != 0)
-                      CommonPagerWidget(
-                        currentPage: controller.giftContributionPageNo,
-                        totalPage: ((controller.elementCount == 0
-                                    ? 1
-                                    : controller.elementCount) /
-                                controller.pageSize)
-                            .ceil(),
-                        onPageChanged: (page) async {
-                          controller.giftContributionPageNo = page;
-
-                          await controller.getGiftPayoutDetail(
-                              controller.giftDetail.id?.toString() ?? '-1');
-                          controller.update();
-                        },
-                      ),
                   ],
                 ),
               ),
-            ],
-          );
-        }),
-      ),
+            ),
+            const VerticalSpacing(20),
+            if (controller.liveGiftingSelectedIndex == 1)
+              CommonPagerWidget(
+                currentPage: controller.giftContributionPageNo,
+                totalPage: ((controller.elementCount == 0
+                            ? 1
+                            : controller.elementCount) /
+                        controller.pageSize)
+                    .ceil(),
+                onPageChanged: (page) async {
+                  controller.giftContributionPageNo = page;
+                  await controller
+                      .getGiftContributions(controller.giftDetail.id ?? -1);
+                  controller.update();
+                },
+              ),
+            if (controller.liveGiftingSelectedIndex == 2)
+              CommonPagerWidget(
+                currentPage: controller.giftPayoutDetailPageNo,
+                totalPage: ((controller.elementCount == 0
+                            ? 1
+                            : controller.elementCount) /
+                        controller.pageSize)
+                    .ceil(),
+                onPageChanged: (page) async {
+                  controller.giftPayoutDetailPageNo = page;
+
+                  await controller.getGiftPayoutDetail(
+                      controller.giftDetail.id?.toString() ?? '-1');
+                  controller.update();
+                },
+              ),
+          ],
+        );
+      }),
     );
   }
 }

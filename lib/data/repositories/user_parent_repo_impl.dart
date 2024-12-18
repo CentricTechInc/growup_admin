@@ -101,14 +101,15 @@ class UserParentRepositoryImpl extends UserParentRepository {
   }
 
   @override
-  Future<GiftPayoutModel> parentDetailPayoutTable(
+  Future<PaginationModel> parentDetailPayoutTable(
       String userId, int page) async {
     try {
       final response =
           await UserParentApi.parentDetailPayoutTable(userId, page).request();
       final json = jsonDecode(response)['data'];
       final GiftPayoutModel data = GiftPayoutModel.fromJson(json);
-      return data;
+      final val = PaginationModel(data: data, count: jsonDecode(response)['totalCount']);
+      return val;
     } catch (e) {
       rethrow;
     }
@@ -129,7 +130,7 @@ class UserParentRepositoryImpl extends UserParentRepository {
   }
 
   @override
-  Future<List<ContributionModel>> getGiftContributions(
+  Future<PaginationModel> getGiftContributions(
       int userId, int page) async {
     try {
       final response =
@@ -137,7 +138,8 @@ class UserParentRepositoryImpl extends UserParentRepository {
       final List<dynamic> json = jsonDecode(response)['data'];
       final List<ContributionModel> data =
           json.map((e) => ContributionModel.fromJson(e)).toList();
-      return data;
+      final val = PaginationModel(data: data, count: jsonDecode(response)['totalCount']);
+      return val;
     } catch (e) {
       rethrow;
     }

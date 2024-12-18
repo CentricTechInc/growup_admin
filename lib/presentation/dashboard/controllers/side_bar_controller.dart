@@ -76,6 +76,9 @@ class SideBarController extends GetxController {
   ///Gift Contribution List Table------
   int giftContributionPageNo = 1;
 
+  ///Gift Contribution List Table------
+  int giftPayoutDetailPageNo = 1;
+
   ///++++++++++++++++++++++++++++++++++++++++++++++
 
   int liveGiftingSelectedIndex = 0;
@@ -455,7 +458,8 @@ class SideBarController extends GetxController {
   Future<void> getGiftPayoutDetail(String userId) async {
     try {
       final res = await userParentRepository.parentDetailPayoutTable(userId, 1);
-      giftPayoutData = res;
+      giftPayoutData = res.data;
+      elementCount = res.count ?? 1;
     } catch (e) {
       CommonSnackBar.message(message: e.toString());
     }
@@ -479,9 +483,10 @@ class SideBarController extends GetxController {
 
   Future<void> getGiftContributions(int giftId) async {
     try {
-      final res = await userParentRepository.getGiftContributions(giftId, 1);
+      final res = await userParentRepository.getGiftContributions(giftId, contributonModulePageNo);
       giftContributionList.clear();
-      giftContributionList.addAll(res);
+      giftContributionList.addAll(res.data);
+      elementCount = res.count ?? 1;
     } catch (e) {
       CommonSnackBar.message(message: e.toString());
     }
